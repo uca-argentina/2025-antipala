@@ -26,3 +26,14 @@ WormHoleTest >> testWhenWeAskToThenWormHoleWhereIsPositionZHeCanAnswerIt [
 	
 	self assert:(wormhole whereIsMyPositionZ=20).
 ]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenWeReceiveAPositionWeCanCheckIfItIsAWormHolePosition [
+	| aPositionY aPositionZ wormhole |
+	aPositionY:=10.
+	aPositionZ:=20.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	
+	self assert:(wormhole validatePosition: 20).
+]

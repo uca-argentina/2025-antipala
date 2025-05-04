@@ -37,6 +37,11 @@ WormHole >> initializeWith: aPositionY and: aPositionZ [
 ]
 
 { #category : 'as yet unclassified' }
+WormHole >> validatePosition: aPosition [ 
+	^(positionY == aPosition) or: (positionZ == aPosition).
+]
+
+{ #category : 'as yet unclassified' }
 WormHole >> whereIsMyPositionY [
 
 	^ positionY
