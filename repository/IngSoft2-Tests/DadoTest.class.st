@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 DadoTest >> testCrearDadoEntre1y6variasveces [
 	| aDice aNumber |
-	aDice := Dice new.
+	aDice := Dice withFace: 6.
 
 	100 timesRepeat: [
 		aNumber := aDice roll.
@@ -18,15 +18,19 @@ DadoTest >> testCrearDadoEntre1y6variasveces [
 
 { #category : 'tests' }
 DadoTest >> testCrearDadodeXcaras [
-	| aDice |
-	aDice:=Dice new .
-	self assert: ((aDice roll) >= 1 and:(aDice roll <= 6)).
+	| aDice aNumber |
+	aDice := Dice withFace: 10.
+		100 timesRepeat: [
+		aNumber := aDice roll.
+		self assert: (aNumber >= 1 and: [aNumber <= 10]).
+	].
 ]
 
 { #category : 'tests' }
 DadoTest >> testCrearDadoentre1y6 [
 
-	| aDice |
-	aDice:=Dice new .
-	self assert: ((aDice roll) >= 1 and:(aDice roll <= 6)).
+	| aDice valor|
+   aDice := Dice withFace: 6.
+	valor := aDice roll.
+	self assert: (valor >= 1 and: [valor <= 6]).
 ]
