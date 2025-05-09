@@ -6,7 +6,28 @@ Class {
 }
 
 { #category : 'tests' }
-WormHoleTest >> testBanana [
+WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceToBeInZ [
+
+	| aPositionY aPositionZ wormhole myActualPosition result |
+	aPositionY:=10.
+	aPositionZ:=20.
+	myActualPosition:= 10.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	result:= wormhole applyWormEffectTo: myActualPosition.
+	self assert:(result = 10).
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testIfWeAreInTheZPositionTheWormHoleKnowsHowMuchToSubTractToTheDiceToBeInY [
+	| aPositionY aPositionZ wormhole myActualPosition result |
+	aPositionY:=10.
+	aPositionZ:=30.
+	myActualPosition:= 30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	result:= wormhole applyWormEffectTo: myActualPosition.
+	self assert:(result = -20).
 ]
 
 { #category : 'tests' }

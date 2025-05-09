@@ -24,6 +24,17 @@ WormHole class >> at: arg1 and: arg2 [
 	^ self new initializeWith: arg1 and: arg2
 ]
 
+{ #category : 'as yet unclassified' }
+WormHole >> applyWormEffectTo: myActualPosition [ 
+	| isInPositionY myActualPosition isInPositionZ |
+	isInPositionY:= myActualPosition = positionY.
+	isInPositionZ:= myActualPosition = positionZ.
+	
+	isInPositionY ifTrue: [^positionZ - positionY ].
+	isInPositionZ ifTrue: [ ^(positionZ - positionY)negated ].
+	^myActualPosition.
+]
+
 { #category : 'initialization' }
 WormHole >> initializeWith: arg1 [
 
