@@ -6,6 +6,17 @@ Class {
 }
 
 { #category : 'tests' }
+DadoTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals:
+				errorMessage ]
+]
+
+{ #category : 'tests' }
 DadoTest >> testCrearDadoEntre1y6variasveces [
 	| aDice aNumber |
 	aDice := Dice withFace: 6.
@@ -33,4 +44,13 @@ DadoTest >> testCrearDadoentre1y6 [
    aDice := Dice withFace: 6.
 	valor := aDice roll.
 	self assert: (valor >= 1 and: [valor <= 6]).
+]
+
+{ #category : 'tests' }
+DadoTest >> testCuandoCaraEsMenorOIgualAUno [
+
+	self
+		should: [ Dice withFace:1 ]
+		raise: Error
+		withMessageText:'Como mínimo, el dado debe tener 2 caras.'
 ]
