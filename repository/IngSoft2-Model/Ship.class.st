@@ -13,8 +13,8 @@ Class {
 }
 
 { #category : 'accessing' }
-Ship >> getPosition [
-	^position
+Ship >> advance: positions [
+	position := position + positions.
 ]
 
 { #category : 'initialization' }
@@ -23,6 +23,11 @@ Ship >> initialize [
 ]
 
 { #category : 'accessing' }
-Ship >> setPosition: newposition [
+Ship >> moveTo: newposition [
 	position := newposition.
+]
+
+{ #category : 'accessing' }
+Ship >> position [
+	^position
 ]

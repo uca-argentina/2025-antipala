@@ -6,16 +6,25 @@ Class {
 }
 
 { #category : 'tests' }
+ShipTest >> testShipCanAdvance [
+	| ship |
+	ship := Ship new.
+	ship moveTo: 3.
+	ship advance: 2.
+	self assert: ship position equals: 5
+]
+
+{ #category : 'tests' }
 ShipTest >> testShipCanChangePosition [
 	| ship |
 	ship := Ship new.
-	ship setPosition: 3.
-	self assert: ship getPosition equals: 3
+	ship moveTo: 3.
+	self assert: ship position equals: 3
 ]
 
 { #category : 'tests' }
 ShipTest >> testShipInitialPositionShouldBe0 [
 	| ship |
 	ship := Ship new.
-	self assert: ship getPosition equals: 0
+	self assert: ship position equals: 0
 ]
