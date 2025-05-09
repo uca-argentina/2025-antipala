@@ -5,6 +5,18 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+WormHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+self
+	should: anErrorBlock
+	raise: anErrorClass
+	withExceptionDo: [ :error | self assert: (error messageText)
+			equals: errorMessage ]. 
+	
+	
+]
+
 { #category : 'tests' }
 WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceToBeInZ [
 
@@ -19,7 +31,23 @@ WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceTo
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testIfWeAreInTheZPositionTheWormHoleKnowsHowMuchToSubTractToTheDiceToBeInY [
+WormHoleTest >> testWhenThePositionYIsNegativeThrowAnError [
+self
+	should:[WormHole at:-20 and: 40]
+	raise: Error
+	withMessageText: 'The WormHole Position Y can not be negative'.
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenThePositionZIsNegativeThrowAnError [
+self
+	should:[WormHole at:20 and: -20]
+	raise: Error
+	withMessageText: 'The WormHole Position Z can not be negative'.
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenWeAreInTheZTheWormHoleKnowsHowMuchToSubTractToTheDiceToBeInY [
 	| aPositionY aPositionZ wormhole myActualPosition result |
 	aPositionY:=10.
 	aPositionZ:=30.
@@ -28,6 +56,18 @@ WormHoleTest >> testIfWeAreInTheZPositionTheWormHoleKnowsHowMuchToSubTractToTheD
 	
 	result:= wormhole applyWormEffectTo: myActualPosition.
 	self assert:(result = -20).
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenWeAreNotInAWormHolePositionThenStaysInTheSamePosition [ 
+	| aPositionY aPositionZ wormhole myActualPosition result |
+	aPositionY:=10.
+	aPositionZ:=20.
+	myActualPosition:= 50.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	result:= wormhole applyWormEffectTo: myActualPosition.
+	self assert:(result = 50).
 ]
 
 { #category : 'tests' }

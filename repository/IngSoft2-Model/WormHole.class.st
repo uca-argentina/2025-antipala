@@ -42,7 +42,9 @@ WormHole >> initializeWith: arg1 [
 ]
 
 { #category : 'initialization' }
-WormHole >> initializeWith: aPositionY and: aPositionZ [ 
+WormHole >> initializeWith: aPositionY and: aPositionZ [
+	aPositionY negative ifTrue: [ Error signal: 'The WormHole Position Y can not be negative' ].
+	aPositionZ negative ifTrue: [ Error signal: 'The WormHole Position Z can not be negative' ].
 	positionY:=aPositionY.
 	positionZ:=aPositionZ.
 ]
