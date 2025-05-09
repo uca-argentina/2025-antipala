@@ -6,6 +6,10 @@ Class {
 }
 
 { #category : 'tests' }
+WormHoleTest >> testBanana [
+]
+
+{ #category : 'tests' }
 WormHoleTest >> testWhenWeAskToTheWormHoleWhereIsPositionYHeCanAnswerIt [
 
 	| wormhole aPositionY |
