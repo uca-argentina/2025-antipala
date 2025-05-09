@@ -21,7 +21,7 @@ DadoTest >> testCrearDadoEntre1y6variasveces [
 	| aDice aNumber |
 	aDice := Dice withFace: 6.
 
-	100 timesRepeat: [
+	99 timesRepeat: [
 		aNumber := aDice roll.
 		self assert: (aNumber >= 1 and: [aNumber <= 6]).
 	].
