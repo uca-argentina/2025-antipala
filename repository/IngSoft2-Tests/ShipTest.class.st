@@ -6,6 +6,20 @@ Class {
 }
 
 { #category : 'tests' }
+ShipTest >> testColectionOfShips [
+	| ships jugador|
+
+ships := OrderedCollection new.
+ships add: ( Ship create: 1 ).
+ships add: ( Ship create: 2 ).
+ships add: ( Ship create: 3 ).
+ships add: ( Ship create: 4 ).
+ships add: ( Ship create: 5 ).
+jugador := ships at: 2.
+self assert: jugador position equals: 0
+]
+
+{ #category : 'tests' }
 ShipTest >> testShipCanAdvance [
 	| ship |
 	ship := Ship new.
@@ -25,6 +39,6 @@ ShipTest >> testShipCanChangePosition [
 { #category : 'tests' }
 ShipTest >> testShipInitialPositionShouldBe0 [
 	| ship |
-	ship := Ship new.
+	ship := Ship create:1.
 	self assert: ship position equals: 0
 ]

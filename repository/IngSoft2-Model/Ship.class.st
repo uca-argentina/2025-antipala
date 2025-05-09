@@ -6,15 +6,16 @@ Class {
 	#name : 'Ship',
 	#superclass : 'Object',
 	#instVars : [
-		'position'
+		'position',
+		'id'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'operations' }
-Ship class >> create [
-	^ self new.
+Ship class >> create: id [
+	^ (self new) initializeWith: id .
 ]
 
 { #category : 'accessing' }
@@ -23,8 +24,14 @@ Ship >> advance: positions [
 ]
 
 { #category : 'initialization' }
-Ship >> initialize [ 
-    position := 0.
+Ship >> getId [
+   ^id.
+]
+
+{ #category : 'initialization' }
+Ship >> initializeWith: aId [ 
+   position := 0.
+	id:= aId.
 ]
 
 { #category : 'accessing' }

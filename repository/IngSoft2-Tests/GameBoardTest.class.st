@@ -27,7 +27,7 @@ GameBoardTest >> testGameBoardCanMoveAShip [
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	
 	tablero := GameBoard setSquares: 40 setWormhole: wormhole.
-	naveActual:= Ship create.
+	naveActual:= Ship create:1.
 	tablero move: naveActual with: 3.
 	
 	self assert: naveActual position equals: 3.
@@ -50,7 +50,7 @@ GameBoardTest >> testShipCanUseTheWormHoleYposition [
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	
 	tablero := GameBoard setSquares: 10 setWormhole: wormhole .
-	naveActual:= Ship create.
+	naveActual:= Ship create:1.
 	tablero move: naveActual with: 10.
 	
 	self assert: naveActual position equals: 30.
@@ -65,7 +65,7 @@ GameBoardTest >> testShipCanUseTheWormHoleZposition [
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	
 	tablero := GameBoard setSquares: 10 setWormhole: wormhole .
-	naveActual:= Ship create.
+	naveActual:= Ship create:1.
 	tablero move: naveActual with: 30.
 	
 	self assert: naveActual position equals: 10.

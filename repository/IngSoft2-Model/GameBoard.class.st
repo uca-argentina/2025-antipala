@@ -18,6 +18,12 @@ GameBoard class >> setSquares: numberOfSquares setWormhole: aWormHole [
 ]
 
 { #category : 'accessing' }
+GameBoard >> getSquares [
+
+	^ squares
+]
+
+{ #category : 'accessing' }
 GameBoard >> move: ship with: diceThrow [ 
 	ship advance: diceThrow.
 	ship advance: (wormhole applyWormEffectTo: ship position).
