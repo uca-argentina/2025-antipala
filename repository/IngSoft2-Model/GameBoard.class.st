@@ -25,7 +25,7 @@ GameBoard >> move: ship with: diceThrow [
 
 { #category : 'accessing' }
 GameBoard >> setSquares: numberOfSquares setWormhole: awormhole [
-	numberOfSquares >1 ifFalse: [ Error signal: 'The number of squares should be more than 1' ].
+	numberOfSquares >3 ifFalse: [ Error signal: 'The number of squares should be more than 3' ].
 	squares := numberOfSquares.
 	wormhole:= awormhole .
 ]

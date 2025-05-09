@@ -26,7 +26,7 @@ GameBoardTest >> testGameBoardCanMoveAShip [
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	
-	tablero := GameBoard setSquares: 10 setWormhole: wormhole.
+	tablero := GameBoard setSquares: 40 setWormhole: wormhole.
 	naveActual:= Ship create.
 	tablero move: naveActual with: 3.
 	
@@ -36,9 +36,9 @@ GameBoardTest >> testGameBoardCanMoveAShip [
 { #category : 'tests' }
 GameBoardTest >> testGameBoardShouldThrowErrorWhenInitialiceSquaresWith1 [
 self
-	should:[GameBoard setSquares: 1 setWormhole:[ WormHole at: 10 and: 20]]
+	should:[GameBoard setSquares: 3 setWormhole:[ WormHole at: 2 and: 3]]
 	raise: Error
-	withMessageText: 'The number of squares should be more than 1'.
+	withMessageText: 'The number of squares should be more than 3'.
 ]
 
 { #category : 'tests' }
