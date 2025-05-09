@@ -12,6 +12,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'operations' }
+Ship class >> create [
+	^ self new.
+]
+
 { #category : 'accessing' }
 Ship >> advance: positions [
 	position := position + positions.
