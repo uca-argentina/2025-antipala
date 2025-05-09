@@ -32,7 +32,7 @@ WormHole >> applyWormEffectTo: myActualPosition [
 	
 	isInPositionY ifTrue: [^positionZ - positionY ].
 	isInPositionZ ifTrue: [ ^(positionZ - positionY)negated ].
-	^myActualPosition.
+	^0.
 ]
 
 { #category : 'initialization' }

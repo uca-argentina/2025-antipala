@@ -76,7 +76,7 @@ WormHoleTest >> testWhenWeAreNotInAWormHolePositionThenStaysInTheSamePosition [
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	
 	result:= wormhole applyWormEffectTo: myActualPosition.
-	self assert:(result = 50).
+	self assert:(result = 0).
 ]
 
 { #category : 'tests' }
