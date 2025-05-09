@@ -31,11 +31,20 @@ WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceTo
 ]
 
 { #category : 'tests' }
+WormHoleTest >> testWhenBothPositionsAreNegativeThrowAnError [
+
+self
+	should:[WormHole at:-20 and: -20]
+	raise: Error
+	withMessageText: 'The WormHole Position can not be negative'.
+]
+
+{ #category : 'tests' }
 WormHoleTest >> testWhenThePositionYIsNegativeThrowAnError [
 self
 	should:[WormHole at:-20 and: 40]
 	raise: Error
-	withMessageText: 'The WormHole Position Y can not be negative'.
+	withMessageText: 'The WormHole Position can not be negative'.
 ]
 
 { #category : 'tests' }
@@ -43,7 +52,7 @@ WormHoleTest >> testWhenThePositionZIsNegativeThrowAnError [
 self
 	should:[WormHole at:20 and: -20]
 	raise: Error
-	withMessageText: 'The WormHole Position Z can not be negative'.
+	withMessageText: 'The WormHole Position can not be negative'.
 ]
 
 { #category : 'tests' }
