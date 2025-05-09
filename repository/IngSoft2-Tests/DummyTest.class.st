@@ -16,3 +16,17 @@ DummyTest >> testDummy2 [
 
 	self assert: Dummy new isDummy
 ]
+
+{ #category : 'tests' }
+DummyTest >> testDummy3 [
+
+
+	self assert: Dummy new isDummy
+]
+
+{ #category : 'tests' }
+DummyTest >> testDummy4 [
+
+
+	self assert: Dummy new isDummy
+]
