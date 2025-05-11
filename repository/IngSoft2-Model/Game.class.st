@@ -30,7 +30,18 @@ Game >> intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShip
 
 { #category : 'as yet unclassified' }
 Game >> setearTerminoElJuego [
+ 
 theGameHasFinish := true.
+]
+
+{ #category : 'method' }
+Game >> showPosition [
+| texto |
+texto := ''.
+ships do: [:nave |
+    texto := texto , 'La nave: ', (nave getId asString), ' terminó en posición: ', (nave position asString), ' '.
+].
+^texto.
 ]
 
 { #category : 'method' }

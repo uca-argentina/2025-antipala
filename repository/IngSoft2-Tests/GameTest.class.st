@@ -195,6 +195,71 @@ GameTest >> testTheGameCanFinish [
 ]
 
 { #category : 'tests' }
+GameTest >> testTheGameCanShowPosition [
+	| game numberOfSquares aPositionY aPositionZ wormhole tablero dados naves count naveIsFinish|
+	numberOfSquares := 15.
+	aPositionY:=5.
+	aPositionZ:=10.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	tablero := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
+	
+	dados:= OrderedCollection new.
+	dados add: (Dice withFace: 6).
+		
+	naves := OrderedCollection new.
+	naveIsFinish:=Ship create:1.
+	naveIsFinish setPosition:15.
+	naves add: (naveIsFinish).
+	
+	game := Game setDices: dados setGameBoard: tablero setShips: naves.
+	
+	count := 0.
+	[ count <1000 and: (game terminoJuego ='El juego sigue')] whileTrue: [
+  	 count := count + 1.
+	game throwDices .
+	].
+
+	self assert: (game showPosition ) equals: 'La nave: 1 terminó en posición: 15 '.
+	self assert: (game terminoJuego) equals: 'Gano la nave 1'.
+
+]
+
+{ #category : 'tests' }
+GameTest >> testTheGameCanShowXPosition [
+	| game numberOfSquares aPositionY aPositionZ wormhole tablero dados naves count naveIsFinish naveIsFinish2|
+	numberOfSquares := 15.
+	aPositionY:=5.
+	aPositionZ:=10.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	tablero := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
+	
+	dados:= OrderedCollection new.
+	dados add: (Dice withFace: 6).
+		
+	naves := OrderedCollection new.
+	naveIsFinish:=Ship create:1.
+	naveIsFinish setPosition:15.
+	naveIsFinish2:=Ship create:2.
+	naveIsFinish2 setPosition:4.
+	naves add: (naveIsFinish).
+	naves add: (naveIsFinish2).
+	
+	game := Game setDices: dados setGameBoard: tablero setShips: naves.
+	
+	count := 0.
+	[ count <1000 and: (game terminoJuego ='El juego sigue')] whileTrue: [
+  	 count := count + 1.
+	game throwDices .
+	].
+
+	self assert: (game showPosition ) equals: 'La nave: 1 terminó en posición: 15 La nave: 2 terminó en posición: 4 '.
+	self assert: (game terminoJuego) equals: 'Gano la nave 1'.
+
+]
+
+{ #category : 'tests' }
 GameTest >> testTheGameCanTellWhoWin [
 	| game numberOfSquares aPositionY aPositionZ wormhole tablero dados naves count |
 	numberOfSquares := 15.
