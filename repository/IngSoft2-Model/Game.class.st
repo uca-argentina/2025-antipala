@@ -6,7 +6,8 @@ Class {
 		'gameBoard',
 		'ships',
 		'shipPlaying',
-		'theGameHasFinish'
+		'theGameHasFinish',
+		'finalPositions'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -24,21 +25,26 @@ Game >> intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShip
 	gameBoard := aGameBoard.
 	ships := aCollectionOfShips.
 	theGameHasFinish := false.
+	finalPositions:= Dictionary new.
+]
+
+{ #category : 'as yet unclassified' }
+Game >> setearTerminoElJuego [
+theGameHasFinish := true.
 ]
 
 { #category : 'method' }
 Game >> terminoJuego [
     | ship |
-    
-    theGameHasFinish ifTrue: [ ^'El juego terminó' ].
 
     ship := ships at: shipPlaying.
     (ship position >= gameBoard getSquares)
         ifTrue: [
             theGameHasFinish := true.
-            ^'Ganó la nave ', (ship getId) asString
-        ]
-        ifFalse: [ ^'El juego sigue' ].
+            ^'Gano la nave ', ship getId asString
+        ].
+
+    ^'El juego sigue'.
 ]
 
 { #category : 'as yet unclassified' }

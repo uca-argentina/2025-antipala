@@ -5,6 +5,16 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+GameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+self
+	should: anErrorBlock
+	raise: anErrorClass
+	withExceptionDo: [ :error | self assert: (error messageText)
+			equals: errorMessage ]. 
+]
+
 { #category : 'tests' }
 GameTest >> testAShipCanAdvance [
 	| game numberOfSquares aPositionY aPositionZ wormhole tablero dados naves tirada |
@@ -36,6 +46,31 @@ Bucle:
 	terminojuego
 	cambiar naveActual
 "
+]
+
+{ #category : 'tests' }
+GameTest >> testAShipCannotPlayWhenTheGameFinish [
+
+	| game numberOfSquares aPositionY aPositionZ wormhole tablero dados naves count tirada |
+	numberOfSquares := 15.
+	aPositionY:=5.
+	aPositionZ:=10.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	tablero := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
+	
+	dados:= OrderedCollection new.
+	dados add: (Dice withFace: 6).
+		
+	naves := OrderedCollection new.
+	naves add: ( Ship create:1 ).
+	
+	game := Game setDices: dados setGameBoard: tablero setShips: naves.
+	game setearTerminoElJuego.
+	self
+		should: [ game throwDices]
+		raise: Error
+		withMessageText:'el juego termino'.
 ]
 
 { #category : 'tests' }
@@ -157,6 +192,34 @@ GameTest >> testTheGameCanFinish [
 
 	self deny: (game terminoJuego) equals: 'El juego sigue'.
 	"La nave no avanza"
+]
+
+{ #category : 'tests' }
+GameTest >> testTheGameCanTellWhoWin [
+	| game numberOfSquares aPositionY aPositionZ wormhole tablero dados naves count |
+	numberOfSquares := 15.
+	aPositionY:=5.
+	aPositionZ:=10.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	tablero := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
+	
+	dados:= OrderedCollection new.
+	dados add: (Dice withFace: 6).
+		
+	naves := OrderedCollection new.
+	naves add: ( Ship create:1 ).
+	
+	game := Game setDices: dados setGameBoard: tablero setShips: naves.
+	
+	count := 0.
+	[ count <1000 and: (game terminoJuego ='El juego sigue')] whileTrue: [
+  	 count := count + 1.
+	game throwDices .
+	].
+
+	self assert: (game terminoJuego) equals: 'Gano la nave 1'.
+
 ]
 
 { #category : 'tests' }
