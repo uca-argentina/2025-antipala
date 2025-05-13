@@ -25,12 +25,22 @@ Game >> intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShip
 	gameBoard := aGameBoard.
 	ships := aCollectionOfShips.
 	theGameHasFinish := false.
-	finalPositions:= Dictionary new.
 ]
 
 { #category : 'as yet unclassified' }
 Game >> setearTerminoElJuego [
+ 
 theGameHasFinish := true.
+]
+
+{ #category : 'method' }
+Game >> showPosition [
+| texto |
+texto := ''.
+ships do: [:nave |
+    texto := texto , 'The ship: ', (nave getId asString), ', ended in the position: ', (nave position asString), ' '.
+].
+^texto.
 ]
 
 { #category : 'method' }
@@ -41,17 +51,17 @@ Game >> terminoJuego [
     (ship position >= gameBoard getSquares)
         ifTrue: [
             theGameHasFinish := true.
-            ^'Gano la nave ', ship getId asString
+            ^'Winner ship: ', ship getId asString
         ].
 
-    ^'El juego sigue'.
+    ^'The game keeps going...'.
 ]
 
 { #category : 'as yet unclassified' }
 Game >> throwDices [
 	| throw text idActual |
 	
-	theGameHasFinish ifTrue: [ Error signal: 'el juego termino' ].
+	theGameHasFinish ifTrue: [ Error signal: 'The game ended' ].
 	throw := dices inject: 0 into: [:sum :eachDice | sum + (eachDice roll) ].
 	gameBoard move: (ships at: shipPlaying) with: throw.
 	idActual:= ((ships at: shipPlaying) getId ) asString.

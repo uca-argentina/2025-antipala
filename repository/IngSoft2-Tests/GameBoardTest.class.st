@@ -19,18 +19,18 @@ self
 
 { #category : 'tests' }
 GameBoardTest >> testGameBoardCanMoveAShip [
-	| tablero naveActual aPositionY aPositionZ wormhole |
+	| gameboard actualShip aPositionY aPositionZ wormhole |
 
 	"despues setear el agujero"
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	
-	tablero := GameBoard setSquares: 40 setWormhole: wormhole.
-	naveActual:= Ship create:1.
-	tablero move: naveActual with: 3.
+	gameboard := GameBoard setSquares: 40 setWormhole: wormhole.
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 3.
 	
-	self assert: naveActual position equals: 3.
+	self assert: actualShip position equals: 3.
 ]
 
 { #category : 'tests' }
@@ -43,30 +43,30 @@ self
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
-	| tablero naveActual aPositionY aPositionZ wormhole |
+	| gameboard actualShip aPositionY aPositionZ wormhole |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	
-	tablero := GameBoard setSquares: 10 setWormhole: wormhole .
-	naveActual:= Ship create:1.
-	tablero move: naveActual with: 10.
+	gameboard := GameBoard setSquares: 10 setWormhole: wormhole .
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 10.
 	
-	self assert: naveActual position equals: 30.
+	self assert: actualShip position equals: 30.
 ]
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleZposition [
-	| tablero naveActual aPositionY aPositionZ wormhole |
+	| gameboard actualShip aPositionY aPositionZ wormhole |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	
-	tablero := GameBoard setSquares: 10 setWormhole: wormhole .
-	naveActual:= Ship create:1.
-	tablero move: naveActual with: 30.
+	gameboard := GameBoard setSquares: 10 setWormhole: wormhole .
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 30.
 	
-	self assert: naveActual position equals: 10.
+	self assert: actualShip position equals: 10.
 ]

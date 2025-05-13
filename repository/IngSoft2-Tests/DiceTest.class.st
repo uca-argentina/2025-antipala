@@ -17,7 +17,16 @@ DiceTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 ]
 
 { #category : 'tests' }
-DiceTest >> testCrearDadoEntre1y6variasveces [
+DiceTest >> testCreateADiceBetween1And6Faces [
+
+	| aDice result|
+   aDice := Dice withFace: 6.
+	result := aDice roll.
+	self assert: (result >= 1 and: [result <= 6]).
+]
+
+{ #category : 'tests' }
+DiceTest >> testCreateADiceBetween1And6FacesSeveralTimes [
 	| aDice aNumber |
 	aDice := Dice withFace: 6.
 
@@ -28,7 +37,7 @@ DiceTest >> testCrearDadoEntre1y6variasveces [
 ]
 
 { #category : 'tests' }
-DiceTest >> testCrearDadodeXcaras [
+DiceTest >> testCreateDiceOfXFaces [
 	| aDice aNumber |
 	aDice := Dice withFace: 10.
 		100 timesRepeat: [
@@ -38,19 +47,10 @@ DiceTest >> testCrearDadodeXcaras [
 ]
 
 { #category : 'tests' }
-DiceTest >> testCrearDadoentre1y6 [
-
-	| aDice valor|
-   aDice := Dice withFace: 6.
-	valor := aDice roll.
-	self assert: (valor >= 1 and: [valor <= 6]).
-]
-
-{ #category : 'tests' }
-DiceTest >> testCuandoCaraEsMenorOIgualAUno [
+DiceTest >> testThrowsErrorWhenInitializingWith1OrLessFaces [
 
 	self
 		should: [ Dice withFace:1 ]
 		raise: Error
-		withMessageText:'Como mínimo, el dado debe tener 2 caras.'
+		withMessageText:'the dice must have at least 2 faces.'
 ]

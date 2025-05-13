@@ -43,3 +43,8 @@ Ship >> moveTo: newposition [
 Ship >> position [
 	^position
 ]
+
+{ #category : 'accessing' }
+Ship >> setPosition:unNumero [
+		position:=unNumero.
+]

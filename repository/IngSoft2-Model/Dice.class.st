@@ -11,7 +11,7 @@ Class {
 { #category : 'as yet unclassified' }
 Dice class >> aMinimumLengthIsInvalid: aFace [
     (aFace < 2) ifTrue: [
-        Error signal: 'Como mínimo, el dado debe tener 2 caras.'
+        Error signal: 'the dice must have at least 2 faces.'
     ].
 ]
 
