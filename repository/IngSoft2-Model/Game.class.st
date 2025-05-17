@@ -14,6 +14,28 @@ Class {
 }
 
 { #category : 'initialization' }
+Game class >> testGame [
+
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships |
+	numberOfSquares := 50.
+	aPositionY := 10.
+	aPositionZ := 30.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+
+	gameboard := GameBoard with: numberOfSquares and: wormhole.
+
+	dices := OrderedCollection new.
+	dices add: (Dice with: 10).
+	
+	ships := OrderedCollection new.
+	ships add: (Ship create: 1).
+	ships add: (Ship create: 2).
+	ships add: (Ship create: 3).
+
+	^ self with: dices and: gameboard and: ships.
+]
+
+{ #category : 'initialization' }
 Game class >> with: aCollectionOfDices and: aGameBoard and: aCollectionOfShips [ 
 	^(self new) intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShips .
 ]
