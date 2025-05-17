@@ -30,8 +30,10 @@ GameBoard >> moveShipWithId: shipId by: steps [
 	
 	| oldPosition  |
 	oldPosition := ships at: shipId at: 'position'. 
-
-	ships at: shipId at: 'position' put: oldPosition + steps 
+	
+   
+	ships at: shipId at: 'position' put: oldPosition + steps + (wormhole applyWormEffectTo:(oldPosition + steps)) . 
+	  
 	
 ]
 
@@ -45,13 +47,6 @@ GameBoard >> positionOf: shipId [
 GameBoard >> squares [
 
 	^ squares
-]
-
-{ #category : 'accessing' }
-GameBoard >> with: numberOfSquares and: aWormhole [
-	numberOfSquares >3 ifFalse: [ Error signal: 'The number of squares should be more than 3' ].
-	squares := numberOfSquares.
-	wormhole:= aWormhole .
 ]
 
 { #category : 'accessing' }

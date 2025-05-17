@@ -19,24 +19,24 @@ self
 
 { #category : 'tests' }
 GameBoardTest >> testGameBoardCanMoveAShip [
-	| gameboard actualShip aPositionY aPositionZ wormhole |
+	| gameboard  aPositionY aPositionZ wormhole aDice result|
 
-	"despues setear el agujero"
+	"despues setear el agujero" 
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	aDice:=ChargeDice new.
+	gameboard := GameBoard with: 40 and: wormhole and: 1.
+	result:=aDice roll.
+	gameboard moveShipWithId:1 by:result.
 	
-	gameboard := GameBoard with: 40 and: wormhole.
-	actualShip:= Ship create:1.
-	gameboard move: actualShip with: 3.
-	
-	self assert: actualShip position equals: 3.
+	self assert: (gameboard positionOf:1) equals: 5.
 ]
 
 { #category : 'tests' }
 GameBoardTest >> testGameBoardShouldThrowErrorWhenInitialiceSquaresWith1 [
 self
-	should:[GameBoard with: 3 and:[ WormHole at: 2 and: 3]]
+	should:[GameBoard with: 3 and:[ WormHole at: 2 and: 3] and:1]
 	raise: Error
 	withMessageText: 'The number of squares should be more than 3'.
 ]
@@ -73,30 +73,32 @@ GameBoardTest >> testGameboardCanKnowPositionsOfShips [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
-	| gameboard actualShip aPositionY aPositionZ wormhole |
-	
+	| gameboard  aPositionY aPositionZ wormhole aDice result|
+
+	"despues setear el agujero" 
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard with: 10 and: wormhole .
-	actualShip:= Ship create:1.
-	gameboard move: actualShip with: 10.
-	
-	self assert: actualShip position equals: 30.
+	aDice:=ChargeDice new.
+	gameboard := GameBoard with: 40 and: wormhole and: 1.
+	result:=aDice roll. "turno 1 "
+	gameboard moveShipWithId:1 by:result.
+	result:=aDice roll. "turno 2 "
+	gameboard moveShipWithId:1 by:result.
+	self assert: (gameboard positionOf:1) equals: 30.
 ]
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleZposition [
-	| gameboard actualShip aPositionY aPositionZ wormhole |
-	
-	aPositionY:=10.
-	aPositionZ:=30.
+	| gameboard  aPositionY aPositionZ wormhole aDice result|
+
+	"despues setear el agujero" 
+	aPositionY:=4.
+	aPositionZ:=5.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard with: 10 and: wormhole .
-	actualShip:= Ship create:1.
-	gameboard move: actualShip with: 30.
-	
-	self assert: actualShip position equals: 10.
+	aDice:=ChargeDice new.
+	gameboard := GameBoard with: 40 and: wormhole and: 1.
+	result:=aDice roll. "turno 1 "
+	gameboard moveShipWithId:1 by:result.
+	self assert: (gameboard positionOf:1) equals: 4.
 ]
