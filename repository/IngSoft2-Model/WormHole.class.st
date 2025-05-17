@@ -19,14 +19,14 @@ WormHole class >> at: arg1 [
 ]
 
 { #category : 'accessing' }
-WormHole class >> at: arg1 and: arg2 [
+WormHole class >> at: start and: finish [
 
-	^ self new initializeWith: arg1 and: arg2
+	^ self new initializeWith: start and: finish
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 WormHole >> applyWormEffectTo: myActualPosition [ 
-	| isInPositionY myActualPosition isInPositionZ |
+	| isInPositionY isInPositionZ |
 	isInPositionY:= myActualPosition = positionY.
 	isInPositionZ:= myActualPosition = positionZ.
 	
@@ -49,18 +49,18 @@ WormHole >> initializeWith: aPositionY and: aPositionZ [
 	positionZ:=aPositionZ.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 WormHole >> validatePosition: aPosition [ 
 	^(positionY == aPosition) or: (positionZ == aPosition).
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 WormHole >> whereIsMyPositionY [
 
 	^ positionY
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 WormHole >> whereIsMyPositionZ [
 
 	^ positionZ

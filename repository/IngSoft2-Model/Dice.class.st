@@ -8,28 +8,28 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-Dice class >> aMinimumLengthIsInvalid: aFace [
+{ #category : 'operations' }
+Dice class >> validLength: aFace [
     (aFace < 2) ifTrue: [
         Error signal: 'the dice must have at least 2 faces.'
     ].
 ]
 
-{ #category : 'as yet unclassified' }
-Dice class >> withFace:aFace [
+{ #category : 'initialize' }
+Dice class >> with:aFace [
 
-self aMinimumLengthIsInvalid: aFace.
+self validLength: aFace.
 ^(self new) initializeDiceWith:aFace.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 Dice >> initializeDiceWith:aFace [
 face:=aFace.
 
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Dice >> roll [
 ^ (1 to: face ) atRandom.
 

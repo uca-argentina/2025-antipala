@@ -13,25 +13,25 @@ Class {
 }
 
 { #category : 'initialization' }
-GameBoard class >> setSquares: numberOfSquares setWormhole: aWormHole [ 
-	^ self new setSquares: numberOfSquares setWormhole: aWormHole.
+GameBoard class >> with: numberOfSquares and: aWormHole [ 
+	^ self new with: numberOfSquares and: aWormHole.
 ]
 
 { #category : 'accessing' }
-GameBoard >> getSquares [
+GameBoard >> move: ship with: adiceThrow [ 
+	ship advance: adiceThrow.
+	ship advance: (wormhole applyWormEffectTo: ship position).
+]
+
+{ #category : 'accessing' }
+GameBoard >> squares [
 
 	^ squares
 ]
 
 { #category : 'accessing' }
-GameBoard >> move: ship with: diceThrow [ 
-	ship advance: diceThrow.
-	ship advance: (wormhole applyWormEffectTo: ship position).
-]
-
-{ #category : 'accessing' }
-GameBoard >> setSquares: numberOfSquares setWormhole: awormhole [
+GameBoard >> with: numberOfSquares and: aWormhole [
 	numberOfSquares >3 ifFalse: [ Error signal: 'The number of squares should be more than 3' ].
 	squares := numberOfSquares.
-	wormhole:= awormhole .
+	wormhole:= aWormhole .
 ]
