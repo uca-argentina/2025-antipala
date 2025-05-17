@@ -17,6 +17,15 @@ DiceTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 ]
 
 { #category : 'tests' }
+DiceTest >> testCreateAChargeDiceReturn5 [
+
+	| aDice result |
+	aDice := ChargeDice new.
+	result := aDice roll.
+	self assert: result equals: 5.
+]
+
+{ #category : 'tests' }
 DiceTest >> testCreateADiceBetween1And6Faces [
 
 	| aDice result |
