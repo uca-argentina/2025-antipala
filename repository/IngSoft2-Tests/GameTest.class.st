@@ -119,11 +119,12 @@ GameTest >> testTheGameCanShowPosition [
 		count := count + 1.
 		game throwDices ].
 
-	self
-		assert: game showPosition
-		equals:
-		'The ship: 1, ended in the position: 50 The ship: 2, ended in the position: 45 The ship: 3, ended in the position: 45 '.
-	self assert: game hasEnded equals: true
+self assert: (game showShipPosition: 1) equals: 50.
+
+self assert: (game showShipPosition: 2) equals: 45.
+
+self assert: (game showShipPosition: 3) equals: 45.
+self assert: game hasEnded equals: true
 ]
 
 { #category : 'tests' }

@@ -19,18 +19,18 @@ self
 
 { #category : 'tests' }
 GameBoardTest >> testGameBoardCanMoveAShip [
-	| gameboard  aPositionY aPositionZ wormhole aDice result|
 
-	"despues setear el agujero" 
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	aDice:=ChargeDice new.
+	| gameboard aPositionY aPositionZ wormhole aDice result |
+	"despues setear el agujero"
+	aPositionY := 10.
+	aPositionZ := 30.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+	aDice := ChargeDice new.
 	gameboard := GameBoard with: 40 and: wormhole and: 1.
-	result:=aDice roll.
-	gameboard moveShipWithId:1 by:result.
-	
-	self assert: (gameboard positionOf:1) equals: 5.
+	result := aDice roll.
+	gameboard moveShip: result.
+
+	self assert: (gameboard positionOf: 1) equals: 5
 ]
 
 { #category : 'tests' }
@@ -44,16 +44,16 @@ self
 { #category : 'tests' }
 GameBoardTest >> testGameboardCanKnowPositionsOfMovedShips [
 
-	| gameboard  aPositionY aPositionZ wormhole |
+	| gameboard aPositionY aPositionZ wormhole |
 	aPositionY := 10.
 	aPositionZ := 35.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 
 	gameboard := GameBoard with: 10 and: wormhole and: 1.
-	
-	gameboard moveShipWithId:1 by:30.
 
-	self assert: (gameboard positionOf: 1) equals: 30.
+	gameboard moveShip: 30.
+
+	self assert: (gameboard positionOf: 1) equals: 30
 ]
 
 { #category : 'tests' }
@@ -73,32 +73,32 @@ GameBoardTest >> testGameboardCanKnowPositionsOfShips [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
-	| gameboard  aPositionY aPositionZ wormhole aDice result|
 
-	"despues setear el agujero" 
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	aDice:=ChargeDice new.
+	| gameboard aPositionY aPositionZ wormhole aDice result |
+	"despues setear el agujero"
+	aPositionY := 10.
+	aPositionZ := 30.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+	aDice := ChargeDice new.
 	gameboard := GameBoard with: 40 and: wormhole and: 1.
-	result:=aDice roll. "turno 1 "
-	gameboard moveShipWithId:1 by:result.
-	result:=aDice roll. "turno 2 "
-	gameboard moveShipWithId:1 by:result.
-	self assert: (gameboard positionOf:1) equals: 30.
+	result := aDice roll. "turno 1 "
+	gameboard moveShip: result.
+	result := aDice roll. "turno 2 "
+	gameboard moveShip: result.
+	self assert: (gameboard positionOf: 1) equals: 30
 ]
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleZposition [
-	| gameboard  aPositionY aPositionZ wormhole aDice result|
 
-	"despues setear el agujero" 
-	aPositionY:=4.
-	aPositionZ:=5.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	aDice:=ChargeDice new.
+	| gameboard aPositionY aPositionZ wormhole aDice result |
+	"despues setear el agujero"
+	aPositionY := 4.
+	aPositionZ := 5.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+	aDice := ChargeDice new.
 	gameboard := GameBoard with: 40 and: wormhole and: 1.
-	result:=aDice roll. "turno 1 "
-	gameboard moveShipWithId:1 by:result.
-	self assert: (gameboard positionOf:1) equals: 4.
+	result := aDice roll. "turno 1 "
+	gameboard moveShip: result.
+	self assert: (gameboard positionOf: 1) equals: 4
 ]

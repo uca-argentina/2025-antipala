@@ -15,41 +15,32 @@ Class {
 }
 
 { #category : 'initialization' }
-GameBoard class >> with: numberOfSquares and: aWormHole [ 
-	^ self new with: numberOfSquares and: aWormHole.
-]
-
-{ #category : 'initialization' }
 GameBoard class >> with: numberOfSquares and: aWormHole and: numerOfShips [
 
 	^ self new with: numberOfSquares and: aWormHole and: numerOfShips 
 ]
 
 { #category : 'accessing' }
-GameBoard >> moveShip: steps [
+GameBoard >> hasEnded [
 
-	
-	| oldPosition|
-	oldPosition := ships at: shipPlaying at: 'position'. 
-	
-   
-	ships at: shipPlaying at: 'position' put: oldPosition + steps + (wormhole applyWormEffectTo:(oldPosition + steps)).
-	shipPlaying:= shipPlaying +1. 
-	  
-	
+	^ ships values anySatisfy: [ :shipData | (shipData at: 'position') >= squares ]
+
 ]
 
 { #category : 'accessing' }
-GameBoard >> moveShipWithId: shipId by: steps [
+GameBoard >> moveShip: steps [
 
-	
-	| oldPosition|
-	oldPosition := ships at: shipPlaying at: 'position'. 
-	
-   
-	ships at: shipId at: 'position' put: oldPosition + steps + (wormhole applyWormEffectTo:(oldPosition + steps)) . 
-	  
-	
+	| oldPosition |
+	oldPosition := ships at: shipPlaying at: 'position'.
+
+	self hasEnded ifTrue: [ Error signal: 'The game ended' ].
+
+	ships at: shipPlaying at: 'position' put: oldPosition + steps
+		+ (wormhole applyWormEffectTo: oldPosition + steps).
+
+	self hasEnded ifFalse: [ shipPlaying := shipPlaying < ships size
+		               ifTrue: [ shipPlaying + 1 ]
+		               ifFalse: [ 1 ]]
 ]
 
 { #category : 'accessing' }
@@ -59,9 +50,22 @@ GameBoard >> positionOf: shipId [
 ]
 
 { #category : 'accessing' }
+GameBoard >> shipPlaying [
+
+	^ shipPlaying 
+]
+
+{ #category : 'accessing' }
 GameBoard >> squares [
 
 	^ squares
+]
+
+{ #category : 'accessing' }
+GameBoard >> winner [
+
+	self hasEnded ifTrue: [^ shipPlaying ].
+	^nil.
 ]
 
 { #category : 'accessing' }
