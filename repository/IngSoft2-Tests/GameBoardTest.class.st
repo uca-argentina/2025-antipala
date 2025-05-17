@@ -46,7 +46,7 @@ GameBoardTest >> testGameboardCanKnowPositionsOfMovedShips [
 
 	| gameboard  aPositionY aPositionZ wormhole |
 	aPositionY := 10.
-	aPositionZ := 30.
+	aPositionZ := 35.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 
 	gameboard := GameBoard with: 10 and: wormhole and: 1.

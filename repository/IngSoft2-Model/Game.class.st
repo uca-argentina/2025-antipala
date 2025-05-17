@@ -16,28 +16,23 @@ Class {
 { #category : 'initialization' }
 Game class >> test [
 
-	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships |
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices |
 	numberOfSquares := 50.
 	aPositionY := 10.
 	aPositionZ := 30.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 
-	gameboard := GameBoard with: numberOfSquares and: wormhole.
+	gameboard := GameBoard with: numberOfSquares and: wormhole and: 3.
 
 	dices := OrderedCollection new.
 	dices add: ChargeDice new.
 
-	ships := OrderedCollection new.
-	ships add: (Ship create: 1).
-	ships add: (Ship create: 2).
-	ships add: (Ship create: 3).
-
-	^ self with: dices and: gameboard and: ships
+	^ self with: dices and: gameboard
 ]
 
 { #category : 'initialization' }
-Game class >> with: aCollectionOfDices and: aGameBoard and: aCollectionOfShips [ 
-	^(self new) intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShips .
+Game class >> with: aCollectionOfDices and: aGameBoard [
+	^(self new) intializeWith: aCollectionOfDices and: aGameBoard.
 ]
 
 { #category : 'method' }
@@ -56,11 +51,10 @@ Game >> hasEnded [
 ]
 
 { #category : 'initialize' }
-Game >> intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShips [ 
+Game >> intializeWith: aCollectionOfDices and: aGameBoard [
 	shipPlaying :=1.
 	dices:= aCollectionOfDices.
 	gameBoard := aGameBoard.
-	ships := aCollectionOfShips.
 	theGameHasFinish := false.
 ]
 
@@ -77,21 +71,19 @@ ships do: [:nave |
 { #category : 'method' }
 Game >> throwDices [
 
-	| throw text idActual |
+	| throw|
 	theGameHasFinish ifTrue: [ Error signal: 'The game ended' ].
 	throw := dices
 		         inject: 0
 		         into: [ :sum :eachDice | sum + eachDice roll ].
-	gameBoard move: (ships at: shipPlaying) with: throw.
-	idActual := (ships at: shipPlaying) getId asString.
-	text := 'the ship ' , idActual , ' moves'. "la nave 1 avanzo"
-	self hasEnded ifFalse: [
+	gameBoard moveShip: throw.
+	"self hasEnded ifFalse: [
 		shipPlaying := (shipPlaying < ships size)
 			               ifTrue: [shipPlaying + 1]
 			               ifFalse: [1].
-			 ].
+			 ]."
 	"shipPlaying := shipPlaying < (ships size) ifTrue: (shipPlaying +1) ifFalse: (1)."
-	^ text
+	^ throw.
 ]
 
 { #category : 'method' }

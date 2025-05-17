@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'squares',
 		'wormhole',
-		'ships'
+		'ships',
+		'shipPlaying'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -25,11 +26,25 @@ GameBoard class >> with: numberOfSquares and: aWormHole and: numerOfShips [
 ]
 
 { #category : 'accessing' }
+GameBoard >> moveShip: steps [
+
+	
+	| oldPosition|
+	oldPosition := ships at: shipPlaying at: 'position'. 
+	
+   
+	ships at: shipPlaying at: 'position' put: oldPosition + steps + (wormhole applyWormEffectTo:(oldPosition + steps)).
+	shipPlaying:= shipPlaying +1. 
+	  
+	
+]
+
+{ #category : 'accessing' }
 GameBoard >> moveShipWithId: shipId by: steps [
 
 	
-	| oldPosition  |
-	oldPosition := ships at: shipId at: 'position'. 
+	| oldPosition|
+	oldPosition := ships at: shipPlaying at: 'position'. 
 	
    
 	ships at: shipId at: 'position' put: oldPosition + steps + (wormhole applyWormEffectTo:(oldPosition + steps)) . 
@@ -57,6 +72,7 @@ GameBoard >> with: numberOfSquares and: aWormhole and: numberOfShips [
 	squares := numberOfSquares.
 	wormhole := aWormhole.
 	ships := Dictionary new.
+	shipPlaying:=1.
 	1 to: numberOfShips do: [:id |
         ships at: id put: { 'position' -> 0. } asDictionary.
     ].
