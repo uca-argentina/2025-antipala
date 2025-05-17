@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'initialization' }
-Game class >> testGame [
+Game class >> test [
 
 	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships |
 	numberOfSquares := 50.
@@ -25,14 +25,14 @@ Game class >> testGame [
 	gameboard := GameBoard with: numberOfSquares and: wormhole.
 
 	dices := OrderedCollection new.
-	dices add: (Dice with: 10).
-	
+	dices add: ChargeDice new.
+
 	ships := OrderedCollection new.
 	ships add: (Ship create: 1).
 	ships add: (Ship create: 2).
 	ships add: (Ship create: 3).
 
-	^ self with: dices and: gameboard and: ships.
+	^ self with: dices and: gameboard and: ships
 ]
 
 { #category : 'initialization' }

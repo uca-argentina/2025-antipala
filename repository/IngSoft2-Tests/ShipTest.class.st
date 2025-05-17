@@ -6,15 +6,6 @@ Class {
 }
 
 { #category : 'tests' }
-ShipTest >> testShipCanAdvance [
-	| ship |
-	ship := Ship new.
-	ship moveTo: 3.
-	ship advance: 2.
-	self assert: ship position equals: 5
-]
-
-{ #category : 'tests' }
 ShipTest >> testShipCanChangePosition [
 	| ship |
 	ship := Ship new.

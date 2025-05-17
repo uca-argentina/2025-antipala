@@ -19,8 +19,8 @@ Ship class >> create: id [
 ]
 
 { #category : 'accessing' }
-Ship >> advance: positions [
-	position := position + positions.
+Ship >> advance: throw [
+	position:= position + throw.
 ]
 
 { #category : 'initialization' }
@@ -42,9 +42,4 @@ Ship >> moveTo: newposition [
 { #category : 'accessing' }
 Ship >> position [
 	^position
-]
-
-{ #category : 'accessing' }
-Ship >> setPosition:unNumero [
-		position:=unNumero.
 ]
