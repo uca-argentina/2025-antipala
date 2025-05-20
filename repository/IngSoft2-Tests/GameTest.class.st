@@ -17,29 +17,15 @@ self
 
 { #category : 'tests' }
 GameTest >> testAShipCanAdvance [
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships throw |
-	numberOfSquares := 50.
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dices:= OrderedCollection new.
-	dices add: (Dice withFace: 10).
-	
-	ships := OrderedCollection new.
-	ships add: ( Ship create:1 ).
-	
-	game := Game setDices: dices setGameBoard: gameboard setShips: ships.
-	
-	throw:= game throwDices.
-	
-	
-	
-	self assert: game terminoJuego equals: 'The game keeps going...'.
 
-"
+	| game throw |
+	game := Game test.
+
+	throw := game throwDices.
+	
+	self assert: game hasEnded equals: false
+
+	"
 Bucle:
 	tirar dices
 	mover nave
@@ -51,260 +37,114 @@ Bucle:
 { #category : 'tests' }
 GameTest >> testAShipCannotPlayWhenTheGameFinish [
 
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships |
-	numberOfSquares := 15.
-	aPositionY:=5.
-	aPositionZ:=10.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dices:= OrderedCollection new.
-	dices add: (Dice withFace: 6).
-		
-	ships := OrderedCollection new.
-	ships add: ( Ship create:1 ).
-	
-	game := Game setDices: dices setGameBoard: gameboard setShips: ships.
-	game setearTerminoElJuego.
+	| game count |
+	game := Game test.
+
+	count := 0.
+	[ count < 16 ] whileTrue: [
+		count := count + 1.
+		game throwDices ].
+
 	self
-		should: [ game throwDices]
+		should: [ game throwDices ]
 		raise: Error
-		withMessageText:'The game ended'.
+		withMessageText: 'The game ended'
 ]
 
 { #category : 'tests' }
 GameTest >> testAllShipsCanPlayARound [
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dados ships throw |
-	numberOfSquares := 50.
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dados:= OrderedCollection new.
-	dados add: (Dice withFace: 10).
-	
-	ships := OrderedCollection new.
-	ships add: ( Ship create:1 ).
-	ships add: ( Ship create:2 ).
-	ships add: ( Ship create:3 ).
-		
-	game := Game setDices: dados setGameBoard: gameboard setShips: ships.
-	
-	throw:= game throwDices. "Hace avazar a la nave"
+
+	| game throw |
+	game := Game test.
+
+	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 1 moves'.
-	
-	throw:= game throwDices. "Hace avazar a la nave"
-	self assert: throw equals: 'the ship 2 moves'.	
 
-	throw:= game throwDices. "Hace avazar a la nave"
+	throw := game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 2 moves'.
+
+	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 3 moves'.
-		
-	self assert: game terminoJuego equals: 'The game keeps going...'.
-	
 
-"
-Bucle:
-	tirar dados
-	mover nave
-	terminojuego
-	cambiar naveActual
-"
+	self assert: game hasEnded equals: false
+
 ]
 
 { #category : 'tests' }
 GameTest >> testAllShipsCanPlaySeveralRounds [
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships throw |
-	numberOfSquares := 50.
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dices:= OrderedCollection new.
-	dices add: (Dice withFace: 10).
-	
-	ships := OrderedCollection new.
-	ships add: ( Ship create:1 ).
-	ships add: ( Ship create:2 ).
-	ships add: ( Ship create:3 ).
-		
-	game := Game setDices: dices setGameBoard: gameboard setShips: ships.
-	
-	throw:= game throwDices. "Hace avazar a la nave"
+
+	| game throw |
+	game := Game test.
+
+	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 1 moves'.
-	
-	self assert: game terminoJuego equals: 'The game keeps going...'.
-	
-	throw:= game throwDices. "Hace avazar a la nave"
-	self assert: throw equals: 'the ship 2 moves'.	
 
-	self assert: game terminoJuego equals: 'The game keeps going...'.
+	throw := game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 2 moves'.
 
-	throw:= game throwDices. "Hace avazar a la nave"
+	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 3 moves'.
-	
-	self assert: game terminoJuego equals: 'The game keeps going...'.
-	
-	throw:= game throwDices. "Hace avazar a la nave"
-	self assert: throw equals: 'the ship 1 moves'.
-		
-	self assert: game terminoJuego equals: 'The game keeps going...'.
-	
 
-"
-Bucle:
-	tirar dices
-	mover nave
-	terminojuego
-	cambiar naveActual
-"
+	throw := game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 1 moves'.
+
+	self assert: game hasEnded equals: false
+
 ]
 
 { #category : 'tests' }
 GameTest >> testTheGameCanFinish [
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships count |
-	numberOfSquares := 15.
-	aPositionY:=5.
-	aPositionZ:=10.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dices:= OrderedCollection new.
-	dices add: (Dice withFace: 6).
-		
-	ships := OrderedCollection new.
-	ships add: ( Ship create:1 ).
-	ships add: ( Ship create:2 ).
-	ships add: ( Ship create:3 ).
-	
-	game := Game setDices: dices setGameBoard: gameboard setShips: ships.
-	
-	count := 0.
-	[ count <1000 and: (game terminoJuego ='The game keeps going...')] whileTrue: [
-  	 count := count + 1.
-	game throwDices .
-	].
 
-	self deny: (game terminoJuego) equals: 'The game keeps going...'.
+	| game count |
+	game := Game test.
+
+	count := 0.
+	[ count < 16] whileTrue: [
+		count := count + 1.
+		game throwDices ].
+
+	self deny: game hasEnded equals: false.
+	self assert: game winner equals: '1'
 	"winner ship: 1"
 ]
 
 { #category : 'tests' }
 GameTest >> testTheGameCanShowPosition [
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships count shipIsFinish|
-	numberOfSquares := 15.
-	aPositionY:=5.
-	aPositionZ:=10.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dices:= OrderedCollection new.
-	dices add: (Dice withFace: 6).
-		
-	ships := OrderedCollection new.
-	shipIsFinish:=Ship create:1.
-	shipIsFinish setPosition:15.
-	ships add: (shipIsFinish).
-	
-	game := Game setDices: dices setGameBoard: gameboard setShips: ships.
-	
+
+	| game count |
+	game := Game test.
+
 	count := 0.
-	[ count <1000 and: (game terminoJuego ='The game keeps going...')] whileTrue: [
-  	 count := count + 1.
-	game throwDices .
-	].
+	[ count < 16 ] whileTrue: [
+		count := count + 1.
+		game throwDices ].
 
-	self assert: (game showPosition ) equals: 'The ship: 1, ended in the position: 15 '.
-	self assert: (game terminoJuego) equals: 'Winner ship: 1'.
+self assert: (game showShipPosition: 1) equals: 50.
 
-]
+self assert: (game showShipPosition: 2) equals: 45.
 
-{ #category : 'tests' }
-GameTest >> testTheGameCanShowXPosition [
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships count shipIsFinish shipIsFinish2|
-	numberOfSquares := 15.
-	aPositionY:=5.
-	aPositionZ:=10.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dices:= OrderedCollection new.
-	dices add: (Dice withFace: 6).
-		
-	ships := OrderedCollection new.
-	shipIsFinish:=Ship create:1.
-	shipIsFinish setPosition:15.
-	shipIsFinish2:=Ship create:2.
-	shipIsFinish2 setPosition:4.
-	ships add: (shipIsFinish).
-	ships add: (shipIsFinish2).
-	
-	game := Game setDices: dices setGameBoard: gameboard setShips: ships.
-	
-	count := 0.
-	[ count <1000 and: (game terminoJuego ='El juego sigue')] whileTrue: [
-  	 count := count + 1.
-	game throwDices .
-	].
-
-	self assert: (game showPosition ) equals: 'The ship: 1, ended in the position: 15 The ship: 2, ended in the position: 4 '.
-	
-	
-	self assert: (game terminoJuego) equals: 'Winner ship: 1'.
-
+self assert: (game showShipPosition: 3) equals: 45.
+self assert: game hasEnded equals: true
 ]
 
 { #category : 'tests' }
 GameTest >> testTheGameCanTellWhoWin [
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships count |
-	numberOfSquares := 15.
-	aPositionY:=5.
-	aPositionZ:=10.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dices:= OrderedCollection new.
-	dices add: (Dice withFace: 6).
-		
-	ships := OrderedCollection new.
-	ships add: ( Ship create:1 ).
-	
-	game := Game setDices: dices setGameBoard: gameboard setShips: ships.
-	
+
+	| game count |
+	game := Game test.
+
 	count := 0.
-	[ count <1000 and: (game terminoJuego ='The game keeps going...')] whileTrue: [
-  	 count := count + 1.
-	game throwDices .
-	].
+	[ count < 16] whileTrue: [
+		count := count + 1.
+		game throwDices ].
 
-	self assert: (game terminoJuego) equals: 'Winner ship: 1'.
-
+	self assert: game hasEnded equals: true
 ]
 
 { #category : 'tests' }
 GameTest >> testTheGameShouldntFinishWhenStarted [
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships |
-	numberOfSquares := 50.
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard setSquares: numberOfSquares setWormhole: wormhole .
-	
-	dices:= OrderedCollection new.
-	dices add: [Dice withFace: 10].
-	
-	ships := OrderedCollection new.
-	ships add: ( Ship create:1 ).
-	
-	game := Game setDices: dices setGameBoard: gameboard setShips: ships.
-	self assert: game terminoJuego equals: 'The game keeps going...'.
+
+	| game  |
+	game := Game test.
+	self assert: game hasEnded equals: false
 ]

@@ -14,59 +14,80 @@ Class {
 }
 
 { #category : 'initialization' }
-Game class >> setDices: aCollectionOfDices setGameBoard: aGameBoard setShips: aCollectionOfShips [ 
-	^(self new) intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShips .
+Game class >> test [
+
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices |
+	numberOfSquares := 50.
+	aPositionY := 10.
+	aPositionZ := 30.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+
+	gameboard := GameBoard with: numberOfSquares and: wormhole and: 3.
+
+	dices := OrderedCollection new.
+	dices add: ChargeDice new.
+
+	^ self with: dices and: gameboard
+]
+
+{ #category : 'initialization' }
+Game class >> with: aCollectionOfDices and: aGameBoard [
+	^(self new) intializeWith: aCollectionOfDices and: aGameBoard.
+]
+
+{ #category : 'method' }
+Game >> hasEnded [
+	
+	^gameBoard hasEnded.
+	
+"	ship := ships at: shipPlaying.
+	theGameHasFinish ifTrue: [ ^ theGameHasFinish ].
+	ship position >= gameBoard squares ifTrue: [
+		theGameHasFinish := true.
+		""^'Winner ship: ', ship getId asString""
+		^ true ].
+
+	""  ^'The game keeps going...'.""
+	^ false"
 ]
 
 { #category : 'initialize' }
-Game >> intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShips [ 
+Game >> intializeWith: aCollectionOfDices and: aGameBoard [
 	shipPlaying :=1.
 	dices:= aCollectionOfDices.
 	gameBoard := aGameBoard.
-	ships := aCollectionOfShips.
 	theGameHasFinish := false.
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> setearTerminoElJuego [
- 
-theGameHasFinish := true.
+{ #category : 'method' }
+Game >> showShipPosition: id [
+
+	^gameBoard positionOf: id.
 ]
 
 { #category : 'method' }
-Game >> showPosition [
-| texto |
-texto := ''.
-ships do: [:nave |
-    texto := texto , 'The ship: ', (nave getId asString), ', ended in the position: ', (nave position asString), ' '.
-].
-^texto.
-]
-
-{ #category : 'method' }
-Game >> terminoJuego [
-    | ship |
-
-    ship := ships at: shipPlaying.
-    (ship position >= gameBoard getSquares)
-        ifTrue: [
-            theGameHasFinish := true.
-            ^'Winner ship: ', ship getId asString
-        ].
-
-    ^'The game keeps going...'.
-]
-
-{ #category : 'as yet unclassified' }
 Game >> throwDices [
-	| throw text idActual |
-	
-	theGameHasFinish ifTrue: [ Error signal: 'The game ended' ].
-	throw := dices inject: 0 into: [:sum :eachDice | sum + (eachDice roll) ].
-	gameBoard move: (ships at: shipPlaying) with: throw.
-	idActual:= ((ships at: shipPlaying) getId ) asString.
-	text:= ('the ship ',idActual, ' moves')  ."la nave 1 avanzo"
-	shipPlaying := shipPlaying < (ships size) ifTrue: (shipPlaying +1) ifFalse: (1).
-	^text .
 
+	| throw idActual text |
+	theGameHasFinish ifTrue: [ Error signal: 'The game ended' ].
+	idActual := gameBoard shipPlaying asString.
+	throw := dices
+		         inject: 0
+		         into: [ :sum :eachDice | sum + eachDice roll ].
+	gameBoard moveShip: throw.
+	text := 'the ship ' , idActual , ' moves'. "la nave 1 avanzo"
+	"
+	self hasEnded ifFalse: [
+		shipPlaying := (shipPlaying < ships size)
+			               ifTrue: [shipPlaying + 1]
+			               ifFalse: [1].
+			 ]."
+	"shipPlaying := shipPlaying < (ships size) ifTrue: (shipPlaying +1) ifFalse: (1)."
+	^ text
+]
+
+{ #category : 'method' }
+Game >> winner [
+
+	^ gameBoard winner asString.
 ]

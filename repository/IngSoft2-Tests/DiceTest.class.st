@@ -17,40 +17,49 @@ DiceTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 ]
 
 { #category : 'tests' }
+DiceTest >> testCreateAChargeDiceReturn5 [
+
+	| aDice result |
+	aDice := ChargeDice new.
+	result := aDice roll.
+	self assert: result equals: 5.
+]
+
+{ #category : 'tests' }
 DiceTest >> testCreateADiceBetween1And6Faces [
 
-	| aDice result|
-   aDice := Dice withFace: 6.
+	| aDice result |
+	aDice := Dice with: 6.
 	result := aDice roll.
-	self assert: (result >= 1 and: [result <= 6]).
+	self assert: (result between: 1 and: 6)
 ]
 
 { #category : 'tests' }
 DiceTest >> testCreateADiceBetween1And6FacesSeveralTimes [
+
 	| aDice aNumber |
-	aDice := Dice withFace: 6.
+	aDice := Dice with: 6.
 
 	99 timesRepeat: [
 		aNumber := aDice roll.
-		self assert: (aNumber >= 1 and: [aNumber <= 6]).
-	].
+		self assert: (aNumber between: 1 and: 6) ]
 ]
 
 { #category : 'tests' }
 DiceTest >> testCreateDiceOfXFaces [
+
 	| aDice aNumber |
-	aDice := Dice withFace: 10.
-		100 timesRepeat: [
+	aDice := Dice with: 10.
+	100 timesRepeat: [
 		aNumber := aDice roll.
-		self assert: (aNumber >= 1 and: [aNumber <= 10]).
-	].
+		self assert: (aNumber between: 1 and: 10) ]
 ]
 
 { #category : 'tests' }
 DiceTest >> testThrowsErrorWhenInitializingWith1OrLessFaces [
 
 	self
-		should: [ Dice withFace:1 ]
+		should: [ Dice with:1 ]
 		raise: Error
 		withMessageText:'the dice must have at least 2 faces.'
 ]
