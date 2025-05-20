@@ -72,6 +72,21 @@ GameBoardTest >> testGameboardCanKnowPositionsOfShips [
 ]
 
 { #category : 'tests' }
+GameBoardTest >> testGameboardCanKnowturnOfShips [
+
+	| gameboard  aPositionY aPositionZ wormhole |
+	aPositionY := 10.
+	aPositionZ := 30.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+
+	gameboard := GameBoard with: 10 and: wormhole and: 1.
+	
+	"gameboard move: actualShip with: 30."
+
+	self assert: (gameboard turnOf: 1) equals: 0.
+]
+
+{ #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
 
 	| gameboard aPositionY aPositionZ wormhole aDice result |

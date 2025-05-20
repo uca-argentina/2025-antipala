@@ -30,13 +30,15 @@ GameBoard >> hasEnded [
 { #category : 'accessing' }
 GameBoard >> moveShip: steps [
 
-	| oldPosition |
+	| oldPosition oldTurn|
 	oldPosition := ships at: shipPlaying at: 'position'.
+	oldTurn := ships at: shipPlaying at: 'turn'.
 
 	self hasEnded ifTrue: [ Error signal: 'The game ended' ].
 
 	ships at: shipPlaying at: 'position' put: oldPosition + steps
 		+ (wormhole applyWormEffectTo: oldPosition + steps).
+		ships at: shipPlaying at: 'turn' put: oldTurn + 1.
 
 	self hasEnded ifFalse: [ shipPlaying := shipPlaying < ships size
 		               ifTrue: [ shipPlaying + 1 ]
@@ -62,6 +64,12 @@ GameBoard >> squares [
 ]
 
 { #category : 'accessing' }
+GameBoard >> turnOf: shipId [
+
+	^ships at: shipId at: 'turn'
+]
+
+{ #category : 'accessing' }
 GameBoard >> winner [
 
 	self hasEnded ifTrue: [^ shipPlaying ].
@@ -77,7 +85,11 @@ GameBoard >> with: numberOfSquares and: aWormhole and: numberOfShips [
 	wormhole := aWormhole.
 	ships := Dictionary new.
 	shipPlaying:=1.
-	1 to: numberOfShips do: [:id |
-        ships at: id put: { 'position' -> 0. } asDictionary.
-    ].
+	1 to: numberOfShips do: [:id | 
+    ships at: id put: { 
+        'position' -> 0. 
+        'turn' -> 0. 
+    } asDictionary.
+].
+"objeto nave"
 ]
