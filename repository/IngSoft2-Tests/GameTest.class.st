@@ -6,6 +6,11 @@ Class {
 }
 
 { #category : 'asserting' }
+GameTest >> assert: aGame Fuel: anInteger equals: anInteger3 [ 
+	self shouldBeImplemented.
+]
+
+{ #category : 'asserting' }
 GameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
 self
@@ -93,6 +98,24 @@ GameTest >> testAllShipsCanPlaySeveralRounds [
 ]
 
 { #category : 'tests' }
+GameTest >> testTheGameCanDecreaseFuel [
+
+	| game|
+	game := Game test.
+	game throwDices.
+	self assert: (game Fuel:1 )equals: 95
+]
+
+{ #category : 'tests' }
+GameTest >> testTheGameCanDecreaseFuelOfVariousShips [
+
+	| game|
+	game := Game test.
+	game throwDices.
+	self assert: (game Fuel:2 ) equals: 100
+]
+
+{ #category : 'tests' }
 GameTest >> testTheGameCanFinish [
 
 	| game count |
@@ -125,6 +148,14 @@ self assert: (game showShipPosition: 2) equals: 45.
 
 self assert: (game showShipPosition: 3) equals: 45.
 self assert: game hasEnded equals: true
+]
+
+{ #category : 'tests' }
+GameTest >> testTheGameCanTellFuel [
+
+	| game|
+	game := Game test.
+	self assert: (game Fuel:1 )equals: 100
 ]
 
 { #category : 'tests' }

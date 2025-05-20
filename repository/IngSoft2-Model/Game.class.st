@@ -7,7 +7,8 @@ Class {
 		'ships',
 		'shipPlaying',
 		'theGameHasFinish',
-		'finalPositions'
+		'finalPositions',
+		'fuel'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -35,6 +36,11 @@ Game class >> with: aCollectionOfDices and: aGameBoard [
 	^(self new) intializeWith: aCollectionOfDices and: aGameBoard.
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> Fuel: anId [ 
+	^fuel at:anId.
+]
+
 { #category : 'method' }
 Game >> hasEnded [
 	
@@ -57,6 +63,10 @@ Game >> intializeWith: aCollectionOfDices and: aGameBoard [
 	dices:= aCollectionOfDices.
 	gameBoard := aGameBoard.
 	theGameHasFinish := false.
+	fuel := Dictionary new.                  
+   1 to: 3 do: [:id |
+    fuel at: id put: 100.      
+   ].
 ]
 
 { #category : 'method' }
@@ -75,6 +85,8 @@ Game >> throwDices [
 		         inject: 0
 		         into: [ :sum :eachDice | sum + eachDice roll ].
 	gameBoard moveShip: throw.
+	fuel at: (idActual asInteger) put: ((fuel at: (idActual asInteger)) - throw).
+
 	text := 'the ship ' , idActual , ' moves'. "la nave 1 avanzo"
 	"
 	self hasEnded ifFalse: [
