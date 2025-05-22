@@ -23,6 +23,11 @@ Ship class >> create: id [
 { #category : 'accessing' }
 Ship >> advance: positions [
 	position := position + positions.
+
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> advanceturn [
 	turn:=turn+1.
 ]
 
@@ -57,6 +62,11 @@ Ship >> position [
 { #category : 'accessing' }
 Ship >> setPosition:unNumero [
 		position:=unNumero.
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> spendfuel:aFuelamoutspend [  
+	fuel:=fuel-aFuelamoutspend.
 ]
 
 { #category : 'as yet unclassified' }

@@ -19,8 +19,12 @@ GameBoard class >> with: numberOfSquares and: aWormHole [
 
 { #category : 'accessing' }
 GameBoard >> move: ship with: adiceThrow [ 
+|test|
 	ship advance: adiceThrow.
 	ship advance: (wormhole applyWormEffectTo: ship position).
+	test:=(wormhole applyWormEffectTo: ship position).
+	ship spendfuel: adiceThrow+((wormhole applyWormEffectTo: ship position) abs).
+	ship advanceturn.
 ]
 
 { #category : 'accessing' }

@@ -80,6 +80,37 @@ GameTest >> testAShipCannotPlayWhenTheGameFinish [
 ]
 
 { #category : 'tests' }
+GameTest >> testAShiprestartIffuelisEmpty [
+
+	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships count |
+	numberOfSquares := 15.
+	aPositionY:=5.
+	aPositionZ:=10.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	gameboard := GameBoard with: numberOfSquares and: wormhole .
+	
+	dices:= OrderedCollection new.
+	dices add: (Dice with: 6).
+		
+	ships := OrderedCollection new.
+	ships add: ( Ship create:1 ).
+	
+	game := Game with: dices and: gameboard and: ships.
+	
+	count := 0.
+	[ count <1000 and: (game hasEnded not)] whileTrue: [
+  	 count := count + 1.
+	game throwDices .
+	].
+	
+	self
+		should: [ game throwDices]
+		raise: Error
+		withMessageText:'The game ended'.
+]
+
+{ #category : 'tests' }
 GameTest >> testAllShipsCanPlayARound [
 	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dados ships throw |
 	numberOfSquares := 50.

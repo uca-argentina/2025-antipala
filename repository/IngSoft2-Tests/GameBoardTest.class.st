@@ -42,6 +42,21 @@ self
 ]
 
 { #category : 'tests' }
+GameBoardTest >> testShipCanSpendFuelAmountwithEffect [
+	| gameboard actualShip aPositionY aPositionZ wormhole |
+	
+	aPositionY:=10.
+	aPositionZ:=30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	
+	gameboard := GameBoard with: 10 and: wormhole .
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 10.
+	
+	self assert: actualShip fuel equals: 70.
+]
+
+{ #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
 	| gameboard actualShip aPositionY aPositionZ wormhole |
 	

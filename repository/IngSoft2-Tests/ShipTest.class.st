@@ -18,7 +18,7 @@ ShipTest >> testShipCanAdvance [
 ShipTest >> testShipCanAdvanceTurn [
 	| ship |
 	ship := Ship create:1.
-	ship advance: 2.
+	ship advanceturn.
 	self assert: ship turn equals: 1
 ]
 
@@ -28,6 +28,14 @@ ShipTest >> testShipCanChangePosition [
 	ship := Ship new.
 	ship moveTo: 3.
 	self assert: ship position equals: 3
+]
+
+{ #category : 'tests' }
+ShipTest >> testShipFuelChange [
+	| ship |
+	ship := Ship create:1.
+	ship spendfuel:10.
+	self assert: ship fuel equals:90.
 ]
 
 { #category : 'tests' }
