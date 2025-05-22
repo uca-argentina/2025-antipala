@@ -15,6 +15,14 @@ ShipTest >> testShipCanAdvance [
 ]
 
 { #category : 'tests' }
+ShipTest >> testShipCanAdvanceTurn [
+	| ship |
+	ship := Ship create:1.
+	ship advance: 2.
+	self assert: ship turn equals: 1
+]
+
+{ #category : 'tests' }
 ShipTest >> testShipCanChangePosition [
 	| ship |
 	ship := Ship new.
@@ -23,8 +31,22 @@ ShipTest >> testShipCanChangePosition [
 ]
 
 { #category : 'tests' }
+ShipTest >> testShipFuelis100 [
+	| ship |
+	ship := Ship create:1.
+	self assert: ship fuel equals: 100.
+]
+
+{ #category : 'tests' }
 ShipTest >> testShipInitialPositionShouldBe0 [
 	| ship |
 	ship := Ship create:1.
 	self assert: ship position equals: 0
+]
+
+{ #category : 'tests' }
+ShipTest >> testShipTurnis0 [
+	| ship |
+	ship := Ship create:1.
+	self assert: ship turn equals: 0.
 ]

@@ -7,7 +7,9 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'position',
-		'id'
+		'id',
+		'turn',
+		'fuel'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -21,6 +23,12 @@ Ship class >> create: id [
 { #category : 'accessing' }
 Ship >> advance: positions [
 	position := position + positions.
+	turn:=turn+1.
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> fuel [
+	^fuel.
 ]
 
 { #category : 'initialization' }
@@ -32,6 +40,8 @@ Ship >> getId [
 Ship >> initializeWith: aId [ 
    position := 0.
 	id:= aId.
+	turn:=0.
+	fuel:=100
 ]
 
 { #category : 'accessing' }
@@ -47,4 +57,9 @@ Ship >> position [
 { #category : 'accessing' }
 Ship >> setPosition:unNumero [
 		position:=unNumero.
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> turn [
+	^turn.
 ]
