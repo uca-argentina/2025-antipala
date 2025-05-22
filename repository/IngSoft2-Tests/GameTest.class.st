@@ -82,7 +82,7 @@ GameTest >> testAShipCannotPlayWhenTheGameFinish [
 { #category : 'tests' }
 GameTest >> testAShiprestartIffuelisEmpty [
 
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships count |
+	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships throw ship1|
 	numberOfSquares := 15.
 	aPositionY:=5.
 	aPositionZ:=10.
@@ -91,23 +91,27 @@ GameTest >> testAShiprestartIffuelisEmpty [
 	gameboard := GameBoard with: numberOfSquares and: wormhole .
 	
 	dices:= OrderedCollection new.
-	dices add: (Dice with: 6).
+	dices add: ChargeDice new.
 		
 	ships := OrderedCollection new.
-	ships add: ( Ship create:1 ).
+	ship1 :=Ship create:1.
+	ship1 setfuel: 10.
+	ships add: ( ship1 ).
 	
 	game := Game with: dices and: gameboard and: ships.
 	
-	count := 0.
-	[ count <1000 and: (game hasEnded not)] whileTrue: [
-  	 count := count + 1.
-	game throwDices .
-	].
+	throw:= game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 1 moves'.
+	throw:= game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: '1 no tiene combustible'.
+	throw:= game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: '1 no tiene combustible'.
+	throw:= game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 1 moves'.
+
 	
-	self
-		should: [ game throwDices]
-		raise: Error
-		withMessageText:'The game ended'.
+	
+	
 ]
 
 { #category : 'tests' }

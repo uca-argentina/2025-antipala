@@ -7,7 +7,8 @@ Class {
 		'ships',
 		'shipPlaying',
 		'theGameHasFinish',
-		'finalPositions'
+		'finalPositions',
+		'shipsOnCooldown'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -62,6 +63,7 @@ Game >> intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShip
 	gameBoard := aGameBoard.
 	ships := aCollectionOfShips.
 	theGameHasFinish := false.
+	shipsOnCooldown := Dictionary new.
 ]
 
 { #category : 'method' }
@@ -76,21 +78,46 @@ ships do: [:nave |
 
 { #category : 'method' }
 Game >> throwDices [
+	| throw text idActual ship |
 
-	| throw text idActual |
 	theGameHasFinish ifTrue: [ Error signal: 'The game ended' ].
-	throw := dices
-		         inject: 0
-		         into: [ :sum :eachDice | sum + eachDice roll ].
-	gameBoard move: (ships at: shipPlaying) with: throw.
-	idActual := (ships at: shipPlaying) getId asString.
-	text := 'the ship ' , idActual , ' moves'. "la nave 1 avanzo"
+
+	ship := ships at: shipPlaying.
+
+	((shipsOnCooldown includesKey: ship) and: [
+		(shipsOnCooldown at: ship) = ship turn
+	]) ifTrue: [
+		ship refill.
+		ship setPosition: 0.
+		shipsOnCooldown removeKey: ship.
+	].
+
+	" no tiene combustible y no esta en cooldown"
+	((ship fuel = 0) and: [(shipsOnCooldown includesKey: ship) not]) ifTrue: [
+		shipsOnCooldown at: ship put: ship turn + 2.
+		ship advanceTurn.
+		^ship getId asString, ' no tiene combustible'.
+	].
+
+	"Si sigue en cooldown, pero aún no le toca salir"
+	((shipsOnCooldown includesKey: ship)) ifTrue: [
+		ship advanceTurn.
+		^ship getId asString, ' no tiene combustible'.
+	].
+
+	"mover normalmente"
+	throw := dices inject: 0 into: [ :sum :eachDice | sum + eachDice roll ].
+	gameBoard move: ship with: throw.
+	idActual := ship getId asString.
+	ship advanceTurn.
+	text := 'the ship ', idActual, ' moves'.
+
 	self hasEnded ifFalse: [
 		shipPlaying := (shipPlaying < ships size)
-			               ifTrue: [shipPlaying + 1]
-			               ifFalse: [1].
-			 ].
-	"shipPlaying := shipPlaying < (ships size) ifTrue: (shipPlaying +1) ifFalse: (1)."
+			ifTrue: [ shipPlaying + 1 ]
+			ifFalse: [ 1 ].
+	].
+
 	^ text
 ]
 

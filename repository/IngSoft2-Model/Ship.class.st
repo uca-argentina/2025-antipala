@@ -27,7 +27,7 @@ Ship >> advance: positions [
 ]
 
 { #category : 'as yet unclassified' }
-Ship >> advanceturn [
+Ship >> advanceTurn [
 	turn:=turn+1.
 ]
 
@@ -59,9 +59,19 @@ Ship >> position [
 	^position
 ]
 
+{ #category : 'as yet unclassified' }
+Ship >> refill [
+	fuel:=100.
+]
+
 { #category : 'accessing' }
 Ship >> setPosition:unNumero [
 		position:=unNumero.
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> setfuel:afuel [
+	fuel:=afuel.
 ]
 
 { #category : 'as yet unclassified' }

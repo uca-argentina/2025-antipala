@@ -24,7 +24,7 @@ GameBoard >> move: ship with: adiceThrow [
 	ship advance: (wormhole applyWormEffectTo: ship position).
 	test:=(wormhole applyWormEffectTo: ship position).
 	ship spendfuel: adiceThrow+((wormhole applyWormEffectTo: ship position) abs).
-	ship advanceturn.
+	ship advanceTurn.
 ]
 
 { #category : 'accessing' }
