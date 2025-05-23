@@ -78,10 +78,19 @@ ships do: [:nave |
 
 { #category : 'method' }
 Game >> throwDices [
-	| throw text idActual ship |
+	| throw text idActual ship respuesta|
 
 	theGameHasFinish ifTrue: [ Error signal: 'The game ended' ].
+	"Preguntar al usuario si quiere tirar los dados"
+"	respuesta := UIManager default request: '¿Querés tirar los dados? (sí/no)'.
 
+	(respuesta asLowercase = 'sí') ifFalse: [
+		 (ships at: shipPlaying) advanceTurn .
+		 (ships at: shipPlaying) refill .
+		
+		^'no tiraste dado'
+	].
+"
 	ship := ships at: shipPlaying.
 
 	((shipsOnCooldown includesKey: ship) and: [
