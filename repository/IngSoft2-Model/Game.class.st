@@ -42,6 +42,33 @@ Game class >> test [
 ]
 
 { #category : 'initialization' }
+Game class >> testFuel: fuel [
+
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame ship |
+	numberOfSquares := 15.
+	aPositionY := 5.
+	aPositionZ := 10.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+	numberOfLaps := 2.
+	gameboard := GameBoard with: numberOfSquares and: wormhole.
+	ships := OrderedCollection new.
+	
+	ship:= Ship create:1 .
+	ship setfuel: 10.
+	ships add: (ship).
+	dices := OrderedCollection new.
+	dices add: ChargeDice new.
+	testGame := self
+		            with: dices
+		            and: gameboard
+		            and: ships
+		            and: numberOfLaps.
+
+	testGame enableTestMode.
+	^ testGame
+]
+
+{ #category : 'initialization' }
 Game class >> with: aCollectionOfDices and: aGameBoard and: aCollectionOfShips [ 
 	^(self new) intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShips .
 ]

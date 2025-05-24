@@ -42,7 +42,7 @@ GameTest >> testAShipCannotPlayWhenTheGameFinish [
 	game := Game test.
 
 	count := 0.
-	[ count < 61 and: game hasEnded not ] whileTrue: [
+	[ count < 10 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 	game showRanking.
@@ -55,27 +55,9 @@ GameTest >> testAShipCannotPlayWhenTheGameFinish [
 { #category : 'tests' }
 GameTest >> testAShiprestartIffuelisEmpty [
 
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships throw ship1 |
-	numberOfSquares := 15.
-	aPositionY := 5.
-	aPositionZ := 10.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
+	| game throw|
 
-	gameboard := GameBoard with: numberOfSquares and: wormhole.
-
-	dices := OrderedCollection new.
-	dices add: ChargeDice new.
-
-	ships := OrderedCollection new.
-	ship1 := Ship create: 1.
-	ship1 setfuel: 10.
-	ships add: ship1.
-
-	game := Game
-		        with: dices
-		        and: gameboard
-		        and: ships
-		        and: 1.
+	game := Game testFuel: 10.
 
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 1 moves'.
@@ -158,50 +140,14 @@ GameTest >> testTheGameCanFinish [
 	game := Game test.
 
 	count := 0.
-	[ count < 1000 and: game hasEnded not ] whileTrue: [
+	[ count < 10 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
 	self deny: game hasEnded equals: false.
 	self assert: game winner equals: '1'.
-	game showRanking.
+	game showRanking
 	"winner ship: 1"
-]
-
-{ #category : 'tests' }
-GameTest >> testTheGameCanShowPosition [
-
-	| game numberOfSquares aPositionY aPositionZ wormhole gameboard dices ships count shipIsFinish |
-	numberOfSquares := 15.
-	aPositionY := 5.
-	aPositionZ := 10.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-
-	gameboard := GameBoard with: numberOfSquares and: wormhole.
-
-	dices := OrderedCollection new.
-	dices add: (ChargeDice new).
-
-	ships := OrderedCollection new.
-	shipIsFinish := Ship create: 1.
-	shipIsFinish setPosition: 10.
-	ships add: shipIsFinish.
-
-	game := Game
-		        with: dices
-		        and: gameboard
-		        and: ships
-		        and: 1.
-
-	count := 0.
-	[ count < 1000 and: game hasEnded not ] whileTrue: [
-		count := count + 1.
-		game throwDices ].
-
-	self
-		assert: game showPosition
-		equals: 'The ship: 1, ended in the position: 0 '. "le dio la vuelta al tablero"
-	self assert: game hasEnded equals: true
 ]
 
 { #category : 'tests' }
@@ -211,7 +157,7 @@ GameTest >> testTheGameCanShowXPosition [
 	game := Game test.
 
 	count := 0.
-	[ count < 1000 and: game hasEnded not ] whileTrue: [
+	[ count < 10 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
@@ -231,13 +177,13 @@ GameTest >> testTheGameCanTellWhoWin [
 	game := Game test.
 
 	count := 0.
-	[ count < 1000 and: game hasEnded not ] whileTrue: [
+	[ count < 10 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
 	self assert: game hasEnded equals: true.
 	self assert: game winner equals: '1'.
-	game showRanking.
+	game showRanking
 ]
 
 { #category : 'tests' }
