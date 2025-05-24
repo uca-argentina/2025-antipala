@@ -18,6 +18,10 @@ self
 ]
 
 { #category : 'tests' }
+GameBoardTest >> testBanana [
+]
+
+{ #category : 'tests' }
 GameBoardTest >> testGameBoardCanMoveAShip [
 	| gameboard actualShip aPositionY aPositionZ wormhole |
 
