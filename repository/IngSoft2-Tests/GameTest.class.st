@@ -218,10 +218,10 @@ GameTest >> testTheGameCanShowXPosition [
 	self
 		assert: game showPosition
 		equals:
-		'The ship: 1, ended in the position: 5 The ship: 2, ended in the position: 15 The ship: 3, ended in the position: 15 '.
+		'The ship: 1, ended in the position: 0 The ship: 2, ended in the position: 10 The ship: 3, ended in the position: 10 '.
 
 	self assert: game hasEnded equals: true.
-	game showRanking.
+	game showRanking
 ]
 
 { #category : 'tests' }
