@@ -73,17 +73,17 @@ GameBoardTest >> testShipCanUseTheWormHoleYposition [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleZposition [
+
 	| gameboard actualShip aPositionY aPositionZ wormhole |
-	
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard with: 10 and: wormhole .
-	actualShip:= Ship create:1.
+	aPositionY := 10.
+	aPositionZ := 30.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+
+	gameboard := GameBoard with: 40 and: wormhole.
+	actualShip := Ship create: 1.
 	gameboard move: actualShip with: 30.
-	
-	self assert: actualShip position equals: 10.
+
+	self assert: actualShip position equals: 10
 ]
 
 { #category : 'tests' }
