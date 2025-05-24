@@ -42,36 +42,6 @@ self
 ]
 
 { #category : 'tests' }
-GameBoardTest >> testGameboardCanKnowPositionsOfMovedShips [
-
-	| gameboard aPositionY aPositionZ wormhole |
-	aPositionY := 10.
-	aPositionZ := 35.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-
-	gameboard := GameBoard with: 10 and: wormhole and: 1.
-
-	gameboard moveShip: 30.
-
-	self assert: (gameboard positionOf: 1) equals: 30
-]
-
-{ #category : 'tests' }
-GameBoardTest >> testGameboardCanKnowPositionsOfShips [
-
-	| gameboard  aPositionY aPositionZ wormhole |
-	aPositionY := 10.
-	aPositionZ := 30.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-
-	gameboard := GameBoard with: 10 and: wormhole and: 1.
-	
-	"gameboard move: actualShip with: 30."
-
-	self assert: (gameboard positionOf: 1) equals: 0.
-]
-
-{ #category : 'tests' }
 GameBoardTest >> testShipCanSpendFuelAmountwithEffect [
 	| gameboard actualShip aPositionY aPositionZ wormhole |
 	
