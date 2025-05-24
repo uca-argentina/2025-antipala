@@ -82,15 +82,15 @@ Game >> throwDices [
 
 	theGameHasFinish ifTrue: [ Error signal: 'The game ended' ].
 	"Preguntar al usuario si quiere tirar los dados"
-"	respuesta := UIManager default request: '¿Querés tirar los dados? (sí/no)'.
+	respuesta := UIManager default request: '¿Querés tirar los dados? (sí/no)'.
 
-	(respuesta asLowercase = 'sí') ifFalse: [
+	(respuesta asLowercase = 'si') ifFalse: [
 		 (ships at: shipPlaying) advanceTurn .
 		 (ships at: shipPlaying) refill .
 		
 		^'no tiraste dado'
 	].
-"
+
 	ship := ships at: shipPlaying.
 
 	((shipsOnCooldown includesKey: ship) and: [

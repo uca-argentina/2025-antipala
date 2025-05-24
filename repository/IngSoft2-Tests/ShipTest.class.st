@@ -18,7 +18,7 @@ ShipTest >> testShipCanAdvance [
 ShipTest >> testShipCanAdvanceTurn [
 	| ship |
 	ship := Ship create:1.
-	ship advanceturn.
+	ship advanceTurn.
 	self assert: ship turn equals: 1
 ]
 
