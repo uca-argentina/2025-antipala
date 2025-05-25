@@ -26,7 +26,7 @@ GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [
 { #category : 'accessing' }
 GameBoard >> move: ship with: adiceThrow [
 
-	| newPosition obstacleAtPosition effect |
+	| newPosition obstacleAtPosition|
 	
 	"Primero avanza la nave con el dado"
 	ship advance: adiceThrow.
@@ -37,9 +37,7 @@ GameBoard >> move: ship with: adiceThrow [
 
 
 	obstacleAtPosition ifNotNil: [
-		effect := obstacleAtPosition applyEffectTo: ship.
-		ship advance: effect.
-		ship spendfuel: effect abs.
+		obstacleAtPosition applyEffectTo: ship.
 	].
 	ship advanceTurn.
 	ship position >= squares ifFalse: [ ^ self ].

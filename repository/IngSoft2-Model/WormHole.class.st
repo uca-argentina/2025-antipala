@@ -28,7 +28,8 @@ WormHole class >> at: start and: finish [
 WormHole >> applyEffectTo: aShip [
 	| effect |
 	effect := self applyWormEffectTo: aShip position.
-	^effect
+	aShip advance: effect.
+	aShip spendfuel: effect abs.
 ]
 
 { #category : 'as yet unclassified' }
