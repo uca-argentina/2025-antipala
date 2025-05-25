@@ -46,7 +46,7 @@ Game class >> test [
 { #category : 'initialization' }
 Game class >> testFuel: fuel [
 
-	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame ship aCollectionOfEffects |
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame ship aCollectionOfEffects|
 	numberOfSquares := 15.
 	numberOfLaps := 2.
 	aPositionY := 5.
@@ -60,7 +60,7 @@ Game class >> testFuel: fuel [
 	ships := OrderedCollection new.
 
 	ship := Ship create: 1.
-	ship setfuel: 10.
+	ship setfuel: fuel.
 	ships add: ship.
 	dices := OrderedCollection new.
 	dices add: ChargeDice new.
@@ -179,7 +179,7 @@ Game >> showRanking [
 		UIManager default inform:
 			'Position ' , index asString , ': Ship ' , ship getId asString
 			, ' (laps: ' , ship laps asString , ', position: '
-			, ship position asString , ')' ]
+			, ship position asString ,'fuel:',ship fuel asString ,')' ]
 ]
 
 { #category : 'method' }
@@ -193,6 +193,7 @@ Game >> throwDices [
 
 	| throw text idActual ship respuesta opciones seleccion |
 	theGameHasFinish ifTrue: [ Error signal: 'The game ended' ].
+	ship := ships at: shipPlaying.
 	
 	(testGame)
 		ifTrue: [ respuesta := 'Sí' ]
@@ -202,7 +203,12 @@ Game >> throwDices [
 				chooseFrom: opciones
 				title: '¿Querés tirar los dados?'.
 			respuesta := opciones at: seleccion ifAbsent: [ ^ 'no tiraste dado' ].
+
 		].
+	throw := dices
+		         inject: 0
+		         into: [ :sum :eachDice | sum + eachDice roll ].
+	gameBoard move: ship with: throw.
 
 	respuesta = 'Sí' ifFalse: [
 		(ships at: shipPlaying) advanceTurn.
@@ -211,7 +217,7 @@ Game >> throwDices [
 	].
 	
 
-	ship := ships at: shipPlaying.
+
 
 	((shipsOnCooldown includesKey: ship) and: [
 		 (shipsOnCooldown at: ship) = ship turn ]) ifTrue: [
@@ -220,7 +226,7 @@ Game >> throwDices [
 		shipsOnCooldown removeKey: ship ].
 
 	" no tiene combustible y no esta en cooldown"
-	(ship fuel = 0 and: [ (shipsOnCooldown includesKey: ship) not ])
+	(ship fuel <= 0 and: [ (shipsOnCooldown includesKey: ship) not ])
 		ifTrue: [
 			shipsOnCooldown at: ship put: ship turn + 2.
 			ship advanceTurn.
@@ -232,10 +238,7 @@ Game >> throwDices [
 		^ ship getId asString , ' no tiene combustible' ].
 
 	"mover normalmente"
-	throw := dices
-		         inject: 0
-		         into: [ :sum :eachDice | sum + eachDice roll ].
-	gameBoard move: ship with: throw.
+	
 	idActual := ship getId asString.
 	ship advanceTurn.
 	text := 'the ship ' , idActual , ' moves'.
