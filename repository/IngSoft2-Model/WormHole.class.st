@@ -24,6 +24,15 @@ WormHole class >> at: start and: finish [
 	^ self new initializeWith: start and: finish
 ]
 
+{ #category : 'as yet unclassified' }
+WormHole >> applyEffectTo: aShip [
+	| effect |
+	effect := self applyWormEffectTo: aShip position.
+	aShip advance: effect.
+	aShip spendfuel: effect abs.
+	^effect
+]
+
 { #category : 'method' }
 WormHole >> applyWormEffectTo: myActualPosition [ 
 	| isInPositionY isInPositionZ |

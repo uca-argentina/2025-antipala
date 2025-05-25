@@ -18,10 +18,6 @@ self
 ]
 
 { #category : 'tests' }
-GameBoardTest >> testBanana [
-]
-
-{ #category : 'tests' }
 GameBoardTest >> testGameBoardCanMoveAShip [
 	| gameboard actualShip aPositionY aPositionZ wormhole |
 
@@ -88,4 +84,22 @@ GameBoardTest >> testShipCanUseTheWormHoleZposition [
 	gameboard move: actualShip with: 30.
 	
 	self assert: actualShip position equals: 10.
+]
+
+{ #category : 'tests' }
+GameBoardTest >> testTheGameBoardCanBeInitializedWithACollectionOfEffects [
+
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+
+	"despues setear el agujero"
+	aPositionY:=10.
+	aPositionZ:=30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 3.
+	
+	self assert: actualShip position equals: 3.
 ]
