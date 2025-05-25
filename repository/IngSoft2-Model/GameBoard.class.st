@@ -25,29 +25,47 @@ GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [
 
 { #category : 'accessing' }
 GameBoard >> move: ship with: adiceThrow [
+	| currentPosition newPosition obstacleAtPosition effect |
 
-	| newPosition obstacleAtPosition effect |
-	"Primero avanza la nave con el dado"
+	currentPosition := ship position.
+
+	"Verifica si hay un efecto en la POSICIÓN ACTUAL (ej. HyperGravity)"
+	obstacleAtPosition := effects
+		detect: [:obs | obs validatePosition: currentPosition]
+		ifNone: [nil].
+
+	(obstacleAtPosition respondsTo: #applyEffectTo:withThrow:) ifTrue: [
+		effect := obstacleAtPosition applyEffectTo: ship withThrow: adiceThrow.
+		effect = 0 ifTrue: [ ^0 ] "Si el efecto no permite moverse, se cancela el turno"
+	].
+
+	"Avanza normalmente"
 	ship advance: adiceThrow.
 	ship spendfuel: adiceThrow.
-	newPosition := ship position.
-	newPosition >= squares ifTrue: [newPosition:= newPosition-squares]. 
-	"Busca si hay un obstáculo en la posición actual"
-	obstacleAtPosition := effects
-		                      detect: [ :obs |
-		                      obs validatePosition: newPosition ]
-		                      ifNone: [ nil ].
 
+	"Calcula nueva posición con wrap-around"
+	newPosition := ship position.
+	newPosition >= squares ifTrue: [ newPosition := newPosition - squares ].
+
+	"Verifica si hay un efecto en la NUEVA posición"
+	obstacleAtPosition := effects
+		detect: [:obs | obs validatePosition: newPosition]
+		ifNone: [nil].
 
 	obstacleAtPosition ifNotNil: [
-		effect := obstacleAtPosition applyEffectTo: ship.
+		effect := (obstacleAtPosition respondsTo: #applyEffectTo:withThrow:)
+			ifTrue: [ obstacleAtPosition applyEffectTo: ship withThrow: adiceThrow ]
+			ifFalse: [ obstacleAtPosition applyEffectTo: ship ].
 		ship advance: effect.
-		ship spendfuel: effect abs ].
+		ship spendfuel: effect abs.
+	].
+
+	"Turno y vuelta"
 	ship advanceTurn.
-	
 	ship position >= squares ifFalse: [ ^ self ].
 	ship advance: 0 - squares.
 	ship advanceLap.
+
 ]
 
 { #category : 'accessing' }

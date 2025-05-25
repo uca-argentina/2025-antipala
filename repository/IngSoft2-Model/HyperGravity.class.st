@@ -20,8 +20,9 @@ HyperGravity class >> at: arg1 [
 ]
 
 { #category : 'as yet unclassified' }
-HyperGravity >> applyEffectTo: aShip [
-
+HyperGravity >> applyEffectTo: aShip withThrow: aNumber [
+   aNumber = 5 ifTrue: [ ^ aNumber ].
+   ^ 0.
 ]
 
 { #category : 'as yet unclassified' }
