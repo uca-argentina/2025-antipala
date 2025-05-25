@@ -1,0 +1,35 @@
+Class {
+	#name : 'AtomicBomb',
+	#superclass : 'Object',
+	#instVars : [
+		'effectposition',
+		'ships'
+	],
+	#classInstVars : [
+		'positionY'
+	],
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
+}
+
+{ #category : 'initialize' }
+AtomicBomb class >> at: positions and: aCollectionOfShips [
+
+	^ self new initializeWith: positions and: aCollectionOfShips
+]
+
+{ #category : 'as yet unclassified' }
+AtomicBomb >> applyEffectTo: aShip [
+
+]
+
+{ #category : 'as yet unclassified' }
+AtomicBomb >> initializeWith: position and: aCollectionOfShips [
+	ships:= aCollectionOfShips.
+	effectposition := position
+]
+
+{ #category : 'method' }
+AtomicBomb >> validatePosition: aPosition [ 
+	^(effectposition == aPosition).
+]

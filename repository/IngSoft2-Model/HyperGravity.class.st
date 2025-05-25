@@ -1,10 +1,10 @@
 Class {
-	#name : 'BlackHole',
+	#name : 'HyperGravity',
 	#superclass : 'Object',
 	#instVars : [
 		'positionY',
 		'positionZ',
-		'blackholeposition'
+		'effectposition'
 	],
 	#classInstVars : [
 		'positionY'
@@ -14,26 +14,23 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-BlackHole class >> at: arg1 [
+HyperGravity class >> at: arg1 [
 
 	^ self new initializeWith: arg1
 ]
 
 { #category : 'as yet unclassified' }
-BlackHole >> applyEffectTo: aShip [
-	| effect |
-	effect := -4.
-	aShip spendfuel: effect abs.
-	^effect
+HyperGravity >> applyEffectTo: aShip [
+
 ]
 
 { #category : 'as yet unclassified' }
-BlackHole >> initializeWith: arg1 [
+HyperGravity >> initializeWith: arg1 [
 
-	blackholeposition := arg1
+	effectposition := arg1
 ]
 
 { #category : 'method' }
-BlackHole >> validatePosition: aPosition [ 
-	^(blackholeposition == aPosition).
+HyperGravity >> validatePosition: aPosition [ 
+	^(effectposition == aPosition).
 ]
