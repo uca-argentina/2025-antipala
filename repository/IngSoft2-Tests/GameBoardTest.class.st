@@ -61,13 +61,14 @@ GameBoardTest >> testShipCanSpendFuelAmountwithEffect [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
-	| gameboard actualShip aPositionY aPositionZ wormhole |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard with: 40 and: wormhole .
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 10.
 	
@@ -76,17 +77,18 @@ GameBoardTest >> testShipCanUseTheWormHoleYposition [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleZposition [
-
-	| gameboard actualShip aPositionY aPositionZ wormhole |
-	aPositionY := 10.
-	aPositionZ := 30.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-
-	gameboard := GameBoard with: 40 and: wormhole.
-	actualShip := Ship create: 1.
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+	
+	aPositionY:=10.
+	aPositionZ:=30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 30.
-
-	self assert: actualShip position equals: 10
+	
+	self assert: actualShip position equals: 10.
 ]
 
 { #category : 'tests' }
@@ -110,19 +112,21 @@ GameBoardTest >> testTheGameBoardCanBeInitializedWithACollectionOfEffects [
 { #category : 'tests' }
 GameBoardTest >> testTheShipsUseTheCircularBoard [
 
-	| gameboard actualShip aPositionY aPositionZ wormhole aDice |
+	| gameboard actualShip aPositionY aPositionZ wormhole aDice aCollectionOfEffects |
 	aPositionY := 2.
 	aPositionZ := 4.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 	aDice := ChargeDice new.
-	gameboard := GameBoard with: 4 and: wormhole.
+	aCollectionOfEffects := OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 4 including: aCollectionOfEffects.
 	actualShip := Ship create: 1.
-	
+
 	self assert: actualShip position equals: 0.
 	self assert: actualShip laps equals: 0.
-	
+
 	gameboard move: actualShip with: aDice roll.
 
 	self assert: actualShip position equals: 1.
-	self assert: actualShip laps equals: 1.
+	self assert: actualShip laps equals: 1
 ]

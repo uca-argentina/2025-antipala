@@ -18,13 +18,15 @@ Class {
 { #category : 'initialization' }
 Game class >> test [
 
-	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame |
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame aCollectionOfEffects |
 	numberOfSquares := 15.
 	aPositionY := 5.
 	aPositionZ := 10.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
+	aCollectionOfEffects := OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: numberOfSquares including: aCollectionOfEffects.
 	numberOfLaps := 2.
-	gameboard := GameBoard with: numberOfSquares and: wormhole.
 	ships := OrderedCollection new.
 	ships add: (Ship create: 1).
 	ships add: (Ship create: 2).
@@ -44,18 +46,22 @@ Game class >> test [
 { #category : 'initialization' }
 Game class >> testFuel: fuel [
 
-	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame ship |
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame ship aCollectionOfEffects |
 	numberOfSquares := 15.
+	numberOfLaps := 2.
 	aPositionY := 5.
 	aPositionZ := 10.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
-	numberOfLaps := 2.
-	gameboard := GameBoard with: numberOfSquares and: wormhole.
+	aCollectionOfEffects := OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard
+		             with: numberOfSquares
+		             including: aCollectionOfEffects.
 	ships := OrderedCollection new.
-	
-	ship:= Ship create:1 .
+
+	ship := Ship create: 1.
 	ship setfuel: 10.
-	ships add: (ship).
+	ships add: ship.
 	dices := OrderedCollection new.
 	dices add: ChargeDice new.
 	testGame := self

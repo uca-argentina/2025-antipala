@@ -26,16 +26,26 @@ GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [
 { #category : 'accessing' }
 GameBoard >> move: ship with: adiceThrow [
 
-	| test |
+	| newPosition obstacleAtPosition effect |
+	
+	"Primero avanza la nave con el dado"
 	ship advance: adiceThrow.
-	ship advance: (wormhole applyWormEffectTo: ship position).
-	test := wormhole applyWormEffectTo: ship position.
-	ship spendfuel:
-		adiceThrow + (wormhole applyWormEffectTo: ship position) abs.
+	ship spendfuel:adiceThrow.
+	newPosition := ship position.
+	"Busca si hay un obstáculo en la posición actual"
+	obstacleAtPosition := effects detect: [:obs | obs validatePosition: newPosition] ifNone: [nil].
+
+
+	obstacleAtPosition ifNotNil: [
+		effect := obstacleAtPosition applyEffectTo: ship.
+		ship advance: effect.
+		ship spendfuel: effect abs.
+	].
 	ship advanceTurn.
 	ship position >= squares ifFalse: [ ^ self ].
 	ship advance: 0 - squares.
 	ship advanceLap
+
 ]
 
 { #category : 'accessing' }
