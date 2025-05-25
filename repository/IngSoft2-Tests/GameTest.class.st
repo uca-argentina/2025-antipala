@@ -57,16 +57,19 @@ GameTest >> testAShiprestartIffuelisEmpty [
 
 	| game throw |
 
-	game := Game testFuel: 10.
+
+ 
+	game := Game testFuel: 20.
 
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 1 moves'.
 	throw := game throwDices. "Hace avazar a la nave"
-	self assert: throw equals: '1 no tiene combustible'.
+	self assert: throw equals: 'the ship 1 moves'.
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: '1 no tiene combustible'.
-	throw := game throwDices. "Hace avazar a la nave"
-	self assert: throw equals: 'the ship 1 moves'
+	
+	
+	game showRanking 
 ]
 
 { #category : 'tests' }

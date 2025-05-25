@@ -75,7 +75,7 @@ Ship >> position [
 
 { #category : 'as yet unclassified' }
 Ship >> refill [
-	fuel:=100.
+	fuel:=20.
 ]
 
 { #category : 'accessing' }
