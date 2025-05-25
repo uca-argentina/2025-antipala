@@ -18,7 +18,7 @@ WormHole class >> at: arg1 [
 	^ self new initializeWith: arg1
 ]
 
-{ #category : 'accessing' }
+{ #category : 'as yet unclassified' }
 WormHole class >> at: start and: finish [
 
 	^ self new initializeWith: start and: finish
@@ -28,20 +28,19 @@ WormHole class >> at: start and: finish [
 WormHole >> applyEffectTo: aShip [
 	| effect |
 	effect := self applyWormEffectTo: aShip position.
-	aShip advance: effect.
-	aShip spendfuel: effect abs.
 	^effect
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 WormHole >> applyWormEffectTo: myActualPosition [ 
-	| isInPositionY isInPositionZ |
-	isInPositionY:= myActualPosition = positionY.
-	isInPositionZ:= myActualPosition = positionZ.
-	
-	isInPositionY ifTrue: [^positionZ - positionY ].
-	isInPositionZ ifTrue: [ ^(positionZ - positionY)negated ].
-	^0.
+    | isInPositionY isInPositionZ |
+    isInPositionY := myActualPosition = positionY.
+    isInPositionZ := myActualPosition = positionZ.
+
+    isInPositionY ifTrue: [ ^ (positionZ - positionY) ].
+    isInPositionZ ifTrue: [ ^ (positionZ - positionY) negated ].
+    ^ 0
+
 ]
 
 { #category : 'initialization' }
@@ -50,7 +49,7 @@ WormHole >> initializeWith: arg1 [
 	positionY := arg1
 ]
 
-{ #category : 'initialization' }
+{ #category : 'as yet unclassified' }
 WormHole >> initializeWith: aPositionY and: aPositionZ [
 	aPositionY negative ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
 	aPositionZ negative ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
@@ -63,13 +62,13 @@ WormHole >> validatePosition: aPosition [
 	^(positionY == aPosition) or: (positionZ == aPosition).
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 WormHole >> whereIsMyPositionY [
 
 	^ positionY
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 WormHole >> whereIsMyPositionZ [
 
 	^ positionZ

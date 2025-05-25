@@ -19,14 +19,16 @@ self
 
 { #category : 'tests' }
 GameBoardTest >> testGameBoardCanMoveAShip [
-	| gameboard actualShip aPositionY aPositionZ wormhole |
+
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
 
 	"despues setear el agujero"
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard with: 40 and: wormhole.
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 3.
 	
@@ -43,13 +45,14 @@ self
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanSpendFuelAmountwithEffect [
-	| gameboard actualShip aPositionY aPositionZ wormhole |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard with: 10 and: wormhole .
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 10.
 	
@@ -58,13 +61,14 @@ GameBoardTest >> testShipCanSpendFuelAmountwithEffect [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
-	| gameboard actualShip aPositionY aPositionZ wormhole |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard with: 10 and: wormhole .
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 10.
 	
@@ -73,13 +77,14 @@ GameBoardTest >> testShipCanUseTheWormHoleYposition [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleZposition [
-	| gameboard actualShip aPositionY aPositionZ wormhole |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	gameboard := GameBoard with: 10 and: wormhole .
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 30.
 	

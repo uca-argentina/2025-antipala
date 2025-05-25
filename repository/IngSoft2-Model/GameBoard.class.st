@@ -29,8 +29,8 @@ GameBoard >> move: ship with: adiceThrow [
 	
 	"Primero avanza la nave con el dado"
 	ship advance: adiceThrow.
+	ship spendfuel:adiceThrow.
 	newPosition := ship position.
-	effects ifNil: [ self error: 'effects no fue inicializado' ].
 	"Busca si hay un obstáculo en la posición actual"
 	obstacleAtPosition := effects detect: [:obs | obs validatePosition: newPosition] ifNone: [nil].
 
