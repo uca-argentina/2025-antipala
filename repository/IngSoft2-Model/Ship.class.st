@@ -10,7 +10,8 @@ Class {
 		'id',
 		'turn',
 		'fuel',
-		'laps'
+		'laps',
+		'backupPosition'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -35,6 +36,12 @@ Ship >> advanceLap [
 { #category : 'as yet unclassified' }
 Ship >> advanceTurn [
 	turn:=turn+1.
+]
+
+{ #category : 'accessing' }
+Ship >> backupPosition: aPosition [
+
+backupPosition:=aPosition.
 ]
 
 { #category : 'as yet unclassified' }
@@ -66,6 +73,11 @@ Ship >> laps [
 { #category : 'accessing' }
 Ship >> moveTo: newposition [
 	position := newposition.
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> myBackupPosition [
+^backupPosition.
 ]
 
 { #category : 'accessing' }

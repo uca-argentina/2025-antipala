@@ -23,8 +23,14 @@ BlackHole class >> at: arg1 [
 BlackHole >> applyEffectTo: aShip [
 	| effect |
 	effect := -4.
-	aShip advance: effect.
-	aShip spendfuel: effect abs.
+	(aShip fuel>=effect abs)
+		ifTrue: [
+			aShip advance: effect.
+			aShip spendfuel: effect abs
+		]
+		ifFalse: [
+			aShip moveTo: (aShip myBackupPosition).
+		].
 ]
 
 { #category : 'initialization' }

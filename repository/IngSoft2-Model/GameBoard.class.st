@@ -27,8 +27,8 @@ GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [
 GameBoard >> move: ship with: adiceThrow [
 
 	| newPosition obstacleAtPosition|
-	
 	"Primero avanza la nave con el dado"
+	ship backupPosition: ship position.
 	ship advance: adiceThrow.
 	ship spendfuel:adiceThrow.
 	newPosition := ship position.
