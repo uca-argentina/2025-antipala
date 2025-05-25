@@ -2,8 +2,6 @@ Class {
 	#name : 'HyperJump',
 	#superclass : 'Object',
 	#instVars : [
-		'positionY',
-		'positionZ',
 		'effectposition',
 		'squares',
 		'parsecs',

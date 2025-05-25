@@ -5,7 +5,7 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 HyperJumpTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
 
 	| gameboard actualShip hyperJump aCollectionOfEffects totalSquares |
@@ -23,7 +23,7 @@ HyperJumpTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
 	
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 HyperJumpTest >> testWhenTheShipEntersMultipleTimesThenItAdvancesDiferentSquares [
 
 	| gameboard actualShip hyperJump aCollectionOfEffects totalSquares |
