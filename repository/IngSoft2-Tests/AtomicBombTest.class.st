@@ -6,6 +6,10 @@ Class {
 }
 
 { #category : 'tests' }
+AtomicBombTest >> testBanana [
+]
+
+{ #category : 'tests' }
 AtomicBombTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
 
 	| gameboard  aCollectionOfEffects totalSquares ships atomicBomb |
