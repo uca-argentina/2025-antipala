@@ -6,6 +6,10 @@ Class {
 }
 
 { #category : 'tests' }
+HiperGravityTest >> testBanana [
+]
+
+{ #category : 'tests' }
 HiperGravityTest >> testWhenTheShipEnterInAHiperGravityHoleAndDontMoveFuelStaysTheSame [
 	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
 	totalSquares := 100.
@@ -37,6 +41,7 @@ HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleAndPassTheConditionHe
 	gameboard move: actualShip with: 10.
 	gameboard move: actualShip with: 10.
 	self assert: actualShip position equals: 15.
+	self assert: actualShip fuel equals: 85.
 ]
 
 { #category : 'tests' }
