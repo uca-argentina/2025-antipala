@@ -2,35 +2,30 @@ Class {
 	#name : 'HyperGravity',
 	#superclass : 'Object',
 	#instVars : [
-		'positionY',
-		'positionZ',
-		'effectposition'
-	],
-	#classInstVars : [
-		'positionY'
+		'hyperGravityPosition',
+		'hyperGravityXValue'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-HyperGravity class >> at: arg1 [
-
-	^ self new initializeWith: arg1
+{ #category : 'accessing' }
+HyperGravity class >> atPosition: aPosition withValue: xValue [ 
+	^ self new initializeWith: aPosition and: xValue.
 ]
 
 { #category : 'as yet unclassified' }
 HyperGravity >> applyEffectTo: aShip [
-
+^0.
 ]
 
-{ #category : 'as yet unclassified' }
-HyperGravity >> initializeWith: arg1 [
-
-	effectposition := arg1
+{ #category : 'initialization' }
+HyperGravity >> initializeWith: aPosition and: aXvalue [ 
+	hyperGravityPosition:=aPosition.
+	hyperGravityXValue:= aXvalue.
 ]
 
 { #category : 'method' }
-HyperGravity >> validatePosition: aPosition [ 
-	^(effectposition == aPosition).
+HyperGravity >> validatePosition: aPosition [
+	^hyperGravityPosition==aPosition.
 ]
