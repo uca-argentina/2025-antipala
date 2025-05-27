@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'hyperGravityPosition',
-		'hyperGravityXValue'
+		'hyperGravityXValue',
+		'hyperGravityStatus'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -19,10 +20,28 @@ HyperGravity >> applyEffectTo: aShip [
 ^0.
 ]
 
+{ #category : 'accessing' }
+HyperGravity >> hyperGravityStatus [
+
+^hyperGravityStatus.
+]
+
 { #category : 'initialization' }
 HyperGravity >> initializeWith: aPosition and: aXvalue [ 
 	hyperGravityPosition:=aPosition.
 	hyperGravityXValue:= aXvalue.
+	hyperGravityStatus:= 0. "0 significa que no esta activado"
+]
+
+{ #category : 'as yet unclassified' }
+HyperGravity >> setHyperGravityStatus: aValue [
+
+hyperGravityStatus:=aValue.
+]
+
+{ #category : 'as yet unclassified' }
+HyperGravity >> validateCondition: aThrowDice [
+^aThrowDice>=hyperGravityXValue.
 ]
 
 { #category : 'method' }

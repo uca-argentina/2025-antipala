@@ -25,26 +25,33 @@ GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [
 
 { #category : 'accessing' }
 GameBoard >> move: ship with: adiceThrow [
-
 	| newPosition obstacleAtPosition effect |
+
 	"Primero avanza la nave con el dado"
 	ship advance: adiceThrow.
 	ship spendfuel: adiceThrow.
 	newPosition := ship position.
-	newPosition >= squares ifTrue: [newPosition:= newPosition-squares]. 
+	newPosition >= squares ifTrue: [ newPosition := newPosition - squares ].
+
 	"Busca si hay un obstáculo en la posición actual"
 	obstacleAtPosition := effects
-		                      detect: [ :obs |
-		                      obs validatePosition: newPosition ]
-		                      ifNone: [ nil ].
-
+		detect: [ :obs | obs validatePosition: newPosition ]
+		ifNone: [ nil ].
 
 	obstacleAtPosition ifNotNil: [
+
+		(obstacleAtPosition isKindOf: HyperGravity) ifTrue: [
+			ship changeHyperGravityStatus.
+].
+		"Aplicar efecto si no es HyperGravity o si ya fue superado"
 		effect := obstacleAtPosition applyEffectTo: ship.
 		ship advance: effect.
-		ship spendfuel: effect abs ].
+		ship spendfuel: effect abs.
+	].
+
 	ship advanceTurn.
-	
+
+	"Verificar si cruzó la meta"
 	ship position >= squares ifFalse: [ ^ self ].
 	ship advance: 0 - squares.
 	ship advanceLap.

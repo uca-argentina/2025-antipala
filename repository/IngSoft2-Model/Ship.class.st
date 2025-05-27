@@ -10,7 +10,8 @@ Class {
 		'id',
 		'turn',
 		'fuel',
-		'laps'
+		'laps',
+		'hyperGravityStatus'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -38,6 +39,11 @@ Ship >> advanceTurn [
 ]
 
 { #category : 'as yet unclassified' }
+Ship >> changeHyperGravityStatus [
+hyperGravityStatus := hyperGravityStatus = 0 ifTrue: [ 1 ] ifFalse: [ 0 ].
+]
+
+{ #category : 'as yet unclassified' }
 Ship >> fuel [
 	^fuel.
 ]
@@ -47,6 +53,11 @@ Ship >> getId [
    ^id.
 ]
 
+{ #category : 'accessing' }
+Ship >> hyperGravityStatus [
+^hyperGravityStatus.
+]
+
 { #category : 'initialization' }
 Ship >> initializeWith: aId [
 
@@ -54,7 +65,8 @@ Ship >> initializeWith: aId [
 	id := aId.
 	turn := 0.
 	laps := 0.
-	fuel := 100
+	fuel := 100.
+	hyperGravityStatus:=0.
 ]
 
 { #category : 'as yet unclassified' }
@@ -76,6 +88,11 @@ Ship >> position [
 { #category : 'as yet unclassified' }
 Ship >> refill [
 	fuel:=20.
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> refundFuel: quantity [ 
+	fuel := fuel + quantity.
 ]
 
 { #category : 'accessing' }

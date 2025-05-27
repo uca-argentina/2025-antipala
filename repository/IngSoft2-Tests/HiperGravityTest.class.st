@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-HiperGravityTest >> testBanana [
+HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleThenChangeHisHyperGravityStatus [
 
 	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
 	totalSquares := 100.
@@ -18,6 +18,5 @@ HiperGravityTest >> testBanana [
 		             including: aCollectionOfEffects.
 	actualShip := Ship create: 1.
 	gameboard move: actualShip with: 5.
-	gameboard move: actualShip with: 5.
-	self assert: actualShip position equals: 5.
+	self assert: actualShip hyperGravityStatus equals: 1.
 ]
