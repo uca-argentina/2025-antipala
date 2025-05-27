@@ -39,8 +39,9 @@ Ship >> advanceTurn [
 ]
 
 { #category : 'as yet unclassified' }
-Ship >> changeHyperGravityStatus [
-hyperGravityStatus := hyperGravityStatus = 0 ifTrue: [ 1 ] ifFalse: [ 0 ].
+Ship >> changeHyperGravityStatus: aValue [
+Transcript show: 'Seteando hyperGravityStatus en: ', aValue printString ; cr.
+hyperGravityStatus := aValue.
 ]
 
 { #category : 'as yet unclassified' }

@@ -34,12 +34,6 @@ HyperGravity >> initializeWith: aPosition and: aXvalue [
 ]
 
 { #category : 'as yet unclassified' }
-HyperGravity >> setHyperGravityStatus: aValue [
-
-hyperGravityStatus:=aValue.
-]
-
-{ #category : 'as yet unclassified' }
 HyperGravity >> validateCondition: aThrowDice [
 ^aThrowDice>=hyperGravityXValue.
 ]

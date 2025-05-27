@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'squares',
 		'wormhole',
-		'effects'
+		'effects',
+		'lastEffect'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -25,34 +26,54 @@ GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [
 
 { #category : 'accessing' }
 GameBoard >> move: ship with: adiceThrow [
-	| newPosition obstacleAtPosition effect |
+| newPosition obstacleAtPosition effect |
 
-	"Primero avanza la nave con el dado"
+(ship hyperGravityStatus = 1) ifTrue: [
+	(lastEffect isKindOf: HyperGravity) ifTrue: [
+		(lastEffect validateCondition: adiceThrow)
+			ifTrue: [
+				ship changeHyperGravityStatus: 0.
+				^nil
+			]
+			ifFalse: [
+				^nil.
+				Transcript show: 'La condición de hipergravedad no se cumplió'; cr.
+			].
+	].
+].
+
+	"Avanza la nave y gasta combustible"
 	ship advance: adiceThrow.
 	ship spendfuel: adiceThrow.
 	newPosition := ship position.
 	newPosition >= squares ifTrue: [ newPosition := newPosition - squares ].
 
-	"Busca si hay un obstáculo en la posición actual"
+	"Busca si hay un efecto en esa posición"
 	obstacleAtPosition := effects
 		detect: [ :obs | obs validatePosition: newPosition ]
 		ifNone: [ nil ].
-
+		
 	obstacleAtPosition ifNotNil: [
 
 		(obstacleAtPosition isKindOf: HyperGravity) ifTrue: [
-			ship changeHyperGravityStatus.
-].
-		"Aplicar efecto si no es HyperGravity o si ya fue superado"
+			lastEffect:=obstacleAtPosition.
+			Transcript show: 'Entró al HyperGravity por primera vez'; cr.
+			ship changeHyperGravityStatus: 1.
+			^nil.
+		].
+		"Aplicar el efecto si no es HyperGravity"
 		effect := obstacleAtPosition applyEffectTo: ship.
-		ship advance: effect.
-		ship spendfuel: effect abs.
+		effect ifNotNil: [
+			ship advance: effect.
+			ship spendfuel: effect abs.
+		].
 	].
 
+	"Avanza el turno"
 	ship advanceTurn.
 
-	"Verificar si cruzó la meta"
-	ship position >= squares ifFalse: [ ^ self ].
+	"Verifica si cruzó la meta"
+	ship position >= squares ifFalse: [ ^self ].
 	ship advance: 0 - squares.
 	ship advanceLap.
 ]
@@ -74,4 +95,5 @@ GameBoard >> with: numberOfSquares and: aWormhole [
 GameBoard >> with: numberOfSquares including: aCollectionOfEffects [
 	squares := numberOfSquares.
 	effects:= aCollectionOfEffects .
+	lastEffect:=nil.
 ]
