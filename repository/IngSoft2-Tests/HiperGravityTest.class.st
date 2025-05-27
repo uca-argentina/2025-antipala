@@ -6,6 +6,23 @@ Class {
 }
 
 { #category : 'tests' }
+HiperGravityTest >> testWhenTheShipEnterInAHiperGravityHoleAndDontMoveTheFuelStaysTheSame [
+	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
+	totalSquares := 100.
+	hyperGravity := HyperGravity atPosition: 5 withValue: 9.
+	aCollectionOfEffects := OrderedCollection new.
+	aCollectionOfEffects add: hyperGravity .
+	gameboard := GameBoard
+		             with: totalSquares
+		             including: aCollectionOfEffects.
+	actualShip := Ship create: 1.
+	gameboard move: actualShip with: 5.
+	gameboard move: actualShip with: 8.
+	gameboard move: actualShip with: 7.
+	self assert: actualShip fuel equals: 95.
+]
+
+{ #category : 'tests' }
 HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleAndPassTheConditionHeCanMove [
 	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
 	totalSquares := 100.
