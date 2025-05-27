@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-HiperGravityTest >> testWhenTheShipEnterInAHiperGravityHoleAndDontMoveTheFuelStaysTheSame [
+HiperGravityTest >> testWhenTheShipEnterInAHiperGravityHoleAndDontMoveFuelStaysTheSame [
 	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
 	totalSquares := 100.
 	hyperGravity := HyperGravity atPosition: 5 withValue: 9.
