@@ -6,7 +6,29 @@ Class {
 }
 
 { #category : 'tests' }
-HiperGravityTest >> testBanana [
+HiperGravityTest >> testTwoShipsEnteredInTheHyperGravityHoleOneExitAndTheOtherNot [
+	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity actualShip2 |
+	totalSquares := 100.
+	hyperGravity := HyperGravity atPosition: 5 withValue: 9.
+	aCollectionOfEffects := OrderedCollection new.
+	aCollectionOfEffects add: hyperGravity .
+	gameboard := GameBoard
+		             with: totalSquares
+		             including: aCollectionOfEffects.
+	actualShip := Ship create: 1.
+	actualShip2 := Ship create: 2.
+	gameboard move: actualShip with: 5.
+	gameboard move: actualShip2 with: 5.
+	gameboard move: actualShip with: 10.
+	gameboard move: actualShip with: 10.
+	gameboard move: actualShip2 with: 6.
+
+	self assert: actualShip position equals: 15.
+	self assert: actualShip2 position equals: 5.
+	
+
+
+
 ]
 
 { #category : 'tests' }

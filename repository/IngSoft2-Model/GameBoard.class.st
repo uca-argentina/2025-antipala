@@ -29,8 +29,8 @@ GameBoard >> move: ship with: adiceThrow [
 | newPosition obstacleAtPosition effect |
 
 (ship hyperGravityStatus = 1) ifTrue: [
-	(lastEffect isKindOf: HyperGravity) ifTrue: [
-		(lastEffect validateCondition: adiceThrow)
+	(ship theLastEffect isKindOf: HyperGravity) ifTrue: [
+		(ship theLastEffect validateCondition: adiceThrow)
 			ifTrue: [
 				ship changeHyperGravityStatus: 0.
 				^nil
@@ -56,7 +56,7 @@ GameBoard >> move: ship with: adiceThrow [
 	obstacleAtPosition ifNotNil: [
 
 		(obstacleAtPosition isKindOf: HyperGravity) ifTrue: [
-			lastEffect:=obstacleAtPosition.
+			ship settheLastEffect:obstacleAtPosition.
 			Transcript show: 'Entró al HyperGravity por primera vez'; cr.
 			ship changeHyperGravityStatus: 1.
 			^nil.
