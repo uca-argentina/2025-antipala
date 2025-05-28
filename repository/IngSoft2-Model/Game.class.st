@@ -75,6 +75,30 @@ Game class >> testFuel: fuel [
 ]
 
 { #category : 'initialization' }
+Game class >> testWithBoardBuilder [
+
+	| numberOfSquares  gameboard dices numberOfLaps ships testGame  boardbuilder |
+	numberOfSquares := 15.
+	numberOfLaps := 2.
+	ships := OrderedCollection new.
+	ships add: (Ship create: 1).
+	ships add: (Ship create: 2).
+	ships add: (Ship create: 3).
+	dices := OrderedCollection new.
+	dices add: (Dice with:6).
+	boardbuilder:= BoardBuilder with: numberOfSquares and: dices and: ships.
+	gameboard:= boardbuilder generateEffectsForBoard .
+	testGame := self
+		            with: dices
+		            and: gameboard
+		            and: ships
+		            and: numberOfLaps.
+
+	testGame enableTestMode.
+	^ testGame
+]
+
+{ #category : 'initialization' }
 Game class >> with: aCollectionOfDices and: aGameBoard and: aCollectionOfShips [ 
 	^(self new) intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShips .
 ]

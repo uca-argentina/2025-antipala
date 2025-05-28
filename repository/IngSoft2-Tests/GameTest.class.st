@@ -136,6 +136,30 @@ Bucle:
 ]
 
 { #category : 'tests' }
+GameTest >> testGameWithBoardBuilder [
+
+	| game throw |
+	game := Game testWithBoardBuilder .
+	throw := game throwDices.
+	throw := game throwDices.
+	throw := game throwDices.
+	throw := game throwDices.
+	throw := game throwDices.
+	throw := game throwDices.
+
+
+	self assert: game hasEnded equals: false.
+	game showRanking.
+	"
+Bucle:
+	tirar dices
+	mover nave
+	terminojuego
+	cambiar naveActual
+"
+]
+
+{ #category : 'tests' }
 GameTest >> testTheGameCanFinish [
 
 	| game count |
