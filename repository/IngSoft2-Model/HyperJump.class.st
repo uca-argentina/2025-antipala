@@ -43,7 +43,7 @@ HyperJump >> initializeWith: position and: totalSquares [
 	currentIndex := 1.
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 HyperJump >> validatePosition: aPosition [ 
 	^(effectposition == aPosition).
 ]

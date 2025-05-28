@@ -31,7 +31,7 @@ AtomicBomb >> initializeWith: position and: aCollectionOfShips [
 	effectposition := position
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 AtomicBomb >> validatePosition: aPosition [ 
 	^(effectposition == aPosition).
 ]

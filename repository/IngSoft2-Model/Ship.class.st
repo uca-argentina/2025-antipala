@@ -100,8 +100,9 @@ Ship >> setPosition:unNumero [
 
 { #category : 'as yet unclassified' }
 Ship >> setfuel:adicemax [
-	fuel:=maxAmount:=2*adicemax.
-	maxAmount:=22*adicemax.
+	maxAmount:=2*adicemax.
+	fuel:=maxAmount.
+	
 ]
 
 { #category : 'as yet unclassified' }

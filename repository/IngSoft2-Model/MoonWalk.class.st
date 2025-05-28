@@ -37,7 +37,7 @@ MoonWalk >> initializeWith: position and: aCollectionOfShips and: n [
 	walk := n.
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 MoonWalk >> validatePosition: aPosition [ 
 	^(effectposition == aPosition).
 ]
