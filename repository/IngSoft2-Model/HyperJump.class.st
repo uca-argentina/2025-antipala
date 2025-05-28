@@ -18,6 +18,12 @@ HyperJump class >> at: positions and: totalSquares [
 ]
 
 { #category : 'as yet unclassified' }
+HyperJump class >> with: context at: position [
+
+	^ self new initializeWith: context at: position 
+]
+
+{ #category : 'as yet unclassified' }
 HyperJump >> applyEffectTo: aShip [
 
 	| percentage jumpSquares |
@@ -32,6 +38,11 @@ HyperJump >> applyEffectTo: aShip [
     jumpSquares := ((percentage / 100) * squares ) rounded.
 
     ^ jumpSquares
+]
+
+{ #category : 'as yet unclassified' }
+HyperJump >> effectProbability [
+	^8
 ]
 
 { #category : 'as yet unclassified' }

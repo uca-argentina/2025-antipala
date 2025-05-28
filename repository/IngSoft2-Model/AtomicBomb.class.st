@@ -18,11 +18,22 @@ AtomicBomb class >> at: positions and: aCollectionOfShips [
 	^ self new initializeWith: positions and: aCollectionOfShips
 ]
 
+{ #category : 'initialize' }
+AtomicBomb class >> with: context at: position [
+
+	^ self new initializeWith: context at: position 
+]
+
 { #category : 'as yet unclassified' }
 AtomicBomb >> applyEffectTo: actualShip [
 
 	ships do: [ :aShip | aShip moveTo: 0 ].
 	^0.
+]
+
+{ #category : 'as yet unclassified' }
+AtomicBomb >> effectProbability [
+	^2
 ]
 
 { #category : 'as yet unclassified' }

@@ -8,11 +8,18 @@ Class {
 		'squares',
 		'wormhole',
 		'effects',
-		'lastEffect'
+		'lastEffect',
+		'die'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'as yet unclassified' }
+GameBoard class >> testBoardWith: numberOfSquares in: aGame [
+
+	^ self new testBoardWith: numberOfSquares in: aGame
+]
 
 { #category : 'accessing' }
 GameBoard class >> with: numberOfSquares and: aWormHole [ 
@@ -22,6 +29,60 @@ GameBoard class >> with: numberOfSquares and: aWormHole [
 { #category : 'as yet unclassified' }
 GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [ 
 	^ self new with: numberOfSquares including: aCollectionOfEffects.
+]
+
+{ #category : 'testing' }
+GameBoard >> createWeightedEffectList [
+	| effectClasses weightedList |
+	effectClasses := { 
+		BlackHole. HyperGravity. MoonWalk. HyperJump. AtomicBomb. NoEffect 
+	}.
+	weightedList := OrderedCollection new.
+
+	effectClasses do: [:class |
+		1 to: class effectProbability do: [ :i |
+			weightedList add: class ].
+	].
+
+	^ weightedList
+	
+"es una lista con: 
+40 casilleros sin nada, 
+2 con atomic bomb, 
+20 blackholes,..."
+]
+
+{ #category : 'testing' }
+GameBoard >> generateEffectsForBoard [
+	| effectClasses counts indexList random pos effect|
+	effectClasses := { 
+		BlackHole. HyperGravity. MoonWalk. HyperJump. AtomicBomb. NoEffect 
+	}.
+	effects := OrderedCollection new. "reinicia los efectos actuales"
+	random := Random new.
+
+	"1. Calcular la cantidad de casilleros para cada efecto según su %"
+	counts := effectClasses collect: [:class |
+		(squares * class effectProbability / 100) rounded
+	].
+
+	"2. Generar una lista de posiciones disponibles"
+	indexList := (1 to: squares ) asOrderedCollection.
+
+	"3. Asignar efectos aleatoriamente a las posiciones"
+	effectClasses with: counts do: [:class :count |
+		1 to: count do: [:i |
+			indexList isEmpty ifTrue: [^ effects]. "Por si rounding excede"
+			pos := indexList removeAt: (random nextInt: indexList size) + 1.
+			class = NoEffect
+				ifFalse: [
+					effect := self instantiateEffect: class at: pos.
+					effects add: effect
+				].
+		].
+	].
+
+
 ]
 
 { #category : 'accessing' }
@@ -84,6 +145,20 @@ GameBoard >> squares [
 	^ squares
 ]
 
+{ #category : 'testing' }
+GameBoard >> testBoardWith: numberOfSquares in: aGame [
+
+	squares := numberOfSquares.
+	effects := OrderedCollection new.
+	lastEffect := nil.
+	die := ChargeDice create.
+	effects add: (HyperJump at: die rollGameBoard and: numberOfSquares).
+	effects add: (HyperGravity atPosition: die withValue: 2).
+	effects add: (MoonWalk at: die and: aGame ships and: 1).
+	effects add: (AtomicBomb at: die rollGameBoard and: numberOfSquares).
+	effects add: (BlackHole at: die).
+]
+
 { #category : 'accessing' }
 GameBoard >> with: numberOfSquares and: aWormhole [
 	numberOfSquares >3 ifFalse: [ Error signal: 'The number of squares should be more than 3' ].
@@ -91,7 +166,7 @@ GameBoard >> with: numberOfSquares and: aWormhole [
 	wormhole:= aWormhole .
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 GameBoard >> with: numberOfSquares including: aCollectionOfEffects [
 	squares := numberOfSquares.
 	effects:= aCollectionOfEffects .

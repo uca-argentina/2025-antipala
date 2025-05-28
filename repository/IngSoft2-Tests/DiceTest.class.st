@@ -26,6 +26,19 @@ DiceTest >> testCreateAChargeDiceReturn5 [
 ]
 
 { #category : 'tests' }
+DiceTest >> testCreateAChargeDiceReturnADefinedSequence [
+
+	| aDice |
+	aDice := ChargeDice create.
+	self assert: aDice rollGameBoard equals: 1.
+	self assert: aDice rollGameBoard equals: 2.
+	self assert: aDice rollGameBoard equals: 3.
+	self assert: aDice rollGameBoard equals: 4.
+	self assert: aDice rollGameBoard equals: 5.
+	self assert: aDice rollGameBoard equals: 1.
+]
+
+{ #category : 'tests' }
 DiceTest >> testCreateADiceBetween1And6Faces [
 
 	| aDice result |

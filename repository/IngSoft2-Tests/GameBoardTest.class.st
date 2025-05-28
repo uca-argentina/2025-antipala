@@ -130,3 +130,30 @@ GameBoardTest >> testTheShipsUseTheCircularBoard [
 	self assert: actualShip position equals: 1.
 	self assert: actualShip laps equals: 1
 ]
+
+{ #category : 'tests' }
+GameBoardTest >> testTheTestGameboard [
+
+	| gameboard actualShip |
+	gameboard := GameBoard testBoardWith: 50 in: Game test.
+	actualShip := Ship create: 1.
+
+	self assert: actualShip position equals: 0.
+	gameboard move: actualShip with: 1.
+
+	self assert: actualShip position equals: 9
+]
+
+{ #category : 'tests' }
+GameBoardTest >> testTheTestGameboardHasAHyperJumpOnTheFirstSquare [
+
+	| gameboard actualShip |
+	gameboard := GameBoard testBoardWith: 50.
+	actualShip := Ship create: 1.
+
+	self assert: actualShip position equals: 0.
+
+	gameboard move: actualShip with: 1.
+
+	self assert: actualShip position equals: 9.
+]

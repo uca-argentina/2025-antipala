@@ -21,12 +21,23 @@ MoonWalk class >> at: position and: aCollectionOfShips and: n [
 ]
 
 { #category : 'as yet unclassified' }
+MoonWalk class >> with: context at: position [
+
+	^ self new initializeWith: context at: position
+]
+
+{ #category : 'as yet unclassified' }
 MoonWalk >> applyEffectTo: aShip [
 
 	(ships select: [ :ship | ship ~= aShip ]) do: [ :ship |
 		ship advance: 0-walk ].
 
 	^ 0
+]
+
+{ #category : 'as yet unclassified' }
+MoonWalk >> effectProbability [
+	^10
 ]
 
 { #category : 'as yet unclassified' }

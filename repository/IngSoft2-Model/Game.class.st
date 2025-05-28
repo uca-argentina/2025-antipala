@@ -25,7 +25,9 @@ Game class >> test [
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
-	gameboard := GameBoard with: numberOfSquares including: aCollectionOfEffects.
+	gameboard := GameBoard
+		             with: numberOfSquares
+		             including: aCollectionOfEffects.
 	numberOfLaps := 2.
 	ships := OrderedCollection new.
 	ships add: (Ship create: 1).
@@ -39,7 +41,7 @@ Game class >> test [
 		            and: ships
 		            and: numberOfLaps.
 
-	testGame enableTestMode.
+	testGame enableTestMode.	
 	^ testGame
 ]
 
@@ -145,6 +147,12 @@ Game >> intializeWith: aCollectionOfDices and: aGameBoard and: aCollectionOfShip
 	testGame :=false.
 	theGameHasFinish := false.
 	shipsOnCooldown := Dictionary new
+]
+
+{ #category : 'method' }
+Game >> ships [
+
+	^ ships
 ]
 
 { #category : 'method' }

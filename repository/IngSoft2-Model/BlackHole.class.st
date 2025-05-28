@@ -20,6 +20,12 @@ BlackHole class >> at: arg1 [
 ]
 
 { #category : 'as yet unclassified' }
+BlackHole class >> with: context at: position [
+
+	^ self new initializeWith: context at: position 
+]
+
+{ #category : 'as yet unclassified' }
 BlackHole >> applyEffectTo: aShip [
 	| effect |
 	effect := -4.
@@ -28,6 +34,11 @@ BlackHole >> applyEffectTo: aShip [
 ]
 
 { #category : 'as yet unclassified' }
+BlackHole >> effectProbability [
+	^20
+]
+
+{ #category : 'initialization' }
 BlackHole >> initializeWith: arg1 [
 
 	blackholeposition := arg1

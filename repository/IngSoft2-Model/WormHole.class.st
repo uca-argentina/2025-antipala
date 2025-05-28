@@ -43,6 +43,11 @@ WormHole >> applyWormEffectTo: myActualPosition [
 
 ]
 
+{ #category : 'as yet unclassified' }
+WormHole >> effectProbability [
+	^0
+]
+
 { #category : 'initialization' }
 WormHole >> initializeWith: arg1 [
 
