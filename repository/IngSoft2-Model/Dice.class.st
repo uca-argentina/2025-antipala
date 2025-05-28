@@ -30,6 +30,13 @@ face:=aFace.
 ]
 
 { #category : 'method' }
+Dice >> max [
+^ face.
+
+
+]
+
+{ #category : 'method' }
 Dice >> roll [
 ^ (1 to: face ) atRandom.
 

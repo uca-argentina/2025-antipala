@@ -8,10 +8,9 @@ Class {
 { #category : 'tests' }
 ShipTest >> testShipCanAdvance [
 	| ship |
-	ship := Ship new.
-	ship moveTo: 3.
-	ship advance: 2.
-	self assert: ship position equals: 5
+	ship := Ship create:1.
+	ship advance:2.
+	self assert: ship position equals: 2
 ]
 
 { #category : 'tests' }
@@ -25,8 +24,8 @@ ShipTest >> testShipCanAdvanceTurn [
 { #category : 'tests' }
 ShipTest >> testShipCanChangePosition [
 	| ship |
-	ship := Ship new.
-	ship moveTo: 3.
+	ship := Ship create:1.
+	ship setPosition:3.
 	self assert: ship position equals: 3
 ]
 
@@ -50,6 +49,14 @@ ShipTest >> testShipInitialPositionShouldBe0 [
 	| ship |
 	ship := Ship create:1.
 	self assert: ship position equals: 0
+]
+
+{ #category : 'tests' }
+ShipTest >> testShipMaxFuelIsDoubleDiceMaxThrow [
+	| ship |
+	ship := Ship create:1.
+	ship setfuel:10.
+		self assert: ship fuel equals: 20.
 ]
 
 { #category : 'tests' }

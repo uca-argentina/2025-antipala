@@ -11,7 +11,8 @@ Class {
 		'turn',
 		'fuel',
 		'laps',
-		'hyperGravityStatus'
+		'hyperGravityStatus',
+		'maxAmount'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -67,6 +68,7 @@ Ship >> initializeWith: aId [
 	turn := 0.
 	laps := 0.
 	fuel := 100.
+	maxAmount:=100.
 	hyperGravityStatus:=0.
 ]
 
@@ -77,18 +79,13 @@ Ship >> laps [
 ]
 
 { #category : 'accessing' }
-Ship >> moveTo: newposition [
-	position := newposition.
-]
-
-{ #category : 'accessing' }
 Ship >> position [
 	^position
 ]
 
 { #category : 'as yet unclassified' }
 Ship >> refill [
-	fuel:=20.
+	fuel:=maxAmount.
 ]
 
 { #category : 'as yet unclassified' }
@@ -102,8 +99,9 @@ Ship >> setPosition:unNumero [
 ]
 
 { #category : 'as yet unclassified' }
-Ship >> setfuel:afuel [
-	fuel:=afuel.
+Ship >> setfuel:adicemax [
+	fuel:=maxAmount:=2*adicemax.
+	maxAmount:=22*adicemax.
 ]
 
 { #category : 'as yet unclassified' }

@@ -21,7 +21,7 @@ AtomicBomb class >> at: positions and: aCollectionOfShips [
 { #category : 'as yet unclassified' }
 AtomicBomb >> applyEffectTo: actualShip [
 
-	ships do: [ :aShip | aShip moveTo: 0 ].
+	ships do: [ :aShip | aShip setPosition: 0 ].
 	^0.
 ]
 
