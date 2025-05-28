@@ -105,8 +105,10 @@ Ship >> setfuel:adicemax [
 ]
 
 { #category : 'as yet unclassified' }
-Ship >> spendfuel:aFuelamoutspend [  
-	fuel:=fuel-aFuelamoutspend.
+Ship >> spendfuel:aFuelamoutspend [ 
+fuel - aFuelamoutspend < 0
+    ifTrue: [ fuel := 0 ]
+    ifFalse: [ fuel := fuel - aFuelamoutspend ].
 ]
 
 { #category : 'as yet unclassified' }
