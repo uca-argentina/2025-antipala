@@ -21,6 +21,13 @@ MoonWalk class >> at: position and: aCollectionOfShips and: n [
 ]
 
 { #category : 'as yet unclassified' }
+MoonWalk class >> effectProbability [
+
+	^ 0.1
+
+]
+
+{ #category : 'as yet unclassified' }
 MoonWalk >> applyEffectTo: aShip [
 
 	(ships select: [ :ship | ship ~= aShip ]) do: [ :ship |

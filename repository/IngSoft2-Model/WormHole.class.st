@@ -25,6 +25,12 @@ WormHole class >> at: start and: finish [
 ]
 
 { #category : 'as yet unclassified' }
+WormHole class >> effectProbability [
+
+	^ 0
+]
+
+{ #category : 'as yet unclassified' }
 WormHole >> applyEffectTo: aShip [
 	| effect |
 	effect := self applyWormEffectTo: aShip position.

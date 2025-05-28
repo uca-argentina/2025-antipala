@@ -15,6 +15,12 @@ HyperGravity class >> atPosition: aPosition withValue: xValue [
 	^ self new initializeWith: aPosition and: xValue.
 ]
 
+{ #category : 'accessing' }
+HyperGravity class >> effectProbability [
+
+	^ 0.2
+]
+
 { #category : 'as yet unclassified' }
 HyperGravity >> applyEffectTo: aShip [
 ^0.
@@ -33,7 +39,7 @@ HyperGravity >> initializeWith: aPosition and: aXvalue [
 	hyperGravityStatus:= 0. "0 significa que no esta activado"
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 HyperGravity >> isHyperGravity [
     ^ true
 ]

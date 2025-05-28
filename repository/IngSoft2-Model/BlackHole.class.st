@@ -20,6 +20,12 @@ BlackHole class >> at: arg1 [
 ]
 
 { #category : 'as yet unclassified' }
+BlackHole class >> effectProbability [
+
+	^ 0.2
+]
+
+{ #category : 'as yet unclassified' }
 BlackHole >> applyEffectTo: aShip [
 	| effect |
 	effect := -4.

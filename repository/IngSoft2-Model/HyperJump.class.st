@@ -18,6 +18,12 @@ HyperJump class >> at: positions and: totalSquares [
 ]
 
 { #category : 'as yet unclassified' }
+HyperJump class >> effectProbability [
+
+	^ 0.08
+]
+
+{ #category : 'as yet unclassified' }
 HyperJump >> applyEffectTo: aShip [
 
 	| percentage jumpSquares |

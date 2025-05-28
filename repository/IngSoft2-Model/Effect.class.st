@@ -6,6 +6,17 @@ Class {
 }
 
 { #category : 'testing' }
+Effect class >> effectProbability [
+
+	^ 40 "subclassResponsibility"
+]
+
+{ #category : 'testing' }
+Effect >> effectProbability [
+	^ self class effectProbability
+]
+
+{ #category : 'testing' }
 Effect >> isHyperGravity [
     ^ false
 ]

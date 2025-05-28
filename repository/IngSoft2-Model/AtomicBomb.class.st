@@ -19,6 +19,12 @@ AtomicBomb class >> at: positions and: aCollectionOfShips [
 ]
 
 { #category : 'as yet unclassified' }
+AtomicBomb class >> effectProbability [
+
+	^ 0.02
+]
+
+{ #category : 'as yet unclassified' }
 AtomicBomb >> applyEffectTo: actualShip [
 
 	ships do: [ :aShip | aShip moveTo: 0 ].
