@@ -18,52 +18,29 @@ Class {
 { #category : 'initialization' }
 Game class >> test [
 
-	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame aCollectionOfEffects |
-	numberOfSquares := 15.
-	aPositionY := 5.
-	aPositionZ := 10.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-	aCollectionOfEffects := OrderedCollection new.
-	aCollectionOfEffects add: wormhole.
-	gameboard := GameBoard with: numberOfSquares including: aCollectionOfEffects.
-	numberOfLaps := 2.
-	ships := OrderedCollection new.
-	ships add: (Ship create: 1).
-	ships add: (Ship create: 2).
-	ships add: (Ship create: 3).
-	dices := OrderedCollection new.
-	dices add: ChargeDice new.
-	testGame := self
-		            with: dices
-		            and: gameboard
-		            and: ships
-		            and: numberOfLaps.
-
-	testGame enableTestMode.
-	^ testGame
-]
-
-{ #category : 'initialization' }
-Game class >> testFuel: fuel [
-
-	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame ship aCollectionOfEffects|
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame  aCollectionOfEffects|
 	numberOfSquares := 15.
 	numberOfLaps := 2.
 	aPositionY := 5.
-	aPositionZ := 10.
+	aPositionZ := 9.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
 	gameboard := GameBoard
 		             with: numberOfSquares
 		             including: aCollectionOfEffects.
-	ships := OrderedCollection new.
-
-	ship := Ship create: 1.
-	ship setfuel: fuel.
-	ships add: ship.
+	
 	dices := OrderedCollection new.
 	dices add: ChargeDice new.
+	
+	ships := OrderedCollection new.
+
+	ships add: (Ship create: 1).
+	ships add: (Ship create: 2).
+	ships add: (Ship create: 3).
+	(ships at: 1 ) setfuel: dices size * (dices at:1) max.
+	(ships at: 2 ) setfuel: dices size * (dices at:1) max.
+	(ships at: 3 ) setfuel: dices size * (dices at:1) max.	
 	testGame := self
 		            with: dices
 		            and: gameboard

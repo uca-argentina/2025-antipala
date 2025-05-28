@@ -9,7 +9,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 EffectManager >> basicMovementFor: ship withThrow: adiceThrow [
 	"Avanza y gasta combustible según el valor del dado"
 	ship advance: adiceThrow.
@@ -18,26 +18,26 @@ EffectManager >> basicMovementFor: ship withThrow: adiceThrow [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 EffectManager >> calculateNewPositionFor: ship withMaxSquares: squares [
 	"Calcula nueva posición con módulo"
 	^ (ship position - 1) \\ squares + 1
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 EffectManager >> detectObstacleAt: position [
 	"Busca un obstáculo que valide la posición, o devuelve nil"
 	^ effects detect: [ :e | e validatePosition: position ] ifNone: [ nil ]
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 EffectManager >> effects: aCollection [
  effects := aCollection.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 EffectManager >> handleEffectsFor: ship withThrow: adiceThrow maxSquares: squares [
 	| newPosition obstacle effect |
 
@@ -63,7 +63,7 @@ EffectManager >> handleEffectsFor: ship withThrow: adiceThrow maxSquares: square
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 EffectManager >> handleHyperGravityFor: ship withObstacle: obstacle [
 	"Aplica hipergravedad si corresponde. Devuelve true si termina el turno."
 	obstacle isHyperGravity ifTrue: [
@@ -76,39 +76,32 @@ EffectManager >> handleHyperGravityFor: ship withObstacle: obstacle [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 EffectManager >> mustEndTurnFor: ship withThrow: adiceThrow [
-	"Devuelve true si el turno debe terminar por efecto de hipergravedad"
-	(ship hyperGravityStatus = 1 and: [ lastEffect isHyperGravity ]) ifTrue: [
-		(lastEffect validateCondition: adiceThrow)
-			ifTrue: [
-				ship changeHyperGravityStatus: 0.
-				Transcript show: 'Termina turno'; cr.
-				^true
-			]
-			ifFalse: [
-				Transcript show: 'La condición de hipergravedad no se cumplió'; cr.
-				^true
-			].
-	].
-	^false
+    "Devuelve true si el turno debe terminar por efecto de hipergravedad"
+    
+    (ship hyperGravityStatus = 1 and: [ lastEffect isHyperGravity ]) ifFalse: [ ^false ].
+
+    (lastEffect validateCondition: adiceThrow)
+        ifTrue: [
+            ship changeHyperGravityStatus: 0.
+            Transcript show: 'Termina turno'; cr.
+        ]
+        ifFalse: [
+            Transcript show: 'La condición de hipergravedad no se cumplió'; cr.
+        ].
+
+    ^true
 
 ]
 
 { #category : 'asserting' }
 EffectManager >> shouldEndTurnDueToHyperGravityWith: adiceThrow for: ship [
-    ^ ship hyperGravityStatus = 1 
-        and: [ lastEffect isHyperGravity and: [ 
-                (lastEffect validateCondition: adiceThrow) 
-                    ifTrue: [
-                        ship changeHyperGravityStatus: 0.
-                        ^true
-                    ]
-                    ifFalse: [
-                        Transcript show: 'La condición de hipergravedad no se cumplió'; cr.
-                        ^true
-                    ]
-            ]
-        ].
-
+    (ship hyperGravityStatus = 1 and: [ lastEffect isHyperGravity ]) ifTrue: [
+        (lastEffect validateCondition: adiceThrow)
+            ifTrue: [ ship changeHyperGravityStatus: 0 ]
+            ifFalse: [ Transcript show: 'La condición de hipergravedad no se cumplió'; cr ].
+        ^true
+    ].
+^false
 ]

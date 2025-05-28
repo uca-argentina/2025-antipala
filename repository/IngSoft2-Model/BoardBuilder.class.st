@@ -1,11 +1,6 @@
 Class {
 	#name : 'BoardBuilder',
 	#superclass : 'Object',
-	#instVars : [
-		'dices',
-		'squares',
-		'ships'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -98,9 +93,20 @@ BoardBuilder >> generateNoEffect: position [
 ]
 
 { #category : 'as yet unclassified' }
+BoardBuilder >> initAtomicBomb:aCollectionshit position:post [
+	
+
+	^AtomicBomb at:post and:aCollectionshit 
+]
+
+{ #category : 'as yet unclassified' }
 BoardBuilder >> initializeWith: totalSquares and: setOfDices and: aCollectionOfShips [
 	squares:= totalSquares .
 	dices:= setOfDices .
 	ships:= aCollectionOfShips .
 	
+]
+
+{ #category : 'as yet unclassified' }
+BoardBuilder >> randomBoard [
 ]

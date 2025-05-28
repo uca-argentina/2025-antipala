@@ -49,7 +49,7 @@ HyperGravity >> validateCondition: aThrowDice [
 ^aThrowDice>=hyperGravityXValue.
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 HyperGravity >> validatePosition: aPosition [
 	^hyperGravityPosition==aPosition.
 ]

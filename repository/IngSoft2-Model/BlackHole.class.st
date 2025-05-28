@@ -39,7 +39,7 @@ BlackHole >> initializeWith: arg1 [
 	blackholeposition := arg1
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 BlackHole >> validatePosition: aPosition [ 
 	^(blackholeposition == aPosition).
 ]

@@ -42,7 +42,7 @@ GameTest >> testAShipCannotPlayWhenTheGameFinish [
 	game := Game test.
 
 	count := 0.
-	[ count < 10 ] whileTrue: [
+	[ count <14 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 	game showRanking.
@@ -59,12 +59,14 @@ GameTest >> testAShiprestartIffuelisEmpty [
 
 
  
-	game := Game testFuel: 20.
+	game := Game test.
 
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 1 moves'.
 	throw := game throwDices. "Hace avazar a la nave"
-	self assert: throw equals: 'the ship 1 moves'.
+	self assert: throw equals: 'the ship 2 moves'.
+	throw := game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 3 moves'.
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: '1 no tiene combustible'.
 	
@@ -120,8 +122,8 @@ GameTest >> testAllShipsCanPlaySeveralRounds [
 
 	self assert: game hasEnded equals: false.
 
-	throw := game throwDices. "Hace avazar a la nave"
-	self assert: throw equals: 'the ship 1 moves'.
+	throw := game throwDices. "se queda sin combustible"
+	self assert: throw equals: '1 no tiene combustible'.
 
 	self assert: game hasEnded equals: false
 
@@ -166,7 +168,7 @@ GameTest >> testTheGameCanFinish [
 	game := Game test.
 
 	count := 0.
-	[ count < 10 ] whileTrue: [
+	[ count < 14 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
@@ -183,14 +185,14 @@ GameTest >> testTheGameCanShowXPosition [
 	game := Game test.
 
 	count := 0.
-	[ count < 10 ] whileTrue: [
+	[ count < 14 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
 	self
 		assert: game showPosition
 		equals:
-		'The ship: 1, ended in the position: 0 The ship: 2, ended in the position: 10 The ship: 3, ended in the position: 10 '.
+		'The ship: 1, ended in the position: 0 The ship: 2, ended in the position: 9 The ship: 3, ended in the position: 9 '.
 
 	self assert: game hasEnded equals: true.
 	game showRanking
@@ -203,7 +205,7 @@ GameTest >> testTheGameCanTellWhoWin [
 	game := Game test.
 
 	count := 0.
-	[ count < 10 ] whileTrue: [
+	[ count < 14 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
