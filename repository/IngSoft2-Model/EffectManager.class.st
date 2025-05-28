@@ -97,18 +97,11 @@ EffectManager >> mustEndTurnFor: ship withThrow: adiceThrow [
 
 { #category : 'asserting' }
 EffectManager >> shouldEndTurnDueToHyperGravityWith: adiceThrow for: ship [
-    ^ ship hyperGravityStatus = 1 
-        and: [ lastEffect isHyperGravity and: [ 
-                (lastEffect validateCondition: adiceThrow) 
-                    ifTrue: [
-                        ship changeHyperGravityStatus: 0.
-                        ^true
-                    ]
-                    ifFalse: [
-                        Transcript show: 'La condición de hipergravedad no se cumplió'; cr.
-                        ^true
-                    ]
-            ]
-        ].
-
+    (ship hyperGravityStatus = 1 and: [ lastEffect isHyperGravity ]) ifTrue: [
+        (lastEffect validateCondition: adiceThrow)
+            ifTrue: [ ship changeHyperGravityStatus: 0 ]
+            ifFalse: [ Transcript show: 'La condición de hipergravedad no se cumplió'; cr ].
+        ^true
+    ].
+^false
 ]
