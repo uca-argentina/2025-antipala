@@ -8,7 +8,8 @@ Class {
 		'squares',
 		'wormhole',
 		'effects',
-		'lastEffect'
+		'lastEffect',
+		'effectManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -25,57 +26,22 @@ GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [
 ]
 
 { #category : 'accessing' }
-GameBoard >> move: ship with: adiceThrow [
-| newPosition obstacleAtPosition effect |
+GameBoard >> move: ship with: adiceThrow [ 
+	| turnContinues |
+	
+	turnContinues := effectManager handleEffectsFor: ship withThrow: adiceThrow maxSquares: squares.
 
-(ship hyperGravityStatus = 1) ifTrue: [
-	(lastEffect isKindOf: HyperGravity) ifTrue: [
-		(lastEffect validateCondition: adiceThrow)
-			ifTrue: [
-				ship changeHyperGravityStatus: 0.
-				^nil
-			]
-			ifFalse: [
-				^nil.
-				Transcript show: 'La condición de hipergravedad no se cumplió'; cr.
-			].
-	].
-].
+	turnContinues ifFalse: [ ^nil ].
 
-	"Avanza la nave y gasta combustible"
-	ship advance: adiceThrow.
-	ship spendfuel: adiceThrow.
-	newPosition := ship position.
-	newPosition >= squares ifTrue: [ newPosition := newPosition - squares ].
-
-	"Busca si hay un efecto en esa posición"
-	obstacleAtPosition := effects
-		detect: [ :obs | obs validatePosition: newPosition ]
-		ifNone: [ nil ].
-		
-	obstacleAtPosition ifNotNil: [
-
-		(obstacleAtPosition isKindOf: HyperGravity) ifTrue: [
-			lastEffect:=obstacleAtPosition.
-			Transcript show: 'Entró al HyperGravity por primera vez'; cr.
-			ship changeHyperGravityStatus: 1.
-			^nil.
-		].
-		"Aplicar el efecto si no es HyperGravity"
-		effect := obstacleAtPosition applyEffectTo: ship.
-		effect ifNotNil: [
-			ship advance: effect.
-			ship spendfuel: effect abs.
-		].
-	].
-
-	"Avanza el turno"
 	ship advanceTurn.
 
-	"Verifica si cruzó la meta"
-	ship position >= squares ifFalse: [ ^self ].
-	ship advance: 0 - squares.
-	ship advanceLap.
+	(ship position >= squares) ifTrue: [
+		ship advance: 0 - squares.
+		ship advanceLap.
+	].
+
+	^self
+
 ]
 
 { #category : 'accessing' }
@@ -93,7 +59,9 @@ GameBoard >> with: numberOfSquares and: aWormhole [
 
 { #category : 'as yet unclassified' }
 GameBoard >> with: numberOfSquares including: aCollectionOfEffects [
-	squares := numberOfSquares.
-	effects:= aCollectionOfEffects .
-	lastEffect:=nil.
+   squares := numberOfSquares.
+	effects := aCollectionOfEffects.
+	lastEffect := nil.
+	effectManager := EffectManager new.
+	effectManager effects: effects.
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : 'BlackHole',
-	#superclass : 'Object',
+	#superclass : 'Effect',
 	#instVars : [
 		'positionY',
 		'positionZ',

@@ -1,6 +1,6 @@
 Class {
 	#name : 'AtomicBomb',
-	#superclass : 'Object',
+	#superclass : 'Effect',
 	#instVars : [
 		'effectposition',
 		'ships'

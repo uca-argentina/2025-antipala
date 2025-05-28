@@ -1,6 +1,6 @@
 Class {
 	#name : 'HyperGravity',
-	#superclass : 'Object',
+	#superclass : 'Effect',
 	#instVars : [
 		'hyperGravityPosition',
 		'hyperGravityXValue',
@@ -31,6 +31,11 @@ HyperGravity >> initializeWith: aPosition and: aXvalue [
 	hyperGravityPosition:=aPosition.
 	hyperGravityXValue:= aXvalue.
 	hyperGravityStatus:= 0. "0 significa que no esta activado"
+]
+
+{ #category : 'method' }
+HyperGravity >> isHyperGravity [
+    ^ true
 ]
 
 { #category : 'as yet unclassified' }

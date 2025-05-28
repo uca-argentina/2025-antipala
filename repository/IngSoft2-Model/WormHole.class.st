@@ -1,6 +1,6 @@
 Class {
 	#name : 'WormHole',
-	#superclass : 'Object',
+	#superclass : 'Effect',
 	#instVars : [
 		'positionY',
 		'positionZ'
