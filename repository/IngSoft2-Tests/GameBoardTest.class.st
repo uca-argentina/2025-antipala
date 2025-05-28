@@ -20,85 +20,113 @@ self
 { #category : 'tests' }
 GameBoardTest >> testGameBoardCanMoveAShip [
 
-	| gameboard aPositionY aPositionZ wormhole aDice result |
-	"despues setear el agujero"
-	aPositionY := 10.
-	aPositionZ := 30.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-	aDice := ChargeDice new.
-	gameboard := GameBoard with: 40 and: wormhole and: 1.
-	result := aDice roll.
-	gameboard moveShip: result.
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
 
-	self assert: (gameboard positionOf: 1) equals: 5
+	"despues setear el agujero"
+	aPositionY:=10.
+	aPositionZ:=30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 3.
+	
+	self assert: actualShip position equals: 3.
 ]
 
 { #category : 'tests' }
 GameBoardTest >> testGameBoardShouldThrowErrorWhenInitialiceSquaresWith1 [
 self
-	should:[GameBoard with: 3 and:[ WormHole at: 2 and: 3] and:1]
+	should:[GameBoard with: 3 and:[ WormHole at: 2 and: 3]]
 	raise: Error
 	withMessageText: 'The number of squares should be more than 3'.
 ]
 
 { #category : 'tests' }
-GameBoardTest >> testGameboardCanKnowPositionsOfMovedShips [
-
-	| gameboard aPositionY aPositionZ wormhole |
-	aPositionY := 10.
-	aPositionZ := 35.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-
-	gameboard := GameBoard with: 10 and: wormhole and: 1.
-
-	gameboard moveShip: 30.
-
-	self assert: (gameboard positionOf: 1) equals: 30
-]
-
-{ #category : 'tests' }
-GameBoardTest >> testGameboardCanKnowPositionsOfShips [
-
-	| gameboard  aPositionY aPositionZ wormhole |
-	aPositionY := 10.
-	aPositionZ := 30.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-
-	gameboard := GameBoard with: 10 and: wormhole and: 1.
+GameBoardTest >> testShipCanSpendFuelAmountwithEffect [
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
 	
-	"gameboard move: actualShip with: 30."
-
-	self assert: (gameboard positionOf: 1) equals: 0.
+	aPositionY:=10.
+	aPositionZ:=30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 10.
+	
+	self assert: actualShip fuel equals: 70.
 ]
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
-
-	| gameboard aPositionY aPositionZ wormhole aDice result |
-	"despues setear el agujero"
-	aPositionY := 10.
-	aPositionZ := 30.
-	wormhole := WormHole at: aPositionY and: aPositionZ.
-	aDice := ChargeDice new.
-	gameboard := GameBoard with: 40 and: wormhole and: 1.
-	result := aDice roll. "turno 1 "
-	gameboard moveShip: result.
-	result := aDice roll. "turno 2 "
-	gameboard moveShip: result.
-	self assert: (gameboard positionOf: 1) equals: 30
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+	
+	aPositionY:=10.
+	aPositionZ:=30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 10.
+	
+	self assert: actualShip position equals: 30.
 ]
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleZposition [
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+	
+	aPositionY:=10.
+	aPositionZ:=30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 30.
+	
+	self assert: actualShip position equals: 10.
+]
 
-	| gameboard aPositionY aPositionZ wormhole aDice result |
+{ #category : 'tests' }
+GameBoardTest >> testTheGameBoardCanBeInitializedWithACollectionOfEffects [
+
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+
 	"despues setear el agujero"
-	aPositionY := 4.
-	aPositionZ := 5.
+	aPositionY:=10.
+	aPositionZ:=30.
+	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	aCollectionOfEffects:= OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	actualShip:= Ship create:1.
+	gameboard move: actualShip with: 3.
+	
+	self assert: actualShip position equals: 3.
+]
+
+{ #category : 'tests' }
+GameBoardTest >> testTheShipsUseTheCircularBoard [
+
+	| gameboard actualShip aPositionY aPositionZ wormhole aDice aCollectionOfEffects |
+	aPositionY := 2.
+	aPositionZ := 4.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 	aDice := ChargeDice new.
-	gameboard := GameBoard with: 40 and: wormhole and: 1.
-	result := aDice roll. "turno 1 "
-	gameboard moveShip: result.
-	self assert: (gameboard positionOf: 1) equals: 4
+	aCollectionOfEffects := OrderedCollection new.
+	aCollectionOfEffects add: wormhole.
+	gameboard := GameBoard with: 4 including: aCollectionOfEffects.
+	actualShip := Ship create: 1.
+
+	self assert: actualShip position equals: 0.
+	self assert: actualShip laps equals: 0.
+
+	gameboard move: actualShip with: aDice roll.
+
+	self assert: actualShip position equals: 1.
+	self assert: actualShip laps equals: 1
 ]

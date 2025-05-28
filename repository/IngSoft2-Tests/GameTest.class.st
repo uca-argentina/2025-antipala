@@ -20,11 +20,12 @@ GameTest >> testAShipCanAdvance [
 
 	| game throw |
 	game := Game test.
-
 	throw := game throwDices.
-	
-	self assert: game hasEnded equals: false
 
+
+
+	self assert: game hasEnded equals: false.
+	game showRanking.
 	"
 Bucle:
 	tirar dices
@@ -41,14 +42,36 @@ GameTest >> testAShipCannotPlayWhenTheGameFinish [
 	game := Game test.
 
 	count := 0.
-	[ count < 16 ] whileTrue: [
+	[ count <14 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
-
+	game showRanking.
 	self
 		should: [ game throwDices ]
 		raise: Error
 		withMessageText: 'The game ended'
+]
+
+{ #category : 'tests' }
+GameTest >> testAShiprestartIffuelisEmpty [
+
+	| game throw |
+
+
+ 
+	game := Game test.
+
+	throw := game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 1 moves'.
+	throw := game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 2 moves'.
+	throw := game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: 'the ship 3 moves'.
+	throw := game throwDices. "Hace avazar a la nave"
+	self assert: throw equals: '1 no tiene combustible'.
+	
+	
+	game showRanking 
 ]
 
 { #category : 'tests' }
@@ -66,8 +89,16 @@ GameTest >> testAllShipsCanPlayARound [
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 3 moves'.
 
-	self assert: game hasEnded equals: false
+	self assert: game hasEnded equals: false.
 
+	game showPositions
+	"
+Bucle:
+	tirar dados
+	mover nave
+	terminojuego
+	cambiar naveActual
+"
 ]
 
 { #category : 'tests' }
@@ -79,17 +110,78 @@ GameTest >> testAllShipsCanPlaySeveralRounds [
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 1 moves'.
 
+	self assert: game hasEnded equals: false.
+
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 2 moves'.
+
+	self assert: game hasEnded equals: false.
 
 	throw := game throwDices. "Hace avazar a la nave"
 	self assert: throw equals: 'the ship 3 moves'.
 
-	throw := game throwDices. "Hace avazar a la nave"
-	self assert: throw equals: 'the ship 1 moves'.
+	self assert: game hasEnded equals: false.
+
+	throw := game throwDices. "se queda sin combustible"
+	self assert: throw equals: '1 no tiene combustible'.
 
 	self assert: game hasEnded equals: false
 
+
+	"
+Bucle:
+	tirar dices
+	mover nave
+	terminojuego
+	cambiar naveActual
+"
+]
+
+{ #category : 'tests' }
+GameTest >> testGameWithBoardBuilder [
+
+	| game throw |
+	
+	
+	game := Game testWithBoardBuilder .
+	throw := game throwDices.
+	throw := game throwDices.
+	throw := game throwDices.
+	throw := game throwDices.
+	throw := game throwDices.
+	throw := game throwDices.
+
+
+	self assert: game hasEnded equals: false.
+	game showRanking.
+	"
+Bucle:
+	tirar dices
+	mover nave
+	terminojuego
+	cambiar naveActual
+"
+]
+
+{ #category : 'tests' }
+GameTest >> testMoonWalk [
+
+	| game throw |
+	
+	
+	game := Game testEffects .
+	throw := game throwDices.
+
+
+	self assert: game hasEnded equals: false.
+	game showRanking.
+	"
+Bucle:
+	tirar dices
+	mover nave
+	terminojuego
+	cambiar naveActual
+"
 ]
 
 { #category : 'tests' }
@@ -99,32 +191,34 @@ GameTest >> testTheGameCanFinish [
 	game := Game test.
 
 	count := 0.
-	[ count < 16] whileTrue: [
+	[ count < 14 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
 	self deny: game hasEnded equals: false.
-	self assert: game winner equals: '1'
+	self assert: game winner equals: '1'.
+	game showRanking
 	"winner ship: 1"
 ]
 
 { #category : 'tests' }
-GameTest >> testTheGameCanShowPosition [
+GameTest >> testTheGameCanShowXPosition [
 
 	| game count |
 	game := Game test.
 
 	count := 0.
-	[ count < 16 ] whileTrue: [
+	[ count < 14 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
-self assert: (game showShipPosition: 1) equals: 50.
+	self
+		assert: game showPosition
+		equals:
+		'The ship: 1, ended in the position: 0 The ship: 2, ended in the position: 9 The ship: 3, ended in the position: 9 '.
 
-self assert: (game showShipPosition: 2) equals: 45.
-
-self assert: (game showShipPosition: 3) equals: 45.
-self assert: game hasEnded equals: true
+	self assert: game hasEnded equals: true.
+	game showRanking
 ]
 
 { #category : 'tests' }
@@ -134,17 +228,20 @@ GameTest >> testTheGameCanTellWhoWin [
 	game := Game test.
 
 	count := 0.
-	[ count < 16] whileTrue: [
+	[ count < 14 ] whileTrue: [
 		count := count + 1.
 		game throwDices ].
 
-	self assert: game hasEnded equals: true
+	self assert: game hasEnded equals: true.
+	self assert: game winner equals: '1'.
+	game showRanking
 ]
 
 { #category : 'tests' }
 GameTest >> testTheGameShouldntFinishWhenStarted [
 
-	| game  |
+	| game |
+
 	game := Game test.
 	self assert: game hasEnded equals: false
 ]

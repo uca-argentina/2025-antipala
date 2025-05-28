@@ -7,52 +7,45 @@ Class {
 	#instVars : [
 		'squares',
 		'wormhole',
-		'ships',
-		'shipPlaying'
+		'effects',
+		'lastEffect',
+		'effectManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'initialization' }
-GameBoard class >> with: numberOfSquares and: aWormHole and: numerOfShips [
+{ #category : 'accessing' }
+GameBoard class >> with: numberOfSquares and: aWormHole [ 
+	^ self new with: numberOfSquares and: aWormHole.
+]
 
-	^ self new with: numberOfSquares and: aWormHole and: numerOfShips 
+{ #category : 'as yet unclassified' }
+GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [ 
+	^ self new with: numberOfSquares including: aCollectionOfEffects.
 ]
 
 { #category : 'accessing' }
-GameBoard >> hasEnded [
+GameBoard >> move: ship with: adiceThrow [ 
+	| turnContinues |
+	
+	turnContinues := effectManager handleEffectsFor: ship withThrow: adiceThrow maxSquares: squares.
 
-	^ ships values anySatisfy: [ :shipData | (shipData at: 'position') >= squares ]
+	turnContinues ifFalse: [ ^nil ].
 
-]
+	ship advanceTurn.
 
-{ #category : 'accessing' }
-GameBoard >> moveShip: steps [
+	(ship position >= squares) ifTrue: [
+		ship advance: 0 - squares.
+		ship advanceLap.
+	].
+	(ship position < 0 and: ship laps >0) ifTrue: [
+		ship advance:squares.
+		ship returnLap .
+	].
 
-	| oldPosition |
-	oldPosition := ships at: shipPlaying at: 'position'.
+	^self
 
-	self hasEnded ifTrue: [ Error signal: 'The game ended' ].
-
-	ships at: shipPlaying at: 'position' put: oldPosition + steps
-		+ (wormhole applyWormEffectTo: oldPosition + steps).
-
-	self hasEnded ifFalse: [ shipPlaying := shipPlaying < ships size
-		               ifTrue: [ shipPlaying + 1 ]
-		               ifFalse: [ 1 ]]
-]
-
-{ #category : 'accessing' }
-GameBoard >> positionOf: shipId [
-
-	^ships at: shipId at: 'position'
-]
-
-{ #category : 'accessing' }
-GameBoard >> shipPlaying [
-
-	^ shipPlaying 
 ]
 
 { #category : 'accessing' }
@@ -62,22 +55,17 @@ GameBoard >> squares [
 ]
 
 { #category : 'accessing' }
-GameBoard >> winner [
-
-	self hasEnded ifTrue: [^ shipPlaying ].
-	^nil.
+GameBoard >> with: numberOfSquares and: aWormhole [
+	numberOfSquares >3 ifFalse: [ Error signal: 'The number of squares should be more than 3' ].
+	squares := numberOfSquares.
+	wormhole:= aWormhole .
 ]
 
-{ #category : 'accessing' }
-GameBoard >> with: numberOfSquares and: aWormhole and: numberOfShips [
-
-	numberOfSquares > 3 ifFalse: [
-		Error signal: 'The number of squares should be more than 3' ].
-	squares := numberOfSquares.
-	wormhole := aWormhole.
-	ships := Dictionary new.
-	shipPlaying:=1.
-	1 to: numberOfShips do: [:id |
-        ships at: id put: { 'position' -> 0. } asDictionary.
-    ].
+{ #category : 'as yet unclassified' }
+GameBoard >> with: numberOfSquares including: aCollectionOfEffects [
+   squares := numberOfSquares.
+	effects := aCollectionOfEffects.
+	lastEffect := nil.
+	effectManager := EffectManager new.
+	effectManager effects: effects.
 ]

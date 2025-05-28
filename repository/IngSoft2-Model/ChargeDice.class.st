@@ -6,6 +6,11 @@ Class {
 }
 
 { #category : 'method' }
+ChargeDice >> max [
+	 ^5.
+]
+
+{ #category : 'method' }
 ChargeDice >> roll [
 	 ^5.
 ]
