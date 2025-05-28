@@ -11,7 +11,8 @@ Class {
 		'turn',
 		'fuel',
 		'laps',
-		'hyperGravityStatus'
+		'hyperGravityStatus',
+		'theLastEffect'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -68,6 +69,7 @@ Ship >> initializeWith: aId [
 	laps := 0.
 	fuel := 100.
 	hyperGravityStatus:=0.
+	theLastEffect:=nil.
 ]
 
 { #category : 'as yet unclassified' }
@@ -107,8 +109,18 @@ Ship >> setfuel:afuel [
 ]
 
 { #category : 'as yet unclassified' }
+Ship >> settheLastEffect: anEffect [
+theLastEffect:=anEffect.
+]
+
+{ #category : 'as yet unclassified' }
 Ship >> spendfuel:aFuelamoutspend [  
 	fuel:=fuel-aFuelamoutspend.
+]
+
+{ #category : 'accessing' }
+Ship >> theLastEffect [
+^theLastEffect.
 ]
 
 { #category : 'as yet unclassified' }

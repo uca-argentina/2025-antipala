@@ -31,6 +31,24 @@ GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [
 	^ self new with: numberOfSquares including: aCollectionOfEffects.
 ]
 
+{ #category : 'as yet unclassified' }
+GameBoard >> activateHyperGravity: aShip with: anObstacle [
+			aShip settheLastEffect: anObstacle.
+			aShip changeHyperGravityStatus: 1.
+			^ nil
+]
+
+{ #category : 'as yet unclassified' }
+GameBoard >> applyEffectIfNeeded: anEffect to: aShip [
+|effect|
+anEffect ifNotNil: [
+	(anEffect isKindOf: HyperGravity) ifTrue: [self activateHyperGravity: aShip with: anEffect ].
+	effect := anEffect applyEffectTo: aShip.
+	effect ifNotNil: [
+		aShip advance: effect.
+		aShip spendfuel: effect abs ] ].
+]
+
 { #category : 'testing' }
 GameBoard >> createWeightedEffectList [
 	| effectClasses weightedList |
@@ -50,6 +68,11 @@ GameBoard >> createWeightedEffectList [
 40 casilleros sin nada, 
 2 con atomic bomb, 
 20 blackholes,..."
+]
+
+{ #category : 'as yet unclassified' }
+GameBoard >> effectAtPosition: aPosition [
+^effects detect: [ :obs | obs validatePosition: aPosition ]ifNone: [ nil ].
 ]
 
 { #category : 'testing' }
@@ -86,57 +109,41 @@ GameBoard >> generateEffectsForBoard [
 ]
 
 { #category : 'accessing' }
+GameBoard >> hasCrossedTheGoal: ship [
+
+	ship position >= squares ifFalse: [ ^ self ]. "Verifica si cruzó la meta"
+	ship advance: 0 - squares.
+	ship advanceLap
+]
+
+{ #category : 'asserting' }
+GameBoard >> hyperGravityCheck: ship with: aDiceThrow [
+	(ship hyperGravityStatus = 1 and: (ship theLastEffect isKindOf: HyperGravity)) ifFalse: [ ^false ].
+
+	(ship theLastEffect validateCondition: aDiceThrow)
+		ifTrue: [
+			ship changeHyperGravityStatus: 0.
+		].
+^true.
+]
+
+{ #category : 'accessing' }
 GameBoard >> move: ship with: adiceThrow [
-| newPosition obstacleAtPosition effect |
 
-(ship hyperGravityStatus = 1) ifTrue: [
-	(lastEffect isKindOf: HyperGravity) ifTrue: [
-		(lastEffect validateCondition: adiceThrow)
-			ifTrue: [
-				ship changeHyperGravityStatus: 0.
-				^nil
-			]
-			ifFalse: [
-				^nil.
-				Transcript show: 'La condición de hipergravedad no se cumplió'; cr.
-			].
-	].
-].
-
-	"Avanza la nave y gasta combustible"
+	| newPosition obstacleAtPosition |
+	(self hyperGravityCheck: ship with: adiceThrow) ifTrue: [ ^ nil ].
+	
 	ship advance: adiceThrow.
 	ship spendfuel: adiceThrow.
 	newPosition := ship position.
-	newPosition >= squares ifTrue: [ newPosition := newPosition - squares ].
+	
+	newPosition >= squares ifTrue: [
+	newPosition := newPosition - squares ].
 
-	"Busca si hay un efecto en esa posición"
-	obstacleAtPosition := effects
-		detect: [ :obs | obs validatePosition: newPosition ]
-		ifNone: [ nil ].
-		
-	obstacleAtPosition ifNotNil: [
-
-		(obstacleAtPosition isKindOf: HyperGravity) ifTrue: [
-			lastEffect:=obstacleAtPosition.
-			Transcript show: 'Entró al HyperGravity por primera vez'; cr.
-			ship changeHyperGravityStatus: 1.
-			^nil.
-		].
-		"Aplicar el efecto si no es HyperGravity"
-		effect := obstacleAtPosition applyEffectTo: ship.
-		effect ifNotNil: [
-			ship advance: effect.
-			ship spendfuel: effect abs.
-		].
-	].
-
-	"Avanza el turno"
+	obstacleAtPosition := self effectAtPosition: newPosition.
+	self applyEffectIfNeeded: obstacleAtPosition to: ship. 
 	ship advanceTurn.
-
-	"Verifica si cruzó la meta"
-	ship position >= squares ifFalse: [ ^self ].
-	ship advance: 0 - squares.
-	ship advanceLap.
+	self hasCrossedTheGoal: ship
 ]
 
 { #category : 'accessing' }
