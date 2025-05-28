@@ -39,6 +39,10 @@ GameBoard >> move: ship with: adiceThrow [
 		ship advance: 0 - squares.
 		ship advanceLap.
 	].
+	(ship position < 0 and: ship laps >0) ifTrue: [
+		ship advance:squares.
+		ship returnLap .
+	].
 
 	^self
 

@@ -1,6 +1,11 @@
 Class {
 	#name : 'BoardBuilder',
 	#superclass : 'Object',
+	#instVars : [
+		'squares',
+		'dices',
+		'ships'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -28,37 +33,33 @@ BoardBuilder >> generateBlackHole: position [
 
 { #category : 'as yet unclassified' }
 BoardBuilder >> generateEffectsForBoard [
-
-	| aCollectionOfEffects generadores  generator r acumulado selector |
+	| aCollectionOfEffects generadores generator r acumulado selector |
 	aCollectionOfEffects := OrderedCollection new.
 
-
-
 	generadores := {
-	{#generateAtomicBomb:. AtomicBomb effectProbability }.
-	{#generateBlackHole:. BlackHole effectProbability }.
-	{#generateHyperJump:. HyperJump effectProbability }.
-	{ #generateHyperGravity:. HyperGravity effectProbability }.
-	{#generateMoonWalk:. MoonWalk effectProbability }.
-	{#generateNoEffect:. NoEffect effectProbability } }.
+		{ #generateAtomicBomb:. [ AtomicBomb effectProbability ] }.
+		{ #generateBlackHole:. [ BlackHole effectProbability ] }.
+		{ #generateHyperJump:. [ HyperJump effectProbability ] }.
+		{ #generateHyperGravity:. [ HyperGravity effectProbability ] }.
+		{ #generateMoonWalk:. [ MoonWalk effectProbability ] }.
+		{ #generateNoEffect:. [ NoEffect effectProbability ] } }.
 
 	generator := Random new.
-	generator seed: 10.
+	
 
 	1 to: squares do: [ :i |
-		r := generator next .
+		r := generator next.
 		acumulado := 0.
 		selector := (generadores detect: [ :g |
-			             acumulado := acumulado + g second.
-			             r <= acumulado ]) first.
+			acumulado := acumulado + (g second value).
+			r <= acumulado ]) first.
 
-		"Genera el efecto usando perform: con la posición actual"
 		aCollectionOfEffects add: (self perform: selector with: i) ].
 
-
-
+	self seePercentage: aCollectionOfEffects.
 
 	^ GameBoard new with: squares including: aCollectionOfEffects
+
 ]
 
 { #category : 'as yet unclassified' }
@@ -82,7 +83,7 @@ BoardBuilder >> generateMoonWalk: position [
 	throw := dices
 		         inject: 0
 		         into: [ :sum :eachDice | sum + eachDice roll ].
-	^MoonWalk at: position and: ships and: throw
+	^MoonWalk at: position and: ships and: throw and: squares 
 	
 ]
 
@@ -108,5 +109,21 @@ BoardBuilder >> initializeWith: totalSquares and: setOfDices and: aCollectionOfS
 ]
 
 { #category : 'as yet unclassified' }
-BoardBuilder >> randomBoard [
+BoardBuilder >> seePercentage: effects [
+
+	| counts total |
+counts := Dictionary new.
+effects do: [ :each |
+    counts at: each class ifAbsentPut: [ 0 ].
+    counts at: each class put: (counts at: each class) + 1 ].
+
+total := effects size.
+
+counts keysAndValuesDo: [ :class :count |
+    | percentage rounded |
+    percentage := count asFloat / total * 100.
+    rounded := (percentage * 10) rounded / 10.0. "Redondea a 1 decimal"
+    Transcript show: class name , ' -> ' , count asString , ' (' , rounded asString , '%)'; cr ].
+
+
 ]

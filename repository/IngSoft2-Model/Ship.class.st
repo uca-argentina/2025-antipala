@@ -94,6 +94,14 @@ Ship >> refundFuel: quantity [
 ]
 
 { #category : 'accessing' }
+Ship >> returnLap [
+
+	laps := laps > 0
+		        ifTrue: [ laps - 1 ]
+		        ifFalse: [ 0 ]
+]
+
+{ #category : 'accessing' }
 Ship >> setPosition:unNumero [
 		position:=unNumero.
 ]

@@ -52,17 +52,57 @@ Game class >> test [
 ]
 
 { #category : 'initialization' }
+Game class >> testEffects [
+
+	| numberOfSquares  gameboard dices numberOfLaps ships testGame  aCollectionOfEffects  |
+	numberOfSquares:= 50.
+	dices := OrderedCollection new.
+	dices add: ChargeDice new.
+	numberOfLaps:= 2.
+	
+	ships := OrderedCollection new.
+
+	ships add: (Ship create: 1).
+	ships add: (Ship create: 2).
+	ships add: (Ship create: 3).
+	(ships at: 1 ) setfuel: dices size * (dices at:1) max.
+	(ships at: 2 ) setfuel: dices size * (dices at:1) max.
+	(ships at: 3 ) setfuel: dices size * (dices at:1) max.	
+	(ships at:2) advance:1.
+	aCollectionOfEffects := OrderedCollection new.
+	aCollectionOfEffects add: (MoonWalk at: 5 and: ships and: 3 and: numberOfSquares).
+	gameboard := GameBoard
+		             with: numberOfSquares
+		             including: aCollectionOfEffects.
+	
+
+	testGame := self
+		            with: dices
+		            and: gameboard
+		            and: ships
+		            and: numberOfLaps.
+
+	testGame enableTestMode.
+	^ testGame
+]
+
+{ #category : 'initialization' }
 Game class >> testWithBoardBuilder [
 
 	| numberOfSquares  gameboard dices numberOfLaps ships testGame  boardbuilder |
-	numberOfSquares := 15.
+	numberOfSquares := 1000.
 	numberOfLaps := 2.
+	dices := OrderedCollection new.
+	dices add: (Dice with:6).
+	
 	ships := OrderedCollection new.
 	ships add: (Ship create: 1).
 	ships add: (Ship create: 2).
 	ships add: (Ship create: 3).
-	dices := OrderedCollection new.
-	dices add: (Dice with:6).
+	
+	(ships at: 1 ) setfuel: dices size * (dices at:1) max.
+	(ships at: 2 ) setfuel: dices size * (dices at:1) max.
+	(ships at: 3 ) setfuel: dices size * (dices at:1) max.	
 	boardbuilder:= BoardBuilder with: numberOfSquares and: dices and: ships.
 	gameboard:= boardbuilder generateEffectsForBoard .
 	testGame := self

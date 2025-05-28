@@ -14,7 +14,7 @@ MoonWalkTest >> testWhenTheShipEnterInAMoonWalkThenTheOtherShipsRetroced [
 	ships add: (Ship create: 1).
 	ships add: (Ship create: 2).
 	ships add: (Ship create: 3).
-	moonWalk := MoonWalk at: 10 and: ships and: 2.
+	moonWalk := MoonWalk at: 10 and: ships and: 2 and: 100.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: moonWalk.
 	gameboard := GameBoard
