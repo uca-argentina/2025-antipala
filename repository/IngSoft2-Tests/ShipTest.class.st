@@ -7,10 +7,11 @@ Class {
 
 { #category : 'tests' }
 ShipTest >> testShipCanAdvance [
-	| ship |
+	| ship totalSquares |
+	totalSquares:= 20.
 	ship := Ship create:1.
-	ship advance:2.
-	self assert: ship position equals: 2
+	ship advance:2 withBoardSize: totalSquares.
+	self assert: (ship isInPosition:2)
 ]
 
 { #category : 'tests' }
@@ -19,14 +20,6 @@ ShipTest >> testShipCanAdvanceTurn [
 	ship := Ship create:1.
 	ship advanceTurn.
 	self assert: ship turn equals: 1
-]
-
-{ #category : 'tests' }
-ShipTest >> testShipCanChangePosition [
-	| ship |
-	ship := Ship create:1.
-	ship setPosition:3.
-	self assert: ship position equals: 3
 ]
 
 { #category : 'tests' }
@@ -48,7 +41,7 @@ ShipTest >> testShipFuelis100 [
 ShipTest >> testShipInitialPositionShouldBe0 [
 	| ship |
 	ship := Ship create:1.
-	self assert: ship position equals: 0
+	self assert: (ship isInPosition:0).
 ]
 
 { #category : 'tests' }
@@ -64,7 +57,7 @@ ShipTest >> testShipStartAtLap0 [
 
 	| ship |
 	ship := Ship create: 1.
-	self assert: ship laps equals: 0
+	self assert: (ship isInLap: 0)
 ]
 
 { #category : 'tests' }
@@ -72,4 +65,42 @@ ShipTest >> testShipTurnis0 [
 	| ship |
 	ship := Ship create:1.
 	self assert: ship turn equals: 0.
+]
+
+{ #category : 'tests' }
+ShipTest >> testWhenShipPassesTheBoardSizeThenTheNumberOfLapsIncreasesTheExpectedAmount [
+
+	| ship totalSquares |
+	totalSquares:= 5.
+	ship := Ship create: 1.
+	
+	self assert: (ship isInLap: 0).
+	
+	ship advance:6 withBoardSize: totalSquares.
+	self deny: (ship isInLap: 0).
+	
+	ship advance:4 withBoardSize: totalSquares.
+	self assert: (ship isInLap: 2).
+	
+	ship advance:20 withBoardSize: totalSquares.
+	self assert: (ship isInLap: 6).
+	
+	ship advance:(-20) withBoardSize: totalSquares.
+	self assert: (ship isInLap: 2).
+]
+
+{ #category : 'tests' }
+ShipTest >> testWhenTheShipPassesTheBoardSizeThenThePositionRespondsToTheCircularBoardLogic [
+
+	| ship totalSquares |
+	totalSquares:= 5.
+	ship := Ship create: 1.
+	ship advance:7 withBoardSize: totalSquares.
+	self assert: (ship isInPosition: 2).
+	
+	ship advance: 20 withBoardSize: totalSquares.
+	self assert: (ship isInPosition: 2).
+
+	ship advance: 6 withBoardSize: totalSquares.
+	self assert: (ship isInPosition: 3).	
 ]

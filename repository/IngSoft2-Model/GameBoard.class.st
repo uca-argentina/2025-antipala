@@ -6,8 +6,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'squares',
-		'wormhole',
-		'lastEffect',
 		'effectManager'
 	],
 	#category : 'IngSoft2-Model',
@@ -29,6 +27,8 @@ GameBoard >> move: ship with: adiceThrow [
 
 	ship advanceTurn.
 
+	"
+	Antes de refactorizar la logica de vueltas dentro de nave se necesitaba este codigo
 	(ship position >= squares) ifTrue: [
 		ship advance: 0 - squares.
 		ship advanceLap.
@@ -36,7 +36,7 @@ GameBoard >> move: ship with: adiceThrow [
 	(ship position < 0 and: ship laps >0) ifTrue: [
 		ship advance:squares.
 		ship returnLap .
-	].
+	]."
 
 	^self
 
@@ -48,16 +48,8 @@ GameBoard >> squares [
 	^ squares
 ]
 
-{ #category : 'accessing' }
-GameBoard >> with: numberOfSquares and: aWormhole [
-	numberOfSquares >3 ifFalse: [ Error signal: 'The number of squares should be more than 3' ].
-	squares := numberOfSquares.
-	wormhole:= aWormhole .
-]
-
 { #category : 'as yet unclassified' }
 GameBoard >> with: numberOfSquares including: anEffectManager [
    squares := numberOfSquares.
-	lastEffect := nil.
 	effectManager := anEffectManager.
 ]

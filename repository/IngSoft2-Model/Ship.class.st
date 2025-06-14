@@ -30,6 +30,15 @@ Ship >> advance: positions [
 ]
 
 { #category : 'accessing' }
+Ship >> advance: positions withBoardSize: boardSize [
+
+	laps := laps + ((position + positions) // boardSize).
+   	position := (position + positions) \\ boardSize.
+    
+
+]
+
+{ #category : 'accessing' }
 Ship >> advanceLap [
 	laps:= laps + 1.
 ]
@@ -70,6 +79,18 @@ Ship >> initializeWith: aId [
 	fuel := 100.
 	maxAmount:=100.
 	hyperGravityStatus:=0.
+]
+
+{ #category : 'accessing' }
+Ship >> isInLap: aLap [
+	^laps = aLap .
+
+]
+
+{ #category : 'accessing' }
+Ship >> isInPosition: aPosition [
+	^position = aPosition .
+
 ]
 
 { #category : 'as yet unclassified' }
