@@ -15,12 +15,6 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
-WormHole class >> at: arg1 [
-
-	^ self new initializeWith: arg1
-]
-
 { #category : 'as yet unclassified' }
 WormHole class >> at: start and: finish [
 

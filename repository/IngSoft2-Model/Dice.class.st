@@ -5,7 +5,7 @@ Class {
 	#name : 'Dice',
 	#superclass : 'Object',
 	#instVars : [
-		'face'
+		'faces'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -27,21 +27,21 @@ self validLength: aFace.
 
 { #category : 'initialize' }
 Dice >> initializeDiceWith:aFace [
-face:=aFace.
+faces:=aFace.
 
 
 ]
 
 { #category : 'method' }
 Dice >> max [
-^ face.
+^ faces.
 
 
 ]
 
 { #category : 'method' }
 Dice >> roll [
-^ (1 to: face ) atRandom.
+^ (1 to: faces ) atRandom.
 
 
 ]

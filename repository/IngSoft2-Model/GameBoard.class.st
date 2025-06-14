@@ -12,9 +12,19 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
+GameBoard class >> validLength: size [
+(size < 3) ifTrue: [
+        Error signal: 'The number of squares should be more than 3'
+    ].
+]
+
+{ #category : 'initialize' }
 GameBoard class >> with: numberOfSquares including: anEffectManager [ 
+	self validLength: numberOfSquares.
 	^ self new with: numberOfSquares including: anEffectManager.
+	
+
 ]
 
 { #category : 'accessing' }

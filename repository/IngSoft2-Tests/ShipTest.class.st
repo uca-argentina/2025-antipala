@@ -26,7 +26,7 @@ ShipTest >> testShipCanAdvanceTurn [
 ShipTest >> testShipFuelChange [
 	| ship |
 	ship := Ship create:1.
-	ship spendfuel:10.
+	ship spendfuelby:10.
 	self assert: ship fuel equals:90.
 ]
 

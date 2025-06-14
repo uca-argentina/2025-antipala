@@ -30,7 +30,7 @@ BlackHole class >> effectProbability [
 BlackHole >> applyEffectTo: aShip [
 	| effect |
 	effect := -4.
-	aShip spendfuel: effect abs.
+	aShip spendfuelby: effect abs.
 	^effect
 ]
 

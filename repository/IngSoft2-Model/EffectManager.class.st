@@ -21,7 +21,7 @@ EffectManager class >> createWith: effects [
 EffectManager >> basicMovementFor: ship withThrow: adiceThrow [
 	"Avanza y gasta combustible según el valor del dado"
 	ship advance: adiceThrow.
-	ship spendfuel: adiceThrow.
+	ship spendfuelby: adiceThrow.
 
 
 ]
@@ -57,7 +57,7 @@ EffectManager >> handleEffectsFor: ship withThrow: adiceThrow maxSquares: square
 		effect := obstacle applyEffectTo: ship.
 		effect ifNotNil: [
 			ship advance: effect.
-			ship spendfuel: effect abs.
+			ship spendfuelby: effect abs.
 		].
 	].
 

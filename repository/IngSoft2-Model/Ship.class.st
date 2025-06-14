@@ -12,7 +12,7 @@ Class {
 		'fuel',
 		'laps',
 		'hyperGravityStatus',
-		'maxAmount'
+		'maxAmountOfFuel'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -77,7 +77,7 @@ Ship >> initializeWith: aId [
 	turn := 0.
 	laps := 0.
 	fuel := 100.
-	maxAmount:=100.
+	maxAmountOfFuel:=100.
 	hyperGravityStatus:=0.
 ]
 
@@ -106,7 +106,7 @@ Ship >> position [
 
 { #category : 'as yet unclassified' }
 Ship >> refill [
-	fuel:=maxAmount.
+	fuel:=maxAmountOfFuel.
 ]
 
 { #category : 'as yet unclassified' }
@@ -129,13 +129,13 @@ Ship >> setPosition:unNumero [
 
 { #category : 'as yet unclassified' }
 Ship >> setfuel:adicemax [
-	maxAmount:=2*adicemax.
-	fuel:=maxAmount.
+	maxAmountOfFuel:=2*adicemax.
+	fuel:=maxAmountOfFuel.
 	
 ]
 
 { #category : 'as yet unclassified' }
-Ship >> spendfuel:aFuelamoutspend [ 
+Ship >> spendfuelby:aFuelamoutspend [ 
 fuel - aFuelamoutspend < 0
     ifTrue: [ fuel := 0 ]
     ifFalse: [ fuel := fuel - aFuelamoutspend ].

@@ -47,7 +47,7 @@ aCollectionOfEffects add: (WormHole at: 2 and: 3).
 anEffectManager := EffectManager createWith: aCollectionOfEffects .
 
 self
-	should:[GameBoard with: 3 including: (anEffectManager) ]
+	should:[GameBoard with: 3 including: anEffectManager ]
 	raise: Error
 	withMessageText: 'The number of squares should be more than 3'.
 ]
@@ -146,11 +146,11 @@ GameBoardTest >> testTheShipsUseTheCircularBoard [
 		             including: anEffectManager.
 	actualShip := Ship create: 1.
 
-	self assert: actualShip position equals: 0.
-	self assert: actualShip laps equals: 0.
+	self assert: (actualShip isInPosition: 0).
+	self assert: (actualShip isInLap: 0).
 
 	gameboard move: actualShip with: aDice roll.
 
-	self assert: actualShip position equals: 1.
-	self assert: actualShip laps equals: 1
+	self assert: (actualShip isInPosition: 1).
+	self assert: (actualShip isInLap: 1)
 ]
