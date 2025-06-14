@@ -1,3 +1,6 @@
+"
+Clase EffectManager. Se encarga de manejar los efectos dentro del tablero, definiendo como se mueven las naves o si se deberian mover
+"
 Class {
 	#name : 'EffectManager',
 	#superclass : 'Object',
@@ -8,6 +11,11 @@ Class {
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'as yet unclassified' }
+EffectManager class >> createWith: effects [
+^self new initializeWith: effects .
+]
 
 { #category : 'accessing' }
 EffectManager >> basicMovementFor: ship withThrow: adiceThrow [
@@ -30,11 +38,6 @@ EffectManager >> detectObstacleAt: position [
 	"Busca un obstáculo que valide la posición, o devuelve nil"
 	^ effects detect: [ :e | e validatePosition: position ] ifNone: [ nil ]
 
-]
-
-{ #category : 'accessing' }
-EffectManager >> effects: aCollection [
- effects := aCollection.
 ]
 
 { #category : 'accessing' }
@@ -74,6 +77,11 @@ EffectManager >> handleHyperGravityFor: ship withObstacle: obstacle [
 	].
 	^false
 
+]
+
+{ #category : 'accessing' }
+EffectManager >> initializeWith: aCollectionOfEffects [
+ effects := aCollectionOfEffects.
 ]
 
 { #category : 'accessing' }

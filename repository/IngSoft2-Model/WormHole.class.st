@@ -1,3 +1,6 @@
+"
+Clase WormHole. Efecto en el cual si una nave aterriza en su posicion Y, esta se desplaza a su posicion Z.
+"
 Class {
 	#name : 'WormHole',
 	#superclass : 'Effect',

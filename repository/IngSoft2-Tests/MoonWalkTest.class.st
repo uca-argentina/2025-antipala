@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 MoonWalkTest >> testWhenTheShipEnterInAMoonWalkThenTheOtherShipsRetroced [
 
-	| gameboard  moonWalk aCollectionOfEffects totalSquares ships |
+	| gameboard  moonWalk aCollectionOfEffects totalSquares ships anEffectManager |
 	totalSquares := 100.
 	ships := OrderedCollection new.
 	ships add: (Ship create: 1).
@@ -17,9 +17,10 @@ MoonWalkTest >> testWhenTheShipEnterInAMoonWalkThenTheOtherShipsRetroced [
 	moonWalk := MoonWalk at: 10 and: ships and: 2 and: 100.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: moonWalk.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
+		             with: totalSquares 
+		             including: anEffectManager.
 	
 		
 	gameboard move: (ships at: 1) with: 5.

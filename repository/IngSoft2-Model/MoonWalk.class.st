@@ -1,3 +1,6 @@
+"
+Clase MoonWalk. Efecto positivo, en el cual la nave que aterriza aqui no se ve afectada, pero haciendo retroceder al resto de naves un numero de casilleros (walk) definido al inicializar cada MoonWalk.
+"
 Class {
 	#name : 'MoonWalk',
 	#superclass : 'Effect',

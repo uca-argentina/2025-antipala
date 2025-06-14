@@ -1,3 +1,6 @@
+"
+Clase HyperJump. Efecto positivo, el cual hace avanzar a la nave que aterrizo una cierta cantidad de parsecs (para esto ahora el tablero esta definido en parsecs, no en casilleros). Cada nave que aterriza recive un efecto distinto (No siempre es la misma cantidad de parsecs) de forma secuencial.
+"
 Class {
 	#name : 'HyperJump',
 	#superclass : 'Effect',

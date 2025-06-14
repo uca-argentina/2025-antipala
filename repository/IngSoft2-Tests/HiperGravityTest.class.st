@@ -7,14 +7,15 @@ Class {
 
 { #category : 'tests' }
 HiperGravityTest >> testWhenTheShipEnterInAHiperGravityHoleAndDontMoveTheFuelStaysTheSame [
-	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
+	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity anEffectManager |
 	totalSquares := 100.
 	hyperGravity := HyperGravity atPosition: 5 withValue: 9.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: hyperGravity .
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
+		             with: totalSquares 
+		             including: anEffectManager.
 	actualShip := Ship create: 1.
 	gameboard move: actualShip with: 5.
 	gameboard move: actualShip with: 8.
@@ -24,14 +25,15 @@ HiperGravityTest >> testWhenTheShipEnterInAHiperGravityHoleAndDontMoveTheFuelSta
 
 { #category : 'tests' }
 HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleAndPassTheConditionHeCanMove [
-	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
+	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity anEffectManager |
 	totalSquares := 100.
 	hyperGravity := HyperGravity atPosition: 5 withValue: 9.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: hyperGravity .
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
+		             with: totalSquares 
+		             including: anEffectManager.
 	actualShip := Ship create: 1.
 	gameboard move: actualShip with: 5.
 	gameboard move: actualShip with: 10.
@@ -41,14 +43,15 @@ HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleAndPassTheConditionHe
 
 { #category : 'tests' }
 HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleHeCameOutInTheNextTurn [
-	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
+	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity anEffectManager |
 	totalSquares := 100.
 	hyperGravity := HyperGravity atPosition: 5 withValue: 9.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: hyperGravity .
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
+		             with: totalSquares 
+		             including: anEffectManager.
 	actualShip := Ship create: 1.
 	gameboard move: actualShip with: 5.
 	gameboard move: actualShip with: 10.
@@ -60,14 +63,15 @@ HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleHeCameOutInTheNextTur
 { #category : 'tests' }
 HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleThenChangeHisHyperGravityStatus [
 
-	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
+	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity anEffectManager |
 	totalSquares := 100.
 	hyperGravity := HyperGravity atPosition: 5 withValue: 9.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: hyperGravity .
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
+		             with: totalSquares 
+		             including: anEffectManager.
 	actualShip := Ship create: 1.
 	gameboard move: actualShip with: 5.
 	self assert: actualShip hyperGravityStatus equals: 1.
@@ -75,14 +79,15 @@ HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleThenChangeHisHyperGra
 
 { #category : 'tests' }
 HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleThenHeCannotMoveWithLowThrowDice [
-	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity |
+	| gameboard actualShip aCollectionOfEffects totalSquares hyperGravity anEffectManager |
 	totalSquares := 100.
 	hyperGravity := HyperGravity atPosition: 5 withValue: 9.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: hyperGravity .
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
+		             with: totalSquares 
+		             including: anEffectManager.
 	actualShip := Ship create: 1.
 	gameboard move: actualShip with: 5.
 	gameboard move: actualShip with: 5.

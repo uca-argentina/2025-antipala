@@ -1,5 +1,5 @@
 "
-clase GameBoard, se encarga de conocer la posicion de las naves y de moverlas segun corresponda
+clase GameBoard, se encarga de conocer los el tablero, las naves y de moverlas segun corresponda
 "
 Class {
 	#name : 'GameBoard',
@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'squares',
 		'wormhole',
-		'effects',
 		'lastEffect',
 		'effectManager'
 	],
@@ -15,14 +14,9 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
-GameBoard class >> with: numberOfSquares and: aWormHole [ 
-	^ self new with: numberOfSquares and: aWormHole.
-]
-
 { #category : 'as yet unclassified' }
-GameBoard class >> with: numberOfSquares including: aCollectionOfEffects [ 
-	^ self new with: numberOfSquares including: aCollectionOfEffects.
+GameBoard class >> with: numberOfSquares including: anEffectManager [ 
+	^ self new with: numberOfSquares including: anEffectManager.
 ]
 
 { #category : 'accessing' }
@@ -62,10 +56,8 @@ GameBoard >> with: numberOfSquares and: aWormhole [
 ]
 
 { #category : 'as yet unclassified' }
-GameBoard >> with: numberOfSquares including: aCollectionOfEffects [
+GameBoard >> with: numberOfSquares including: anEffectManager [
    squares := numberOfSquares.
-	effects := aCollectionOfEffects.
 	lastEffect := nil.
-	effectManager := EffectManager new.
-	effectManager effects: effects.
+	effectManager := anEffectManager.
 ]

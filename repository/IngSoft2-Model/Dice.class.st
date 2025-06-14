@@ -1,3 +1,6 @@
+"
+Clase Dice. Representa un dado, se puede crear con una cantidad arbitraria (Positiva) de caras. Cuando se tire generara un numero aleatoreo entre 1 y la cantidad de caras.
+"
 Class {
 	#name : 'Dice',
 	#superclass : 'Object',

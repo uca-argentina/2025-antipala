@@ -20,7 +20,7 @@ self
 { #category : 'tests' }
 GameBoardTest >> testGameBoardCanMoveAShip [
 
-	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects anEffectManager |
 
 	"despues setear el agujero"
 	aPositionY:=10.
@@ -28,7 +28,10 @@ GameBoardTest >> testGameBoardCanMoveAShip [
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	aCollectionOfEffects:= OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
-	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
+	gameboard := GameBoard
+		             with: 40
+		             including: anEffectManager.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 3.
 	
@@ -37,22 +40,31 @@ GameBoardTest >> testGameBoardCanMoveAShip [
 
 { #category : 'tests' }
 GameBoardTest >> testGameBoardShouldThrowErrorWhenInitialiceSquaresWith1 [
+| anEffectManager aCollectionOfEffects |
+aCollectionOfEffects:= OrderedCollection new.
+
+aCollectionOfEffects add: (WormHole at: 2 and: 3).
+anEffectManager := EffectManager createWith: aCollectionOfEffects .
+
 self
-	should:[GameBoard with: 3 and:[ WormHole at: 2 and: 3]]
+	should:[GameBoard with: 3 including: (anEffectManager) ]
 	raise: Error
 	withMessageText: 'The number of squares should be more than 3'.
 ]
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanSpendFuelAmountwithEffect [
-	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects anEffectManager |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	aCollectionOfEffects:= OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
-	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
+	gameboard := GameBoard
+		             with: 40
+		             including: anEffectManager.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 10.
 	
@@ -61,14 +73,17 @@ GameBoardTest >> testShipCanSpendFuelAmountwithEffect [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleYposition [
-	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects anEffectManager |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	aCollectionOfEffects:= OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
-	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
+	gameboard := GameBoard
+		             with: 40
+		             including: anEffectManager.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 10.
 	
@@ -77,14 +92,17 @@ GameBoardTest >> testShipCanUseTheWormHoleYposition [
 
 { #category : 'tests' }
 GameBoardTest >> testShipCanUseTheWormHoleZposition [
-	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects anEffectManager |
 	
 	aPositionY:=10.
 	aPositionZ:=30.
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	aCollectionOfEffects:= OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
-	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
+	gameboard := GameBoard
+		             with: 40
+		             including: anEffectManager.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 30.
 	
@@ -94,7 +112,7 @@ GameBoardTest >> testShipCanUseTheWormHoleZposition [
 { #category : 'tests' }
 GameBoardTest >> testTheGameBoardCanBeInitializedWithACollectionOfEffects [
 
-	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects anEffectManager |
 
 	"despues setear el agujero"
 	aPositionY:=10.
@@ -102,7 +120,10 @@ GameBoardTest >> testTheGameBoardCanBeInitializedWithACollectionOfEffects [
 	wormhole:= WormHole at:aPositionY and: aPositionZ.
 	aCollectionOfEffects:= OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
-	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
+	gameboard := GameBoard
+		             with: 40
+		             including: anEffectManager.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 3.
 	
@@ -112,14 +133,17 @@ GameBoardTest >> testTheGameBoardCanBeInitializedWithACollectionOfEffects [
 { #category : 'tests' }
 GameBoardTest >> testTheShipsUseTheCircularBoard [
 
-	| gameboard actualShip aPositionY aPositionZ wormhole aDice aCollectionOfEffects |
+	| gameboard actualShip aPositionY aPositionZ wormhole aDice aCollectionOfEffects anEffectManager |
 	aPositionY := 2.
 	aPositionZ := 4.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 	aDice := ChargeDice new.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
-	gameboard := GameBoard with: 4 including: aCollectionOfEffects.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
+	gameboard := GameBoard
+		             with: 4
+		             including: anEffectManager.
 	actualShip := Ship create: 1.
 
 	self assert: actualShip position equals: 0.

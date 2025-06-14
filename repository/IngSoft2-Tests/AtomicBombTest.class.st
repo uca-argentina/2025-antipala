@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 AtomicBombTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
 
-	| gameboard  aCollectionOfEffects totalSquares ships atomicBomb |
+	| gameboard  aCollectionOfEffects totalSquares ships atomicBomb anEffectManager |
 	totalSquares := 100.
 	ships := OrderedCollection new.
 	ships add: (Ship create: 1).
@@ -17,9 +17,10 @@ AtomicBombTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
 	atomicBomb := AtomicBomb at: 10 and: ships.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: atomicBomb .
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
 		             with: totalSquares
-		             including: aCollectionOfEffects.
+		             including: anEffectManager.
 
 	gameboard move: (ships at: 1) with: 5.
 	self assert: (ships at: 1) position equals: 5.

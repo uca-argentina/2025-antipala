@@ -1,3 +1,6 @@
+"
+Clase BoardBuilder. Es una clase que busca distribuir los efectos en cierta proporcion, creando un GameBoard.
+"
 Class {
 	#name : 'BoardBuilder',
 	#superclass : 'Object',
@@ -33,7 +36,7 @@ BoardBuilder >> generateBlackHole: position [
 
 { #category : 'as yet unclassified' }
 BoardBuilder >> generateEffectsForBoard [
-	| aCollectionOfEffects generadores generator r acumulado selector |
+	| aCollectionOfEffects generadores generator r acumulado selector anEffectManager |
 	aCollectionOfEffects := OrderedCollection new.
 
 	generadores := {
@@ -57,8 +60,10 @@ BoardBuilder >> generateEffectsForBoard [
 		aCollectionOfEffects add: (self perform: selector with: i) ].
 
 	self seePercentage: aCollectionOfEffects.
+	
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 
-	^ GameBoard new with: squares including: aCollectionOfEffects
+	^ GameBoard new with: squares including: anEffectManager
 
 ]
 
@@ -91,13 +96,6 @@ BoardBuilder >> generateMoonWalk: position [
 BoardBuilder >> generateNoEffect: position [
 
 	^ NoEffect at: position 
-]
-
-{ #category : 'as yet unclassified' }
-BoardBuilder >> initAtomicBomb:aCollectionshit position:post [
-	
-
-	^AtomicBomb at:post and:aCollectionshit 
 ]
 
 { #category : 'as yet unclassified' }

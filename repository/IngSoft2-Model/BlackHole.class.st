@@ -1,9 +1,10 @@
+"
+Clase BlackHole. Efecto negativo, que hace retroceder 4 casilleros a la nave que aterrize en este efecto.
+"
 Class {
 	#name : 'BlackHole',
 	#superclass : 'Effect',
 	#instVars : [
-		'positionY',
-		'positionZ',
 		'blackholeposition'
 	],
 	#classInstVars : [
@@ -34,9 +35,9 @@ BlackHole >> applyEffectTo: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-BlackHole >> initializeWith: arg1 [
+BlackHole >> initializeWith: position [
 
-	blackholeposition := arg1
+	blackholeposition := position
 ]
 
 { #category : 'as yet unclassified' }

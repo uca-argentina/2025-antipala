@@ -1,3 +1,6 @@
+"
+Clase Game, Se encarga de conocer las reglas del juego, cuando una nave es ganadora y de definir el flujo del juego
+"
 Class {
 	#name : 'Game',
 	#superclass : 'Object',
@@ -18,7 +21,7 @@ Class {
 { #category : 'initialization' }
 Game class >> test [
 
-	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame  aCollectionOfEffects|
+	| numberOfSquares aPositionY aPositionZ wormhole gameboard dices numberOfLaps ships testGame  aCollectionOfEffects anEffectManager |
 	numberOfSquares := 15.
 	numberOfLaps := 2.
 	aPositionY := 5.
@@ -26,9 +29,10 @@ Game class >> test [
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
-		             with: numberOfSquares
-		             including: aCollectionOfEffects.
+		             with: numberOfSquares 
+		             including: anEffectManager.
 	
 	dices := OrderedCollection new.
 	dices add: ChargeDice new.
@@ -54,7 +58,7 @@ Game class >> test [
 { #category : 'initialization' }
 Game class >> testEffects [
 
-	| numberOfSquares  gameboard dices numberOfLaps ships testGame  aCollectionOfEffects  |
+	| numberOfSquares  gameboard dices numberOfLaps ships testGame  aCollectionOfEffects  anEffectManager |
 	numberOfSquares:= 50.
 	dices := OrderedCollection new.
 	dices add: ChargeDice new.
@@ -71,9 +75,10 @@ Game class >> testEffects [
 	(ships at:2) advance:1.
 	aCollectionOfEffects := OrderedCollection new.
 	aCollectionOfEffects add: (MoonWalk at: 5 and: ships and: 3 and: numberOfSquares).
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
 	gameboard := GameBoard
-		             with: numberOfSquares
-		             including: aCollectionOfEffects.
+		             with: numberOfSquares 
+		             including: anEffectManager.
 	
 
 	testGame := self

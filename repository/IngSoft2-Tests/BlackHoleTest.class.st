@@ -7,7 +7,7 @@ Class {
 
 { #category : 'tests' }
 BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
-	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects blackhole |
+	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects blackhole anEffectManager |
 
 	"despues setear el agujero"
 	aPositionY:=10.
@@ -17,7 +17,10 @@ BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 	aCollectionOfEffects:= OrderedCollection new.
 	aCollectionOfEffects add: wormhole.
 	aCollectionOfEffects add: blackhole.
-	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
+	anEffectManager := EffectManager createWith: aCollectionOfEffects .
+	gameboard := GameBoard
+		             with: 40
+		             including: anEffectManager.
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 5.
 	

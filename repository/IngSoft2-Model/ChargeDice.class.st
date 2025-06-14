@@ -1,3 +1,6 @@
+"
+Clase ChargeDice. Clase creada para el testing, es un dado que siempre devuelve lo mismo.
+"
 Class {
 	#name : 'ChargeDice',
 	#superclass : 'Object',
