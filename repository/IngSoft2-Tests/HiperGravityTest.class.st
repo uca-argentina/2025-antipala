@@ -38,7 +38,7 @@ HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleAndPassTheConditionHe
 	gameboard move: actualShip with: 5.
 	gameboard move: actualShip with: 10.
 	gameboard move: actualShip with: 10.
-	self assert: actualShip position equals: 15.
+	self assert: (actualShip isInPosition: 15).
 ]
 
 { #category : 'tests' }
@@ -92,5 +92,5 @@ HiperGravityTest >> testWhenTheShipEnterInAHyperGravityHoleThenHeCannotMoveWithL
 	gameboard move: actualShip with: 5.
 	gameboard move: actualShip with: 5.
 	self assert: actualShip hyperGravityStatus equals: 1.
-	self assert: actualShip position equals: 5.
+	self assert: (actualShip isInPosition: 5).
 ]

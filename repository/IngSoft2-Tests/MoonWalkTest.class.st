@@ -28,7 +28,8 @@ MoonWalkTest >> testWhenTheShipEnterInAMoonWalkThenTheOtherShipsRetroced [
 	gameboard move: (ships at: 3) with: 5.
 	gameboard move: (ships at: 1) with: 5.
 	
-	self assert: (ships at: 1) position equals: 10.
-	self assert: (ships at: 2) position equals: 3.
-	self assert: (ships at: 3) position equals: 3
+	
+	self assert: ((ships at: 1) isInPosition: 10).
+	self assert: ((ships at: 2) isInPosition: 3).
+	self assert: ((ships at: 3) isInPosition: 3)
 ]

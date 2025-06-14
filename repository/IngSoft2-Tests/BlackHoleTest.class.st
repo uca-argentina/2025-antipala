@@ -24,5 +24,5 @@ BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 	actualShip:= Ship create:1.
 	gameboard move: actualShip with: 5.
 	
-	self assert: actualShip position equals: 1.
+	self assert: (actualShip isInPosition: 1).
 ]

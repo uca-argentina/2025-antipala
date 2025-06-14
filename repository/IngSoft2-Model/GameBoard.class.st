@@ -1,5 +1,5 @@
 "
-clase GameBoard, se encarga de conocer los el tablero, las naves y de moverlas segun corresponda
+clase GameBoard, se encarga de conocer los efectos del tablero, las naves y de moverlas segun corresponda
 "
 Class {
 	#name : 'GameBoard',

@@ -23,16 +23,16 @@ AtomicBombTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
 		             including: anEffectManager.
 
 	gameboard move: (ships at: 1) with: 5.
-	self assert: (ships at: 1) position equals: 5.
+	self assert: ((ships at: 1) isInPosition: 5).
 
 	gameboard move: (ships at: 2) with: 5.
-	self assert: (ships at: 2) position equals: 5.
+	self assert: ((ships at: 2) isInPosition: 5).
 
 	gameboard move: (ships at: 3) with: 5.
-	self assert: (ships at: 3) position equals: 5.
+	self assert: ((ships at: 3) isInPosition: 5).
 
 	gameboard move: (ships at: 1) with: 5.
-	self assert: (ships at: 1) position equals: 0.
-	self assert: (ships at: 2) position equals: 0.
-	self assert: (ships at: 3) position equals: 0.
+	self assert: ((ships at: 1) isInPosition: 0).
+	self assert: ((ships at: 2) isInPosition: 0).
+	self assert: ((ships at: 3) isInPosition: 0).
 ]
