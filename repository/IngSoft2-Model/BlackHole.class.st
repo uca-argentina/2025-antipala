@@ -15,9 +15,9 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-BlackHole class >> at: arg1 [
+BlackHole class >> at: thisSquare [
 
-	^ self new initializeWith: arg1
+	^ self new initializeWith: thisSquare
 ]
 
 { #category : 'as yet unclassified' }
@@ -28,10 +28,8 @@ BlackHole class >> effectProbability [
 
 { #category : 'as yet unclassified' }
 BlackHole >> applyEffectTo: aShip [
-	| effect |
-	effect := -4.
-	aShip spendfuelby: effect abs.
-	^effect
+	aShip spendfuelby: -4.
+	^-4.
 ]
 
 { #category : 'as yet unclassified' }
