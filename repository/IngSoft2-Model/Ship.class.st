@@ -23,10 +23,20 @@ Ship class >> create: id [
 	^ (self new) initializeWith: id .
 ]
 
+{ #category : 'operations' }
+Ship class >> create: id with: aMaxAmountOfFuel [
+	^ (self new) initializeWith: id and: aMaxAmountOfFuel.
+]
+
 { #category : 'accessing' }
 Ship >> advance: positions [
-	position := position + positions.
 
+	self
+		deprecated: 'Use advance:withBoardSize: instead of current one'
+		on: '16 June 2025'
+		in:
+		'Pharo-12.0.0+SNAPSHOT.build.1571.sha.cf5fcd22e66957962c97dffc58b0393b7f368147 (64 Bit)'.
+	position := position + positions
 ]
 
 { #category : 'accessing' }
@@ -36,11 +46,6 @@ Ship >> advance: positions withBoardSize: boardSize [
    	position := (position + positions) \\ boardSize.
     
 
-]
-
-{ #category : 'accessing' }
-Ship >> advanceLap [
-	laps:= laps + 1.
 ]
 
 { #category : 'as yet unclassified' }
@@ -81,6 +86,18 @@ Ship >> initializeWith: aId [
 	hyperGravityStatus:=0.
 ]
 
+{ #category : 'initialization' }
+Ship >> initializeWith: aId and: aMaxAmountOfFuel [
+
+	position := 0.
+	id := aId.
+	turn := 0.
+	laps := 0.
+	fuel := aMaxAmountOfFuel.
+	maxAmountOfFuel:=aMaxAmountOfFuel.
+	hyperGravityStatus:=0.
+]
+
 { #category : 'accessing' }
 Ship >> isInLap: aLap [
 	^laps = aLap .
@@ -91,6 +108,11 @@ Ship >> isInLap: aLap [
 Ship >> isInPosition: aPosition [
 	^position = aPosition .
 
+]
+
+{ #category : 'testing' }
+Ship >> isWithFuel: aFuelNumber [ 
+	^fuel = aFuelNumber .
 ]
 
 { #category : 'as yet unclassified' }
@@ -135,10 +157,9 @@ Ship >> setfuel:adicemax [
 ]
 
 { #category : 'as yet unclassified' }
-Ship >> spendfuelby:aFuelamoutspend [ 
-fuel - aFuelamoutspend < 0
-    ifTrue: [ fuel := 0 ]
-    ifFalse: [ fuel := fuel - aFuelamoutspend ].
+Ship >> spendfuelby: aFuelamoutspend [
+
+	fuel := (fuel - aFuelamoutspend) max: 0
 ]
 
 { #category : 'as yet unclassified' }

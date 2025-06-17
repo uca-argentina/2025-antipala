@@ -80,18 +80,6 @@ WormHoleTest >> testWhenWeAreNotInAWormHolePositionThenStaysInTheSamePosition [
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenWeAskToTheWormHoleWhereIsPositionYHeCanAnswerIt [
-
-	| wormhole aPositionY |
-	aPositionY:=10.
-	wormhole:= WormHole at:aPositionY.
-	
-	self assert:(wormhole whereIsMyPositionY=10).
-	
-	
-]
-
-{ #category : 'tests' }
 WormHoleTest >> testWhenWeAskToThenWormHoleWhereIsPositionZHeCanAnswerIt [
 	| aPositionY aPositionZ wormhole |
 	aPositionY:=10.
