@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Effect',
 	#instVars : [
 		'effectposition',
-		'ships'
+		'ships',
+		'applytoallships'
 	],
 	#classInstVars : [
 		'positionY'
@@ -16,9 +17,9 @@ Class {
 }
 
 { #category : 'initialize' }
-AtomicBomb class >> at: positions and: aCollectionOfShips [
+AtomicBomb class >> at: positions [ 
 
-	^ self new initializeWith: positions and: aCollectionOfShips
+	^ self new initializeWith: positions
 ]
 
 { #category : 'as yet unclassified' }
@@ -29,18 +30,19 @@ AtomicBomb class >> effectProbability [
 
 { #category : 'as yet unclassified' }
 AtomicBomb >> applyEffectTo: actualShip [
+| hasitbeenapply |
+hasitbeenapply:=applytoallships anySatisfy: [:each | each == actualShip ].
+hasitbeenapply ifTrue: [ applytoallships removeAll ] ifFalse:  [ actualShip fellinatomicbomb ]
 
-	ships do: [ :aShip | aShip setPosition: 0 ].
-	^0.
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBomb >> initializeWith: position and: aCollectionOfShips [
-	ships:= aCollectionOfShips.
-	effectposition := position
+AtomicBomb >> initializeWith: position [
+	effectposition := position.
+	applytoallships:=OrderedCollection new.
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBomb >> validatePosition: aPosition [ 
-	^(effectposition == aPosition).
+AtomicBomb >> validatePosition: aships [ 
+	(effectposition == aships position) ifTrue: [self applyEffectTo:aships].
 ]

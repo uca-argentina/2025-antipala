@@ -6,33 +6,15 @@ Class {
 }
 
 { #category : 'tests' }
-AtomicBombTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
+AtomicBombTest >> testWhenTheShipEnterAtomicBomb [
+| ship manager alapmanager anAtomicBomb|
+alapmanager:=Lapmanager creatwithblock:20.
+ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
+manager := MoveManager create.
+manager move: ship to: 10.
+anAtomicBomb :=AtomicBomb at:10.
+anAtomicBomb applyEffectTo:ship.
+self assert: ship position equals: 0. 
 
-	| gameboard  aCollectionOfEffects totalSquares ships atomicBomb anEffectManager |
-	totalSquares := 100.
-	ships := OrderedCollection new.
-	ships add: (Ship create: 1).
-	ships add: (Ship create: 2).
-	ships add: (Ship create: 3).
-	atomicBomb := AtomicBomb at: 10 and: ships.
-	aCollectionOfEffects := OrderedCollection new.
-	aCollectionOfEffects add: atomicBomb .
-	anEffectManager := EffectManager createWith: aCollectionOfEffects .
-	gameboard := GameBoard
-		             with: totalSquares
-		             including: anEffectManager.
 
-	gameboard move: (ships at: 1) with: 5.
-	self assert: ((ships at: 1) isInPosition: 5).
-
-	gameboard move: (ships at: 2) with: 5.
-	self assert: ((ships at: 2) isInPosition: 5).
-
-	gameboard move: (ships at: 3) with: 5.
-	self assert: ((ships at: 3) isInPosition: 5).
-
-	gameboard move: (ships at: 1) with: 5.
-	self assert: ((ships at: 1) isInPosition: 0).
-	self assert: ((ships at: 2) isInPosition: 0).
-	self assert: ((ships at: 3) isInPosition: 0).
 ]
