@@ -57,7 +57,9 @@ ShipGame >> play [
 
 player:=ships at:siguiente.
 playerthrow:=self throwdice.
+manageeffects applyanEffect:player. 
 movemanager move:player  to:playerthrow.
+manageeffects applyanEffect:player.
 siguiente :=siguiente+1
 ]
 

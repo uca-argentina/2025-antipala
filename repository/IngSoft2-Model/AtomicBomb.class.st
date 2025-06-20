@@ -41,12 +41,13 @@ hasitbeenapply ifTrue: [ applytoallships removeAll.  active:=false] ifFalse:  [ 
 AtomicBomb >> initializeWith: position [
 	effectposition := position.
 	applytoallships:=OrderedCollection new.
+	active:=false
 ]
 
 { #category : 'as yet unclassified' }
 AtomicBomb >> validatePosition: aships [
 
-	(effectposition == aships position or: active) ifFalse: [ ^ self ].
+	(effectposition == aships position or: active) ifFalse: [ ^ self ] ifTrue:[
 	active := true.
-	self applyEffectTo: aships
+	self applyEffectTo: aships]
 ]
