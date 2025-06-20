@@ -26,7 +26,7 @@ Ship2 class >> createWhithId: anId andWithFuel: anFuel andwithlapmanager: anlapm
 
 { #category : 'as yet unclassified' }
 Ship2 >> changeLapsBy: someLaps [
-	laps:=laps+someLaps 
+	laps:=laps+someLaps max:0.
 ]
 
 { #category : 'initialization' }
@@ -39,11 +39,6 @@ Ship2 >> consumeFuel:amount [
 Ship2 >> fellinatomicbomb [
 
 	position:=0.
-]
-
-{ #category : 'as yet unclassified' }
-Ship2 >> increaselap [
-	laps:=laps+1
 ]
 
 { #category : 'as yet unclassified' }
@@ -60,12 +55,13 @@ Ship2 >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 
 { #category : 'as yet unclassified' }
 Ship2 >> laps [
+	"este metodo solo debe ser usado por los tests"
 	^laps.
 ]
 
 { #category : 'as yet unclassified' }
 Ship2 >> moveBy: steps moveManager: aMoveManager [ 
-	fuel <= (steps abs) 
+	fuel < (steps abs) 
     ifTrue: [aMoveManager blockship: self]
     ifFalse: [position := position + steps. self consumeFuel: steps. lapmanger laphandler:self with: aMoveManager].
 ]
