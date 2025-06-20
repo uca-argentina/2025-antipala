@@ -11,6 +11,6 @@ Lapmanagertest >> testlapManger [
 alapmanager:=Lapmanager creatwithblock:10.
 ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 manager := MoveManager create.
-manager move: ship to: 10.
+manager move: ship by: 10.
 self assert: ship laps equals:1. 
 ]

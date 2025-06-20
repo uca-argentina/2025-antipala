@@ -16,7 +16,7 @@ effectlist:=OrderedCollection new.
 anAtomicBomb :=AtomicBomb at:10.
 effectlist add:anAtomicBomb.
 effectmanager:=Effectsmanager creatwitheffect:effectlist.
-manager move: ship to: 10.
+manager move: ship by: 10.
 effectmanager applyanEffect:ship.
 self assert: ship position equals: 0. 
 ]
@@ -33,7 +33,7 @@ anAtomicBomb :=AtomicBomb at:10.
 effectlist add:anAtomicBomb.
 effectmanager:=Effectsmanager creatwitheffect:effectlist.
 effectmanager applyanEffect:ship.
-manager move: ship to: 10.
+manager move: ship by: 10.
 effectmanager applyanEffect:ship.
 self assert: ship position equals: 0. 
 ]

@@ -28,11 +28,11 @@ MoveManager >> intializeWith:aid [
 ]
 
 { #category : 'public' }
-MoveManager >> move: aShip to: aPositionNumber [
+MoveManager >> move: aShip by: steps [
 	| isitblock |
 	listofblockship anySatisfy: [:each | each == aShip ].
 	isitblock:=listofblockship anySatisfy: [:each | each == aShip ] .
-	isitblock ifTrue: [ aShip shiptimeout:1  movemanger:self] ifFalse:[aShip moveto:aPositionNumber  movemanger:self.]
+	isitblock ifTrue: [ aShip shiptimeout:1  movemanger:self] ifFalse:[aShip moveBy:steps  moveManager:self.]
 ]
 
 { #category : 'as yet unclassified' }

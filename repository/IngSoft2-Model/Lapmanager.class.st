@@ -2,7 +2,7 @@ Class {
 	#name : 'Lapmanager',
 	#superclass : 'Object',
 	#instVars : [
-		'blocscount'
+		'boardSize'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -14,12 +14,16 @@ Lapmanager class >> creatwithblock: anblocknumber [
 ]
 
 { #category : 'as yet unclassified' }
-Lapmanager >> initwithamoutofblocks: aBlocnumber [. 
-	blocscount:=aBlocnumber.
+Lapmanager >> initwithamoutofblocks: aboardSize [
+	boardSize:=aboardSize.
 ]
 
 { #category : 'as yet unclassified' }
-Lapmanager >> laphandler:aship [
+Lapmanager >> laphandler: aship with: aMoveManager [
+	
+	| lapsDoneByTheShip |
 
-	aship position >= blocscount ifTrue: [aship increaselap].
+	lapsDoneByTheShip := aship position // boardSize. "esto maneja tanto vueltas positivas como negativas"
+	aship changeLapsBy: lapsDoneByTheShip .
+	aship moveBy: (boardSize * lapsDoneByTheShip negated) moveManager: aMoveManager
 ]

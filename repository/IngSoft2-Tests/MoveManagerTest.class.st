@@ -11,7 +11,7 @@ MoveManagerTest >> testMoveManger [
 alapmanager:=Lapmanager creatwithblock:10.
 ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 manager := MoveManager create.
-manager move: ship to: 10.
+manager move: ship by: 10.
 "ship changePositionTo: 10. no te deja porq es privado"
 positionValue := ship instVarNamed: 'position'.
 
@@ -25,7 +25,7 @@ MoveManagerTest >> testMoveMangeraddseffectManager [
 alapmanager:=Lapmanager creatwithblock:30.
 ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 manager := MoveManager create.
-manager move: ship to: 10.
+manager move: ship by: 10.
 
 ]
 
@@ -35,8 +35,8 @@ MoveManagerTest >> testMoveMangersebloque [
 alapmanager:=Lapmanager creatwithblock:30..
 ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 manager := MoveManager create.
-manager move: ship to: 10.
-manager move: ship to: 10.
+manager move: ship by: 10.
+manager move: ship by: 10.
 self assert:ship position equals:10.
 
 ]
@@ -47,12 +47,12 @@ MoveManagerTest >> testMoveMangersedebloquea [
 alapmanager:=Lapmanager creatwithblock:30.
 ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 manager := MoveManager create.
-manager move: ship to: 10.
-manager move: ship to: 10.
+manager move: ship by: 10.
+manager move: ship by: 10.
 self assert:ship position equals:10.
-manager move: ship to: 2.
-manager move: ship to: 2.
-manager move: ship to: 2.
+manager move: ship by: 2.
+manager move: ship by: 2.
+manager move: ship by: 2.
 self assert:ship position equals:12.
 
 ]

@@ -24,6 +24,11 @@ Ship2 class >> createWhithId: anId andWithFuel: anFuel andwithlapmanager: anlapm
 	^self new initializewith:anId andfuel:anFuel andlapmanger:anlapmanager.
 ]
 
+{ #category : 'as yet unclassified' }
+Ship2 >> changeLapsBy: someLaps [
+	laps:=laps+someLaps 
+]
+
 { #category : 'initialization' }
 Ship2 >> consumeFuel:amount [
    
@@ -59,10 +64,10 @@ Ship2 >> laps [
 ]
 
 { #category : 'as yet unclassified' }
-Ship2 >> moveto: anpostion movemanger: aMoveManager [ 
-	fuel <= 0
+Ship2 >> moveBy: steps moveManager: aMoveManager [ 
+	fuel <= (steps abs) 
     ifTrue: [aMoveManager blockship: self]
-    ifFalse: [position := position + anpostion. self consumeFuel:anpostion. lapmanger laphandler:self].
+    ifFalse: [position := position + steps. self consumeFuel: steps. lapmanger laphandler:self with: aMoveManager].
 ]
 
 { #category : 'as yet unclassified' }
