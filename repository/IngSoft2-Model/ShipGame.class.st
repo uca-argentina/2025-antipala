@@ -6,7 +6,8 @@ Class {
 		'setofdices',
 		'boardlength',
 		'movemanager',
-		'siguiente'
+		'siguiente',
+		'manageeffects'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -14,15 +15,19 @@ Class {
 
 { #category : 'as yet unclassified' }
 ShipGame class >> createShipPlayer: anAmountofShips lengthOfBoard: anBoardlength diceAmount: anDiceamout withfaces: facesofdice [
-   |shipcreate setofdice  listofShipplayer dice alapmanager |
+   |shipcreate setofdice  listofShipplayer dice alapmanager anAtomicBomb effectlist effectmanager |
    shipcreate:=Shipbuilder init.
 	dice:=Chargedice new.
+	anAtomicBomb :=AtomicBomb at:10.
+	effectlist :=OrderedCollection new.
+   effectlist add:anAtomicBomb.
+   effectmanager:=Effectsmanager creatwitheffect:effectlist.
    setofdice:=OrderedCollection new:anDiceamout  withAll:dice.
    alapmanager:=Lapmanager creatwithblock:anBoardlength.
 	"listofShipplayer:=OrderedCollection new:anAmountofShips  withAll: ( shipcreate createship:dice maxface dice:anDiceamout). esto no sirve porque me pone el mismo objeto exactio"
 	listofShipplayer := OrderedCollection new.
     anAmountofShips timesRepeat: [listofShipplayer add: (shipcreate createship: dice maxface dice: anDiceamout lapmanager:alapmanager)]. 
-	^self new initializeWith:listofShipplayer and:setofdice and:anBoardlength.   
+	^self new initializeWith:listofShipplayer and:setofdice and:anBoardlength and:effectmanager.   
 ]
 
 { #category : 'initialization' }
@@ -33,6 +38,17 @@ ShipGame >> initializeWith: anAmountofShips and: setofdice and: anBoardlength [
 	boardlength:=anBoardlength.
 	movemanager:=MoveManager create.
 	siguiente:=1.
+]
+
+{ #category : 'initialization' }
+ShipGame >> initializeWith: anAmountofShips and: setofdice and: anBoardlength and:effectmanager [
+	    
+	ships:=anAmountofShips.
+	setofdices:=setofdice.
+	boardlength:=anBoardlength.
+	movemanager:=MoveManager create.
+	siguiente:=1.
+	manageeffects:=effectmanager.
 ]
 
 { #category : 'playing' }
