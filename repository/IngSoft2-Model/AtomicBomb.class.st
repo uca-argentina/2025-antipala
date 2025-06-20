@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'effectposition',
 		'ships',
-		'applytoallships'
+		'applytoallships',
+		'active'
 	],
 	#classInstVars : [
 		'positionY'
@@ -32,7 +33,7 @@ AtomicBomb class >> effectProbability [
 AtomicBomb >> applyEffectTo: actualShip [
 | hasitbeenapply |
 hasitbeenapply:=applytoallships anySatisfy: [:each | each == actualShip ].
-hasitbeenapply ifTrue: [ applytoallships removeAll ] ifFalse:  [ actualShip fellinatomicbomb ]
+hasitbeenapply ifTrue: [ applytoallships removeAll.  active:=false] ifFalse:  [ actualShip fellinatomicbomb ]
 
 ]
 
@@ -43,6 +44,9 @@ AtomicBomb >> initializeWith: position [
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBomb >> validatePosition: aships [ 
-	(effectposition == aships position) ifTrue: [self applyEffectTo:aships].
+AtomicBomb >> validatePosition: aships [
+
+	(effectposition == aships position or: active) ifFalse: [ ^ self ].
+	active := true.
+	self applyEffectTo: aships
 ]

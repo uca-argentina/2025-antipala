@@ -15,7 +15,7 @@ Effectsmanager class >> creatwitheffect: aCollectionofeffects [
 
 { #category : 'as yet unclassified' }
 Effectsmanager >> applyanEffect: aShip2 [ 
-	effectlist do:[:effect|effect applyEffectTo:aShip2].
+	effectlist do:[:effect|effect validatePosition:aShip2].
 ]
 
 { #category : 'as yet unclassified' }
