@@ -6,7 +6,6 @@ Class {
 	#superclass : 'Effect',
 	#instVars : [
 		'effectposition',
-		'ships',
 		'applytoallships',
 		'active'
 	],
@@ -45,9 +44,7 @@ AtomicBomb >> initializeWith: position [
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBomb >> validatePosition: aships [
+AtomicBomb >> shouldApplyTo: aships [
 
-	(effectposition == aships position or: active) ifFalse: [ ^ self ] ifTrue:[
-	active := true.
-	self applyEffectTo: aships]
+	^(effectposition == aships position or: active)
 ]

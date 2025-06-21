@@ -1,3 +1,6 @@
+"
+Clase LapManager: Se encarga de manejar el correcto funcionamiento de vueltas al tablero de todas las naves
+"
 Class {
 	#name : 'Lapmanager',
 	#superclass : 'Object',
@@ -9,17 +12,12 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Lapmanager class >> creatwithblock: anblocknumber [ 
-	^self new initwithamoutofblocks:anblocknumber.
+Lapmanager class >> createWith: aBoardSize [ 
+	^self new initializeWith: aBoardSize.
 ]
 
 { #category : 'as yet unclassified' }
-Lapmanager >> initwithamoutofblocks: aboardSize [
-	boardSize:=aboardSize.
-]
-
-{ #category : 'as yet unclassified' }
-Lapmanager >> laphandler: aship with: aMoveManager [
+Lapmanager >> handle: aship with: aMoveManager [
 	
 	| lapsDoneByTheShip |
 
@@ -27,4 +25,9 @@ Lapmanager >> laphandler: aship with: aMoveManager [
 	lapsDoneByTheShip = 0 ifTrue: [^self].
 	aship changeLapsBy: lapsDoneByTheShip .
 	aship moveBy: (boardSize * lapsDoneByTheShip negated) moveManager: aMoveManager
+]
+
+{ #category : 'as yet unclassified' }
+Lapmanager >> initializeWith: aboardSize [
+	boardSize:=aboardSize.
 ]

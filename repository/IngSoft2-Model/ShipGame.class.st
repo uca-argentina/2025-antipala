@@ -17,13 +17,13 @@ Class {
 ShipGame class >> createShipPlayer: anAmountofShips lengthOfBoard: anBoardlength diceAmount: anDiceamout withfaces: facesofdice [
    |shipcreate setofdice  listofShipplayer dice alapmanager anAtomicBomb effectlist effectmanager |
    shipcreate:=Shipbuilder init.
-	dice:=Chargedice new.
+	dice:=ChargeDice new.
 	anAtomicBomb :=AtomicBomb at:10.
 	effectlist :=OrderedCollection new.
    effectlist add:anAtomicBomb.
    effectmanager:=Effectsmanager creatwitheffect:effectlist.
    setofdice:=OrderedCollection new:anDiceamout  withAll:dice.
-   alapmanager:=Lapmanager creatwithblock:anBoardlength.
+   alapmanager:=Lapmanager createWith:anBoardlength.
 	"listofShipplayer:=OrderedCollection new:anAmountofShips  withAll: ( shipcreate createship:dice maxface dice:anDiceamout). esto no sirve porque me pone el mismo objeto exactio"
 	listofShipplayer := OrderedCollection new.
     anAmountofShips timesRepeat: [listofShipplayer add: (shipcreate createship: dice maxface dice: anDiceamout lapmanager:alapmanager)]. 
@@ -57,9 +57,9 @@ ShipGame >> play [
 
 player:=ships at:siguiente.
 playerthrow:=self throwdice.
-manageeffects applyanEffect:player. 
+manageeffects applyAnEffectTo:player. 
 movemanager move:player  by:playerthrow.
-manageeffects applyanEffect:player.
+manageeffects applyAnEffectTo:player.
 siguiente :=siguiente+1
 ]
 

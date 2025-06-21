@@ -14,8 +14,11 @@ Effectsmanager class >> creatwitheffect: aCollectionofeffects [
 ]
 
 { #category : 'as yet unclassified' }
-Effectsmanager >> applyanEffect: aShip2 [ 
-	effectlist do:[:effect|effect validatePosition:aShip2].
+Effectsmanager >> applyAnEffectTo: aShip2 [ 
+	| effect |
+    effect := effectlist detect: [:each | each shouldApplyTo: aShip2 ] ifNone: [ NoEffect new].
+    effect applyEffectTo: aShip2.
+
 ]
 
 { #category : 'as yet unclassified' }

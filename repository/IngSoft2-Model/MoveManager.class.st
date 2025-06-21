@@ -1,3 +1,6 @@
+"
+Clase MoveManager: Se encarga de mover correctamente las naves, teniendo en cuenta bloqueos dados por efectos
+"
 Class {
 	#name : 'MoveManager',
 	#superclass : 'Object',
@@ -12,18 +15,18 @@ Class {
 
 { #category : 'operations' }
 MoveManager class >> create [
-	^self new intializeWith:1.
+	^self new intialize.
 ]
 
 { #category : 'as yet unclassified' }
-MoveManager >> blockship:aship [
+MoveManager >> block:aship [
 
  listofblockship add:aship.
 ]
 
 { #category : 'private - initialization' }
-MoveManager >> intializeWith:aid [
-	id:=0.
+MoveManager >> intialize [
+"	id:=0."
 	listofblockship:= OrderedCollection new.
 ]
 

@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 AtomicBombTest >> testWhenTheShipEnterAtomicBomb [
 | ship manager alapmanager anAtomicBomb|
-alapmanager:=Lapmanager creatwithblock:20.
+alapmanager:=Lapmanager createWith:20.
 ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 manager := MoveManager create.
 manager move: ship by: 10.

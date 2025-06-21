@@ -5,7 +5,7 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MoonWalkTest >> testWhenTheShipEnterInAMoonWalkThenTheOtherShipsRetroced [
 
 	| gameboard  moonWalk aCollectionOfEffects totalSquares ships anEffectManager |
