@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'hyperGravityPosition',
 		'hyperGravityXValue',
-		'hyperGravityStatus'
+		'hyperGravityStatus',
+		'listInHyperGravityShips'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -26,33 +27,13 @@ HyperGravity class >> effectProbability [
 
 { #category : 'as yet unclassified' }
 HyperGravity >> applyEffectTo: aShip [
-^0.
-]
-
-{ #category : 'accessing' }
-HyperGravity >> hyperGravityStatus [
-
-^hyperGravityStatus.
+	| hasFallenInHyperGravityBefore |
+	hasFallenInHyperGravityBefore:= listInHyperGravityShips anySatisfy: [:each | each == aShip ] .
 ]
 
 { #category : 'initialization' }
 HyperGravity >> initializeWith: aPosition and: aXvalue [ 
 	hyperGravityPosition:=aPosition.
 	hyperGravityXValue:= aXvalue.
-	hyperGravityStatus:= 0. "0 significa que no esta activado"
-]
-
-{ #category : 'as yet unclassified' }
-HyperGravity >> isHyperGravity [
-    ^ true
-]
-
-{ #category : 'as yet unclassified' }
-HyperGravity >> validateCondition: aThrowDice [
-^aThrowDice>=hyperGravityXValue.
-]
-
-{ #category : 'as yet unclassified' }
-HyperGravity >> validatePosition: aPosition [
-	^hyperGravityPosition==aPosition.
+	listInHyperGravityShips:= OrderedCollection new.
 ]

@@ -35,6 +35,7 @@ MoveManager >> intialize [
 MoveManager >> move: aShip by: steps [
 	| isitblock |
 	isitblock:=listofblockship anySatisfy: [:each | each == aShip ] .
+	
 	isitblock ifTrue: [ aShip shiptimeout:1  movemanger:self] ifFalse:[aShip moveBy:steps  moveManager:self.].
 	
 	"Tambien puede ser esta variante:
