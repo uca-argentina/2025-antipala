@@ -29,12 +29,6 @@ HyperGravity >> applyEffectTo: aShip [
 ^0.
 ]
 
-{ #category : 'accessing' }
-HyperGravity >> hyperGravityStatus [
-
-^hyperGravityStatus.
-]
-
 { #category : 'initialization' }
 HyperGravity >> initializeWith: aPosition and: aXvalue [ 
 	hyperGravityPosition:=aPosition.
@@ -42,17 +36,19 @@ HyperGravity >> initializeWith: aPosition and: aXvalue [
 	hyperGravityStatus:= 0. "0 significa que no esta activado"
 ]
 
+{ #category : 'asserting' }
+HyperGravity >> shouldApplyTo: aShip [
+
+	^ aShip isAt: hyperGravityPosition 
+]
+
 { #category : 'as yet unclassified' }
-HyperGravity >> isHyperGravity [
-    ^ true
+HyperGravity >> triggerBeforeMove: aShip [
+
+^0.
 ]
 
 { #category : 'as yet unclassified' }
 HyperGravity >> validateCondition: aThrowDice [
 ^aThrowDice>=hyperGravityXValue.
-]
-
-{ #category : 'as yet unclassified' }
-HyperGravity >> validatePosition: aPosition [
-	^hyperGravityPosition==aPosition.
 ]

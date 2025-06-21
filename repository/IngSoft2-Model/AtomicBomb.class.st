@@ -29,19 +29,11 @@ AtomicBomb class >> effectProbability [
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBomb >> applyEffectTo: actualShip [
-| hasitbeenapply |
-hasitbeenapply := shipsAffected anySatisfy: [ :each |
-	                  each == actualShip ].
-hasitbeenapply
-	ifTrue: [
-		shipsAffected removeAll.
-		active := false ]
-	ifFalse: [
-		active := true.
-		shipsAffected add: actualShip.
-		actualShip moveToFirstPosition ]
-
+AtomicBomb >> applyEffectTo: ship [
+	
+	shipsAffected add: ship.
+	ship moveToFirstPosition
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -54,5 +46,18 @@ AtomicBomb >> initializeWith: position [
 { #category : 'as yet unclassified' }
 AtomicBomb >> shouldApplyTo: aShip [
 
-	^active or: (aShip isAt: atomicBombPosition)
+	^ aShip isAt: atomicBombPosition
+]
+
+{ #category : 'as yet unclassified' }
+AtomicBomb >> triggerBeforeMove: ship [
+(shipsAffected includes: ship ) ifTrue: [ 
+	shipsAffected removeAll ].  
+shipsAffected isNotEmpty ifTrue: [ 
+	ship moveToFirstPosition ].
+ 
+
+
+
+
 ]

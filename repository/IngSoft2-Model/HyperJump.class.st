@@ -52,7 +52,8 @@ HyperJump >> initializeWith: position and: totalSquares [
 	currentIndex := 1.
 ]
 
-{ #category : 'as yet unclassified' }
-HyperJump >> validatePosition: aPosition [ 
-	^(effectposition == aPosition).
+{ #category : 'asserting' }
+HyperJump >> shouldApplyTo: aShip [
+
+	^ aShip isAt: effectposition 
 ]
