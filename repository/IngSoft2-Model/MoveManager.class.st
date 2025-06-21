@@ -27,19 +27,42 @@ MoveManager >> block:aship [
 
 { #category : 'private - initialization' }
 MoveManager >> intialize [
-"	id:=0."
-	listofblockship:= OrderedCollection new.
+
+	listofblockship := OrderedCollection new.
 ]
 
 { #category : 'public' }
 MoveManager >> move: aShip by: steps [
-	| isitblock |
-	isitblock:=listofblockship anySatisfy: [:each | each == aShip ] .
-	isitblock ifTrue: [ aShip shiptimeout:1  movemanger:self] ifFalse:[aShip moveBy:steps  moveManager:self.].
-	
-	"Tambien puede ser esta variante:
-	listofblockship detect:[ :each | each == aShip ] ifNone: [aShip moveBy:steps  moveManager:self. ^nil].
-	aShip shiptimeout:1  movemanger:self"
+
+	| isBlockedByList isBlockedByHyperGravity escapeOK |
+
+	isBlockedByList := listofblockship anySatisfy: [:each | each == aShip].
+	isBlockedByHyperGravity := aShip hyperGravityStatus.
+	escapeOK := steps > aShip hyperGravityEscapeNumber.
+
+	isBlockedByHyperGravity ifTrue: [
+		escapeOK 
+			ifTrue: [
+				aShip escapeFromHyperGravity.
+				aShip moveBy: steps moveManager: self.
+				^ self
+			]
+			ifFalse: [
+				aShip shiptimeout: 1 movemanger: self.
+				^ self
+			].
+	].
+
+	isBlockedByList 
+		ifTrue: [
+			aShip shiptimeout: 1 movemanger: self.
+		]
+		ifFalse: [
+			aShip moveBy: steps moveManager: self.
+		].
+
+
+		
 ]
 
 { #category : 'as yet unclassified' }

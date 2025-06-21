@@ -8,7 +8,9 @@ Class {
 		'maxfuel',
 		'lapmanger',
 		'timeout',
-		'laps'
+		'laps',
+		'blockedByHyperGravity',
+		'hyperGravityEscapeNumber'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -31,6 +33,41 @@ Ship2 >> consumeFuel:amount [
 ]
 
 { #category : 'as yet unclassified' }
+Ship2 >> escapeFromHyperGravity [
+blockedByHyperGravity := false.
+]
+
+{ #category : 'as yet unclassified' }
+Ship2 >> escapeValue: aValue [
+
+hyperGravityEscapeNumber := aValue.
+]
+
+{ #category : 'as yet unclassified' }
+Ship2 >> hyperGravityBlock [
+
+	blockedByHyperGravity := true
+]
+
+{ #category : 'accessing' }
+Ship2 >> hyperGravityEscapeNumber [
+
+ ^hyperGravityEscapeNumber.
+]
+
+{ #category : 'accessing' }
+Ship2 >> hyperGravityEscapeNumber: aValue [
+
+hyperGravityEscapeNumber := aValue.
+]
+
+{ #category : 'as yet unclassified' }
+Ship2 >> hyperGravityStatus [
+
+	^ blockedByHyperGravity
+]
+
+{ #category : 'as yet unclassified' }
 Ship2 >> id [
 	"este metodo solo debe ser usado por los tests"
 	^id.
@@ -45,6 +82,8 @@ Ship2 >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 	lapmanger:=anlapmanager.
 	timeout:=1.
 	laps:=0.
+	blockedByHyperGravity:= false.
+	hyperGravityEscapeNumber:=0.
 	
 ]
 
