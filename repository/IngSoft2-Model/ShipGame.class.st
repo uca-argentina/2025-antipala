@@ -31,16 +31,6 @@ ShipGame class >> createShipPlayer: anAmountofShips lengthOfBoard: anBoardlength
 ]
 
 { #category : 'initialization' }
-ShipGame >> initializeWith: anAmountofShips and: setofdice and: anBoardlength [ 
-	    
-	ships:=anAmountofShips.
-	setofdices:=setofdice.
-	boardlength:=anBoardlength.
-	movemanager:=MoveManager create.
-	siguiente:=1.
-]
-
-{ #category : 'initialization' }
 ShipGame >> initializeWith: anAmountofShips and: setofdice and: anBoardlength and:effectmanager [
 	    
 	ships:=anAmountofShips.

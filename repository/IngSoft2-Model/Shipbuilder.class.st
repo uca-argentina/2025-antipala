@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : 'private - initialization' }
+Shipbuilder class >> BuildWith: alapmanager and: dices [
+	^self new initializewith:alapmanager and: dices.
+]
+
+{ #category : 'private - initialization' }
 Shipbuilder class >> init [
 	^self new initializewith:0.
 ]
@@ -26,5 +31,10 @@ Shipbuilder >> createship: amaxface dice: amount lapmanager: anlapmanager [
 
 { #category : 'as yet unclassified' }
 Shipbuilder >> initializewith: anId [
+	id:=1.
+]
+
+{ #category : 'as yet unclassified' }
+Shipbuilder >> initializewith: alapmanager and: dices [
 	id:=1.
 ]

@@ -43,7 +43,7 @@ Ship2 >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 ]
 
 { #category : 'initialization' }
-Ship2 >> isInPosition: aPosition [
+Ship2 >> isAt: aPosition [
 	^position =aPosition 
 ]
 
@@ -51,6 +51,11 @@ Ship2 >> isInPosition: aPosition [
 Ship2 >> laps [
 	"este metodo solo debe ser usado por los tests"
 	^laps.
+]
+
+{ #category : 'as yet unclassified' }
+Ship2 >> lapsToApplyWith: boardSize [
+    ^ position // boardSize.
 ]
 
 { #category : 'as yet unclassified' }

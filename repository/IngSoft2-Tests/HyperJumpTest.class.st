@@ -20,7 +20,7 @@ HyperJumpTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
 	actualShip := Ship create: 1.
 	gameboard move: actualShip with: 5.
 
-	self assert: (actualShip isInPosition: 20) "5 (throw) + 15 (15% of 100)"
+	self assert: (actualShip isAt: 20) "5 (throw) + 15 (15% of 100)"
 	
 ]
 
@@ -39,17 +39,17 @@ HyperJumpTest >> testWhenTheShipEntersMultipleTimesThenItAdvancesDiferentSquares
 	actualShip := Ship create: 1.
 
 	gameboard move: actualShip with: 5.
-	self assert: (actualShip isInPosition: 8).
+	self assert: (actualShip isAt: 8).
 	
 	actualShip := Ship create: 2.
 	gameboard move: actualShip with: 5.
-	self assert: (actualShip isInPosition: 7).
+	self assert: (actualShip isAt: 7).
 	
 	actualShip := Ship create: 3.
 	gameboard move: actualShip with: 5.
-	self assert: (actualShip isInPosition: 6).
+	self assert: (actualShip isAt: 6).
 	
 	actualShip := Ship create: 4.
 	gameboard move: actualShip with: 5.
-	self assert: (actualShip isInPosition: 8).
+	self assert: (actualShip isAt: 8).
 ]

@@ -5,9 +5,9 @@ Class {
 	#name : 'AtomicBomb',
 	#superclass : 'Effect',
 	#instVars : [
-		'effectposition',
-		'applytoallships',
-		'active'
+		'active',
+		'atomicBombPosition',
+		'shipsAffected'
 	],
 	#classInstVars : [
 		'positionY'
@@ -31,20 +31,28 @@ AtomicBomb class >> effectProbability [
 { #category : 'as yet unclassified' }
 AtomicBomb >> applyEffectTo: actualShip [
 | hasitbeenapply |
-hasitbeenapply:=applytoallships anySatisfy: [:each | each == actualShip ].
-hasitbeenapply ifTrue: [ applytoallships removeAll.  active:=false] ifFalse:  [active := true. actualShip moveToFirstPosition ]
+hasitbeenapply := shipsAffected anySatisfy: [ :each |
+	                  each == actualShip ].
+hasitbeenapply
+	ifTrue: [
+		shipsAffected removeAll.
+		active := false ]
+	ifFalse: [
+		active := true.
+		shipsAffected add: actualShip.
+		actualShip moveToFirstPosition ]
 
 ]
 
 { #category : 'as yet unclassified' }
 AtomicBomb >> initializeWith: position [
-	effectposition := position.
-	applytoallships:=OrderedCollection new.
+	atomicBombPosition := position.
+	shipsAffected:=OrderedCollection new.
 	active:=false
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBomb >> shouldApplyTo: aships [
+AtomicBomb >> shouldApplyTo: aShip [
 
-	^(effectposition == aships position or: active)
+	^active or: (aShip isAt: atomicBombPosition)
 ]

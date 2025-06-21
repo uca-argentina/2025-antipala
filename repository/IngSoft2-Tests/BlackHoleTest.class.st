@@ -14,5 +14,5 @@ BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 	manager := MoveManager create.
 	manager move: ship by: 5.
 	blackhole applyEffectTo: ship.
-	self assert: (ship isInPosition: 1).
+	self assert: (ship isAt: 1).
 ]
