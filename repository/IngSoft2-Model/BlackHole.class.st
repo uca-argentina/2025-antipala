@@ -15,9 +15,9 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-BlackHole class >> at: arg1 [
+BlackHole class >> at: aPosition [
 
-	^ self new initializeWith: arg1
+	^ self new initializeWith: aPosition
 ]
 
 { #category : 'as yet unclassified' }
@@ -28,10 +28,9 @@ BlackHole class >> effectProbability [
 
 { #category : 'as yet unclassified' }
 BlackHole >> applyEffectTo: aShip [
-	| effect |
-	effect := -4.
-	aShip spendfuelby: effect abs.
-	^effect
+	| moveManager |
+	moveManager:= MoveManager create .
+	moveManager move: aShip by: -4
 ]
 
 { #category : 'as yet unclassified' }
@@ -40,7 +39,7 @@ BlackHole >> initializeWith: position [
 	blackholeposition := position
 ]
 
-{ #category : 'as yet unclassified' }
-BlackHole >> validatePosition: aPosition [ 
-	^(blackholeposition == aPosition).
+{ #category : 'asserting' }
+BlackHole >> shouldApplyTo: aShip2 [
+	^(blackholeposition == aShip2 position ).
 ]

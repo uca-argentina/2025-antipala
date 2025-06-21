@@ -31,12 +31,6 @@ Ship2 >> consumeFuel:amount [
 ]
 
 { #category : 'as yet unclassified' }
-Ship2 >> fellinatomicbomb [
-
-	position:=0.
-]
-
-{ #category : 'as yet unclassified' }
 Ship2 >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 	fuel:=afuel.
 	maxfuel:=afuel.
@@ -46,6 +40,11 @@ Ship2 >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 	timeout:=1.
 	laps:=0.
 	
+]
+
+{ #category : 'initialization' }
+Ship2 >> isInPosition: aPosition [
+	^position =aPosition 
 ]
 
 { #category : 'as yet unclassified' }
@@ -62,17 +61,23 @@ Ship2 >> moveBy: steps moveManager: aMoveManager [
 ]
 
 { #category : 'as yet unclassified' }
+Ship2 >> moveToFirstPosition [
+
+	position:=0.
+]
+
+{ #category : 'as yet unclassified' }
 Ship2 >> position [
     "Devuelve la posición actual"
     ^ position
 ]
 
 { #category : 'initialization' }
-Ship2 >> refillFuel: anAmount [
-    fuel := fuel + anAmount.
+Ship2 >> refillFuel [
+    fuel := maxfuel .
 ]
 
 { #category : 'as yet unclassified' }
 Ship2 >> shiptimeout:anumber  movemanger:amanager [
-timeout==2 ifTrue: [ amanager unblock:self. timeout:=1. self refillFuel:maxfuel] ifFalse: [timeout:=timeout+1].
+timeout==2 ifTrue: [ amanager unblock:self. timeout:=1. self refillFuel] ifFalse: [timeout:=timeout+1].
 ]

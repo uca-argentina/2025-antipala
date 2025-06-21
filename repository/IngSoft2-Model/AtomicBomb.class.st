@@ -32,7 +32,7 @@ AtomicBomb class >> effectProbability [
 AtomicBomb >> applyEffectTo: actualShip [
 | hasitbeenapply |
 hasitbeenapply:=applytoallships anySatisfy: [:each | each == actualShip ].
-hasitbeenapply ifTrue: [ applytoallships removeAll.  active:=false] ifFalse:  [ actualShip fellinatomicbomb ]
+hasitbeenapply ifTrue: [ applytoallships removeAll.  active:=false] ifFalse:  [active := true. actualShip moveToFirstPosition ]
 
 ]
 

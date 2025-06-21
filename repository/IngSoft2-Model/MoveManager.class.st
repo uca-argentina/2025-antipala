@@ -22,6 +22,7 @@ MoveManager class >> create [
 MoveManager >> block:aship [
 
  listofblockship add:aship.
+ aship moveToFirstPosition.
 ]
 
 { #category : 'private - initialization' }
@@ -34,7 +35,11 @@ MoveManager >> intialize [
 MoveManager >> move: aShip by: steps [
 	| isitblock |
 	isitblock:=listofblockship anySatisfy: [:each | each == aShip ] .
-	isitblock ifTrue: [ aShip shiptimeout:1  movemanger:self] ifFalse:[aShip moveBy:steps  moveManager:self.]
+	isitblock ifTrue: [ aShip shiptimeout:1  movemanger:self] ifFalse:[aShip moveBy:steps  moveManager:self.].
+	
+	"Tambien puede ser esta variante:
+	listofblockship detect:[ :each | each == aShip ] ifNone: [aShip moveBy:steps  moveManager:self. ^nil].
+	aShip shiptimeout:1  movemanger:self"
 ]
 
 { #category : 'as yet unclassified' }

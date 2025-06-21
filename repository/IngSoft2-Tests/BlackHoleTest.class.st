@@ -7,22 +7,12 @@ Class {
 
 { #category : 'tests' }
 BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
-	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects blackhole anEffectManager |
-
-	"despues setear el agujero"
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
+	| ship manager alapmanager blackhole|
+	alapmanager:=Lapmanager createWith:20.
+	ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 	blackhole:= BlackHole at: 5.
-	aCollectionOfEffects:= OrderedCollection new.
-	aCollectionOfEffects add: wormhole.
-	aCollectionOfEffects add: blackhole.
-	anEffectManager := EffectManager createWith: aCollectionOfEffects .
-	gameboard := GameBoard
-		             with: 40
-		             including: anEffectManager.
-	actualShip:= Ship create:1.
-	gameboard move: actualShip with: 5.
-	
-	self assert: (actualShip isInPosition: 1).
+	manager := MoveManager create.
+	manager move: ship by: 5.
+	blackhole applyEffectTo: ship.
+	self assert: (ship isInPosition: 1).
 ]

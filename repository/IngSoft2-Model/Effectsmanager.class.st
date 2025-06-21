@@ -18,6 +18,7 @@ Effectsmanager >> applyAnEffectTo: aShip2 [
 	| effect |
     effect := effectlist detect: [:each | each shouldApplyTo: aShip2 ] ifNone: [ NoEffect new].
     effect applyEffectTo: aShip2.
+	 
 
 ]
 
