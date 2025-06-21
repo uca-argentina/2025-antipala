@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ChargeDice >> maxface [
+ChargeDice >> max [
 	^5.
 ]
 

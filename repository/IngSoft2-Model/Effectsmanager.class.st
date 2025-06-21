@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'effectlist',
-		'moveManager'
+		'moveManager',
+		'game'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -15,26 +16,22 @@ Effectsmanager class >> createWith: aCollectionofeffects and: aMoveManager [
 ]
 
 { #category : 'as yet unclassified' }
-Effectsmanager >> applyAnEffectTo: aShip2 [ 
+Effectsmanager >> applyAnEffectTo: aShip2 in: aGameState [
 	| effect |
-    effect := effectlist detect: [:each | each shouldApplyTo: aShip2 ] ifNone: [ NoEffect new].
-    effect applyEffectTo: aShip2.
+	game:= aGameState.
+   effect := effectlist detect: [:each | each shouldApplyTo: aShip2 ] ifNone: [ NoEffect new].
+   effect applyEffectTo: aShip2 with: self.
 	 
-
-]
-
-{ #category : 'as yet unclassified' }
-Effectsmanager >> applyBeforeMove: aShip2 [ 
-	
-	| effect |
-    effect := effectlist detect: [:each | each shouldApplyTo: aShip2 ] ifNone: [ NoEffect new].
-    effect applyEffectTo: aShip2.
-	 
-
+	"Rompe tell dont ask"
 ]
 
 { #category : 'as yet unclassified' }
 Effectsmanager >> initwitheffects: aCollectionofeffects and: aMoveManager [
 	effectlist:=aCollectionofeffects.
 	moveManager:= aMoveManager.
+]
+
+{ #category : 'as yet unclassified' }
+Effectsmanager >> triggerAtomicBomb [
+	game moveAllShipsToTheInitialPosition.
 ]

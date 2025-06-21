@@ -5,9 +5,7 @@ Class {
 	#name : 'AtomicBomb',
 	#superclass : 'Effect',
 	#instVars : [
-		'active',
-		'atomicBombPosition',
-		'shipsAffected'
+		'atomicBombPosition'
 	],
 	#classInstVars : [
 		'positionY'
@@ -29,35 +27,19 @@ AtomicBomb class >> effectProbability [
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBomb >> applyEffectTo: ship [
+AtomicBomb >> applyEffectTo: ship with: effectManager [
 	
-	shipsAffected add: ship.
-	ship moveToFirstPosition
+	effectManager triggerAtomicBomb
 	
 ]
 
 { #category : 'as yet unclassified' }
 AtomicBomb >> initializeWith: position [
 	atomicBombPosition := position.
-	shipsAffected:=OrderedCollection new.
-	active:=false
 ]
 
 { #category : 'as yet unclassified' }
 AtomicBomb >> shouldApplyTo: aShip [
 
 	^ aShip isAt: atomicBombPosition
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBomb >> triggerBeforeMove: ship [
-(shipsAffected includes: ship ) ifTrue: [ 
-	shipsAffected removeAll ].  
-shipsAffected isNotEmpty ifTrue: [ 
-	ship moveToFirstPosition ].
- 
-
-
-
-
 ]

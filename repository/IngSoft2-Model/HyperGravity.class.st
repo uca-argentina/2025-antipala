@@ -25,8 +25,13 @@ HyperGravity class >> effectProbability [
 ]
 
 { #category : 'as yet unclassified' }
-HyperGravity >> applyEffectTo: aShip [
-^0.
+HyperGravity >> applyEffectTo: aShip with: anEffectManager [
+	| throw |
+	anEffectManager block:aShip.
+	"throw:= dices throwDices"
+	throw:= false.
+	(self validateCondition: throw) ifTrue: [anEffectManager unblock:aShip].
+	
 ]
 
 { #category : 'initialization' }
@@ -36,16 +41,10 @@ HyperGravity >> initializeWith: aPosition and: aXvalue [
 	hyperGravityStatus:= 0. "0 significa que no esta activado"
 ]
 
-{ #category : 'asserting' }
+{ #category : 'as yet unclassified' }
 HyperGravity >> shouldApplyTo: aShip [
 
 	^ aShip isAt: hyperGravityPosition 
-]
-
-{ #category : 'as yet unclassified' }
-HyperGravity >> triggerBeforeMove: aShip [
-
-^0.
 ]
 
 { #category : 'as yet unclassified' }

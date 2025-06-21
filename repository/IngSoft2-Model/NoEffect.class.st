@@ -24,7 +24,7 @@ NoEffect class >> effectProbability [
 ]
 
 { #category : 'as yet unclassified' }
-NoEffect >> applyEffectTo: aShip [
+NoEffect >> applyEffectTo: ship with: effectManager [
 
 	^0
 ]

@@ -39,7 +39,7 @@ BlackHole >> initializeWith: position [
 	blackholeposition := position
 ]
 
-{ #category : 'asserting' }
+{ #category : 'as yet unclassified' }
 BlackHole >> shouldApplyTo: aShip [
 	^(aShip isAt: blackholeposition).
 ]

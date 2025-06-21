@@ -43,6 +43,11 @@ MoveManager >> move: aShip by: steps [
 ]
 
 { #category : 'as yet unclassified' }
+MoveManager >> resetPosition: aShip [
+	aShip moveToFirstPosition
+]
+
+{ #category : 'as yet unclassified' }
 MoveManager >> unblock:aship [
 
 listofblockship removeAllSuchThat: [:each | each == aship ].

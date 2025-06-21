@@ -6,56 +6,68 @@ Class {
 		'setofdices',
 		'boardlength',
 		'movemanager',
-		'siguiente',
-		'manageeffects'
+		'manageeffects',
+		'currentPlayerIndex'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-ShipGame class >> createShipPlayer: anAmountofShips lengthOfBoard: anBoardlength diceAmount: anDiceamout withfaces: facesofdice [
-   |shipcreate setofdice  listofShipplayer dice alapmanager anAtomicBomb effectlist effectmanager |
-   shipcreate:=Shipbuilder init.
-	dice:=ChargeDice new.
-	anAtomicBomb :=AtomicBomb at:10.
-	effectlist :=OrderedCollection new.
-   effectlist add:anAtomicBomb.
-   effectmanager:=Effectsmanager creatwitheffect:effectlist.
-   setofdice:=OrderedCollection new:anDiceamout  withAll:dice.
-   alapmanager:=Lapmanager createWith:anBoardlength.
-	"listofShipplayer:=OrderedCollection new:anAmountofShips  withAll: ( shipcreate createship:dice maxface dice:anDiceamout). esto no sirve porque me pone el mismo objeto exactio"
-	listofShipplayer := OrderedCollection new.
-    anAmountofShips timesRepeat: [listofShipplayer add: (shipcreate createship: dice maxface dice: anDiceamout lapmanager:alapmanager)]. 
-	^self new initializeWith:listofShipplayer and:setofdice and:anBoardlength and:effectmanager.   
+ShipGame class >> createShipPlayer: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects [
+
+	^self new initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects 
+   
 ]
 
 { #category : 'initialization' }
-ShipGame >> initializeWith: anAmountofShips and: setofdice and: anBoardlength and:effectmanager [
+ShipGame >> initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects [ 
 	    
-	ships:=anAmountofShips.
-	setofdices:=setofdice.
-	boardlength:=anBoardlength.
-	movemanager:=MoveManager create.
-	siguiente:=1.
-	manageeffects:=effectmanager.
+	| alapmanager shipbuilder |
+	setofdices := dices.
+	boardlength := anBoardlength.
+	currentPlayerIndex := 0.
+
+	movemanager := MoveManager create.
+	manageeffects := Effectsmanager
+		                 createWith: aCollectionofeffects
+		                 and: movemanager.
+	alapmanager := Lapmanager createWith: anBoardlength.
+
+	shipbuilder := Shipbuilder buildWith: alapmanager and: dices.
+	ships := OrderedCollection new.
+	anAmountofShips timesRepeat: [ ships add: shipbuilder build ]
+
+]
+
+{ #category : 'playing' }
+ShipGame >> moveAllShipsToTheInitialPosition [
+	ships do: [:ship | movemanager resetPosition: ship].
 ]
 
 { #category : 'playing' }
 ShipGame >> play [
 |player playerthrow|
 
-player:=ships at:siguiente.
+
+currentPlayerIndex := currentPlayerIndex \\ ships size + 1. 
+player:=ships at: currentPlayerIndex.
 playerthrow:=self throwdice.
-manageeffects applyAnEffectTo:player. 
-movemanager move:player  by:playerthrow.
-manageeffects applyAnEffectTo:player.
-siguiente :=siguiente+1
+
+movemanager move: player  by: playerthrow.
+manageeffects applyAnEffectTo: player in: self.
+
 ]
 
 { #category : 'as yet unclassified' }
 ShipGame >> playerpostion: anID [ 
 	^(ships at:anID) position.
+]
+
+{ #category : 'tests - accessing' }
+ShipGame >> ship:index [
+"Este metodo solamente se debe usar para Testeo"
+	^ships at:index
 ]
 
 { #category : 'as yet unclassified' }

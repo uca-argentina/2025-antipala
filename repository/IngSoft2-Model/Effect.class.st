@@ -21,13 +21,3 @@ Effect class >> effectProbability [
 Effect >> effectProbability [
 	^ self class effectProbability
 ]
-
-{ #category : 'testing' }
-Effect >> isHyperGravity [
-    ^ false
-]
-
-{ #category : 'testing' }
-Effect >> setMaxSquares: maxLenght [
-	lenghtOfBoard:=maxLenght 
-]
