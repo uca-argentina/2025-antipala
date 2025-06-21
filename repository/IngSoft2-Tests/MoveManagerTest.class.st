@@ -22,6 +22,20 @@ self assert: (ship isAt: 2).
 ]
 
 { #category : 'tests' }
+MoveManagerTest >> testMoveManagerCanHandleSeveralShips [
+| manager alapmanager ship1 ship2 |
+alapmanager:=Lapmanager createWith:30.
+ship1 := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
+ship2 := Ship2 createWhithId:1 andWithFuel:20 andwithlapmanager:alapmanager.
+manager := MoveManager create.
+manager move: ship1 by: 15.
+manager move: ship2 by: 15.
+self assert: (ship1 isAt: 0). 
+self assert: (ship2 isAt: 15). 
+
+]
+
+{ #category : 'tests' }
 MoveManagerTest >> testMoveManagerCanMoveShips [
 | ship manager alapmanager|
 alapmanager :=Lapmanager createWith:15.

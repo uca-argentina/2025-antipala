@@ -31,6 +31,12 @@ Ship2 >> consumeFuel:amount [
 ]
 
 { #category : 'as yet unclassified' }
+Ship2 >> id [
+	"este metodo solo debe ser usado por los tests"
+	^id.
+]
+
+{ #category : 'as yet unclassified' }
 Ship2 >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 	fuel:=afuel.
 	maxfuel:=afuel.

@@ -2,39 +2,40 @@ Class {
 	#name : 'Shipbuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'id'
+		'actualId',
+		'maxFuel',
+		'lapmanager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'private - initialization' }
-Shipbuilder class >> BuildWith: alapmanager and: dices [
-	^self new initializewith:alapmanager and: dices.
-]
-
-{ #category : 'private - initialization' }
-Shipbuilder class >> init [
-	^self new initializewith:0.
+Shipbuilder class >> buildWith: alapmanager and: dices [
+	^self new initializewith: alapmanager and: dices.
 ]
 
 { #category : 'as yet unclassified' }
-Shipbuilder >> createship: amaxface dice: amount lapmanager: anlapmanager [
- | fuelamount newship |
-   fuelamount:=(amaxface*amount)*2.
-    
-	newship := Ship2 createWhithId:id andWithFuel:fuelamount andwithlapmanager:anlapmanager.
-	id:=id+1.
+Shipbuilder >> build [
+	|newship|
+	newship := Ship2 createWhithId:actualId andWithFuel:maxFuel andwithlapmanager:lapmanager.
+	actualId:= actualId+1.
 	^newship.
+
 	
 ]
 
 { #category : 'as yet unclassified' }
-Shipbuilder >> initializewith: anId [
-	id:=1.
+Shipbuilder >> initializewith: alapmanager and: aSetOfDices [
+	actualId:=1.
+	lapmanager := alapmanager.
+	self maxFuelWith: aSetOfDices
 ]
 
 { #category : 'as yet unclassified' }
-Shipbuilder >> initializewith: alapmanager and: dices [
-	id:=1.
+Shipbuilder >> maxFuelWith: aSetOfDices [
+	| maxDices sumOfMaxDices |
+	maxDices:=(aSetOfDices collect: [:d | d max]) .
+	sumOfMaxDices:=maxDices inject: 0 into: [:sum :each | sum + each].
+	maxFuel := sumOfMaxDices * 2.
 ]
