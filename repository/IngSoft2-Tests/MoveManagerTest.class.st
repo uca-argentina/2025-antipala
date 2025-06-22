@@ -10,7 +10,7 @@ MoveManagerTest >> testBlocks [
 
 	| ship manager alapmanager |
 	alapmanager := Lapmanager createWith: 30.
-	ship := Ship2
+	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10
 		        andwithlapmanager: alapmanager.
@@ -29,7 +29,7 @@ MoveManagerTest >> testBlocks [
 MoveManagerTest >> testMoveManagerBlocksTheShipsForSeveralTurnsWhenOutOfFuel [
 | ship manager alapmanager|
 alapmanager:=Lapmanager createWith:30.
-ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
+ship := Ship createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 manager := MoveManager create.
 manager move: ship by: 10.
 manager move: ship by: 10.
@@ -45,8 +45,8 @@ self assert: (ship isAt: 4).
 MoveManagerTest >> testMoveManagerCanHandleSeveralShips [
 | manager alapmanager ship1 ship2 |
 alapmanager:=Lapmanager createWith:30.
-ship1 := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
-ship2 := Ship2 createWhithId:1 andWithFuel:20 andwithlapmanager:alapmanager.
+ship1 := Ship createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
+ship2 := Ship createWhithId:1 andWithFuel:20 andwithlapmanager:alapmanager.
 manager := MoveManager create.
 manager move: ship1 by: 15.
 manager move: ship2 by: 15.
@@ -60,7 +60,7 @@ MoveManagerTest >> testMoveManagerCanMoveShips [
 
 	| ship manager alapmanager |
 	alapmanager := Lapmanager createWith: 15.
-	ship := Ship2
+	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10
 		        andwithlapmanager: alapmanager.
@@ -76,7 +76,7 @@ MoveManagerTest >> testMoveManagerCanMoveShips [
 MoveManagerTest >> testMoveManagerResetThePositionOfShipsWhenOutOfFuel [
 | ship manager  alapmanager|
 alapmanager:=Lapmanager createWith:30.
-ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
+ship := Ship createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
 manager := MoveManager create.
 manager move: ship by: 10.
 manager move: ship by: 10.
@@ -88,7 +88,7 @@ self assert: (ship isAt: 0).
 MoveManagerTest >> testMoveManagerResetThePositionOfShipsWhenTheShipsShouldntMove [
 | ship manager  alapmanager|
 alapmanager:=Lapmanager createWith:30.
-ship := Ship2 createWhithId:1 andWithFuel:15 andwithlapmanager:alapmanager.
+ship := Ship createWhithId:1 andWithFuel:15 andwithlapmanager:alapmanager.
 manager := MoveManager create.
 manager move: ship by: 20.
 self assert: (ship isAt: 0). 

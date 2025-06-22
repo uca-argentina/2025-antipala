@@ -5,7 +5,6 @@ Class {
 	#name : 'HyperGravity',
 	#superclass : 'Effect',
 	#instVars : [
-		'hyperGravityPosition',
 		'hyperGravityXValue'
 	],
 	#category : 'IngSoft2-Model',
@@ -23,7 +22,7 @@ HyperGravity class >> effectProbability [
 	^ 0.2
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 HyperGravity >> applyEffectTo: aShip with: anEffectManager [
 
 	anEffectManager
@@ -31,15 +30,9 @@ HyperGravity >> applyEffectTo: aShip with: anEffectManager [
 		in: aShip
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialize' }
 HyperGravity >> initializeWith: aPosition and: aXvalue [
 
-	hyperGravityPosition := aPosition.
-	hyperGravityXValue := aXvalue.
-]
-
-{ #category : 'asserting' }
-HyperGravity >> shouldApplyTo: aShip [
-
-	^ aShip isAt: hyperGravityPosition 
+	effectPosition := aPosition.
+	hyperGravityXValue := aXvalue
 ]

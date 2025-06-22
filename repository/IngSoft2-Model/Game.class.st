@@ -1,5 +1,8 @@
+"
+Clase game: Se encarga de mantener el flujo del juego, tirando dados y jugando.
+"
 Class {
-	#name : 'ShipGame',
+	#name : 'Game',
 	#superclass : 'Object',
 	#instVars : [
 		'ships',
@@ -14,14 +17,14 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ShipGame class >> createShipPlayer: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects [
+Game class >> createShipPlayer: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects [
 
 	^self new initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects 
    
 ]
 
-{ #category : 'initialization' }
-ShipGame >> initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects [ 
+{ #category : 'initialize' }
+Game >> initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects [ 
 	    
 	| alapmanager shipbuilder |
 	setofdices := dices.
@@ -41,7 +44,7 @@ ShipGame >> initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: 
 ]
 
 { #category : 'playing' }
-ShipGame >> moveAllShipsExcept: shipToExclude by: walk [
+Game >> moveAllShipsExcept: shipToExclude by: walk [
 
     ships do: [ :aShip |
         aShip == shipToExclude ifFalse: [
@@ -51,12 +54,12 @@ ShipGame >> moveAllShipsExcept: shipToExclude by: walk [
 ]
 
 { #category : 'playing' }
-ShipGame >> moveAllShipsToTheInitialPosition [
+Game >> moveAllShipsToTheInitialPosition [
 	ships do: [:ship | movemanager resetPosition: ship].
 ]
 
 { #category : 'playing' }
-ShipGame >> play [
+Game >> play [
 
 	| player playerthrow |
 	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
@@ -67,14 +70,23 @@ ShipGame >> play [
 	manageeffects applyAnEffectTo: player in: self with: playerthrow.
 ]
 
-{ #category : 'tests - accessing' }
-ShipGame >> ship:index [
+{ #category : 'playing' }
+Game >> repostFuel [
+
+	| player |
+	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
+	player := ships at: currentPlayerIndex.
+	player refillFuel.
+]
+
+{ #category : 'private - testing' }
+Game >> ship:index [
 "Este metodo solamente se debe usar para Testeo"
 	^ships at:index
 ]
 
-{ #category : 'as yet unclassified' }
-ShipGame >> throwdice [
+{ #category : 'playing' }
+Game >> throwdice [
  | totalThrow |
 totalThrow:= setofdices
 		         inject: 0

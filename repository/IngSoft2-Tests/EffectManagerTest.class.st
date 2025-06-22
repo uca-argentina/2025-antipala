@@ -10,7 +10,7 @@ EffectManagerTest >> testEffectHandlerCanHandleAnAtomicBomb [
 
 	| ship manager alapmanager effectmanager effectlist anAtomicBomb dices game |
 	alapmanager := Lapmanager createWith: 30.
-	ship := Ship2
+	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 20
 		        andwithlapmanager: alapmanager.
@@ -23,7 +23,7 @@ EffectManagerTest >> testEffectHandlerCanHandleAnAtomicBomb [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 1
 		        lengthOfBoard: 20
 		        dices: dices

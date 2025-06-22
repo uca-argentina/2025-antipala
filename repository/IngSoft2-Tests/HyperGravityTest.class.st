@@ -18,7 +18,7 @@ HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 1
 		        lengthOfBoard: 20
 		        dices: dices
@@ -48,7 +48,7 @@ HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 3
 		        lengthOfBoard: 20
 		        dices: dices
@@ -82,7 +82,7 @@ HyperGravityTest >> testShipsCanExitTheHyperGravity [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 15 10 )).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 1
 		        lengthOfBoard: 20
 		        dices: dices

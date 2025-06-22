@@ -16,7 +16,7 @@ Lapmanager class >> createWith: aBoardSize [
 	^self new initializeWith: aBoardSize.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Lapmanager >> handle: aship with: aMoveManager [
 
 	| lapsDoneByTheShip |
@@ -26,7 +26,7 @@ Lapmanager >> handle: aship with: aMoveManager [
 		moveBy: boardSize * lapsDoneByTheShip negated
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 Lapmanager >> initializeWith: aboardSize [
 	boardSize:=aboardSize.
 ]

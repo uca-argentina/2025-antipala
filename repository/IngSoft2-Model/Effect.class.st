@@ -5,19 +5,20 @@ Class {
 	#name : 'Effect',
 	#superclass : 'Object',
 	#instVars : [
-		'lenghtOfBoard'
+		'effectPosition'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'testing' }
-Effect class >> effectProbability [
+{ #category : 'method' }
+Effect >> applyEffectTo: ship with: effectManager [
 
-	^ 0 "subclassResponsibility"
+	^ self subclassResponsibility 
 ]
 
-{ #category : 'testing' }
-Effect >> effectProbability [
-	^ self class effectProbability
+{ #category : 'method' }
+Effect >> shouldApplyTo: aShip [
+
+	^ aShip isAt: effectPosition
 ]

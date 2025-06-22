@@ -4,9 +4,6 @@ Clase NoEffect. Efecto generico que tiene cualquier casillero, no modifica la po
 Class {
 	#name : 'NoEffect',
 	#superclass : 'Effect',
-	#instVars : [
-		'effectposition'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -23,19 +20,14 @@ NoEffect class >> effectProbability [
 	^ 0.4
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 NoEffect >> applyEffectTo: ship with: effectManager [
 
 	^ nil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 NoEffect >> initializeWith: position [
-	effectposition := position.
-]
 
-{ #category : 'method' }
-NoEffect >> shouldApplyTo: aShip [
-
-	^ aShip isAt: effectposition
+	effectPosition := position
 ]

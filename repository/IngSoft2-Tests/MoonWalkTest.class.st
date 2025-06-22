@@ -18,7 +18,7 @@ MoonWalkTest >> testMoonWalkAffectsAllShipsExceptTheOneThatTriggersIt [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 3
 		        lengthOfBoard: 20
 		        dices: dices

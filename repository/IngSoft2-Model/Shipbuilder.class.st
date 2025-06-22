@@ -1,3 +1,7 @@
+"
+clase ShipBuilder: Se encarga de crear diferentes naves. Se puede cambiar el combustible de las naves a contruir con maxFuelWith: 
+
+"
 Class {
 	#name : 'Shipbuilder',
 	#superclass : 'Object',
@@ -15,24 +19,24 @@ Shipbuilder class >> buildWith: alapmanager and: dices [
 	^self new initializewith: alapmanager and: dices.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Shipbuilder >> build [
 	|newship|
-	newship := Ship2 createWhithId:actualId andWithFuel:maxFuel andwithlapmanager:lapmanager.
+	newship := Ship createWhithId:actualId andWithFuel:maxFuel andwithlapmanager:lapmanager.
 	actualId:= actualId+1.
 	^newship.
 
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 Shipbuilder >> initializewith: alapmanager and: aSetOfDices [
 	actualId:=1.
 	lapmanager := alapmanager.
 	self maxFuelWith: aSetOfDices
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Shipbuilder >> maxFuelWith: aSetOfDices [
 	| maxDices sumOfMaxDices |
 	maxDices:=(aSetOfDices collect: [:d | d max]) .

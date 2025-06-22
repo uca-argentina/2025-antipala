@@ -4,9 +4,6 @@ Clase BlackHole. Efecto negativo, que hace retroceder 4 casilleros a la nave que
 Class {
 	#name : 'BlackHole',
 	#superclass : 'Effect',
-	#instVars : [
-		'blackholeposition'
-	],
 	#classInstVars : [
 		'positionY'
 	],
@@ -26,25 +23,14 @@ BlackHole class >> effectProbability [
 	^ 0.2
 ]
 
-{ #category : 'as yet unclassified' }
-BlackHole >> applyEffectTo: aShip [
-	| moveManager |
-	moveManager:= MoveManager create .
-	moveManager move: aShip by: -4
+{ #category : 'method' }
+BlackHole >> applyEffectTo: aShip with: anEffectManager [
+
+	anEffectManager move: aShip by: -4
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 BlackHole >> initializeWith: position [
 
-	blackholeposition := position
-]
-
-{ #category : 'asserting' }
-BlackHole >> shouldApplyTo: aShip [
-	^(aShip isAt: blackholeposition).
-]
-
-{ #category : 'as yet unclassified' }
-BlackHole >> triggerBeforeMove: aShip [
-	
+	effectPosition := position
 ]

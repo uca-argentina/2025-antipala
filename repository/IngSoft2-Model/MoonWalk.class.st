@@ -5,7 +5,6 @@ Class {
 	#name : 'MoonWalk',
 	#superclass : 'Effect',
 	#instVars : [
-		'effectposition',
 		'walk'
 	],
 	#classInstVars : [
@@ -30,21 +29,15 @@ MoonWalk class >> effectProbability [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 MoonWalk >> applyEffectTo: ship with: effectManager [
 
 	effectManager moveAllShipsExcept: ship by: walk.
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialize' }
 MoonWalk >> initializeWith: position and: aWalk [
 
-	effectposition := position.
-	walk := aWalk negated.
-]
-
-{ #category : 'asserting' }
-MoonWalk >> shouldApplyTo: aShip [
-
-	^ aShip isAt: effectposition 
+	effectPosition := position.
+	walk := aWalk negated
 ]

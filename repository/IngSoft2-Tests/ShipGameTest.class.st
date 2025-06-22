@@ -20,7 +20,7 @@ ShipGameTest >> testShipGameCanMoveTheCreatedShips [
 	dices add: (ChargeDice createWith: #( 5 )).
 	dices add: (ChargeDice createWith: #( 5 )).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 1
 		        lengthOfBoard: 30
 		        dices: dices
@@ -42,7 +42,7 @@ ShipGameTest >> testcreateAShipGamepasaturnoconatomicbomb [
 	dices add: (ChargeDice createWith: #( 5 )).
 	dices add: (ChargeDice createWith: #( 5 )).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 2
 		        lengthOfBoard: 30
 		        dices: dices

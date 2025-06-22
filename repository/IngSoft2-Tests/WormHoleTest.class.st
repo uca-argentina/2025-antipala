@@ -39,7 +39,7 @@ WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceTo
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 
-	ship := Ship2
+	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 50
 		        andwithlapmanager: (Lapmanager createWith: 50).
@@ -48,7 +48,7 @@ WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceTo
 		                 createWith: effectlist
 		                 and: aMoveManager.
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 1
 		        lengthOfBoard: 50
 		        dices: dices
@@ -92,7 +92,7 @@ WormHoleTest >> testWhenWeReceiveAPositionWeCanCheckIfItIsAWormHolePosition [
 	aPositionZ := 15.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
 
-	ship := Ship2
+	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 50
 		        andwithlapmanager: (Lapmanager createWith: 50).

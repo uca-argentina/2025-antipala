@@ -4,9 +4,6 @@ Clase AtomicBomb. Efecto que hace volver a cada nave a 1er posicion del tablero,
 Class {
 	#name : 'AtomicBomb',
 	#superclass : 'Effect',
-	#instVars : [
-		'atomicBombPosition'
-	],
 	#classInstVars : [
 		'positionY'
 	],
@@ -33,13 +30,8 @@ AtomicBomb >> applyEffectTo: ship with: effectManager [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 AtomicBomb >> initializeWith: position [
-	atomicBombPosition := position.
-]
 
-{ #category : 'as yet unclassified' }
-AtomicBomb >> shouldApplyTo: aShip [
-
-	^ aShip isAt: atomicBombPosition
+	effectPosition := position
 ]

@@ -26,10 +26,9 @@ self validLength: aFace.
 ]
 
 { #category : 'initialize' }
-Dice >> initializeDiceWith:aFace [
-faces:=aFace.
+Dice >> initializeDiceWith: maxFaces [
 
-
+	faces := maxFaces
 ]
 
 { #category : 'method' }
@@ -41,7 +40,6 @@ Dice >> max [
 
 { #category : 'method' }
 Dice >> roll [
-^ (1 to: faces ) atRandom.
 
-
+	^ faces atRandom
 ]

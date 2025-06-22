@@ -18,26 +18,26 @@ MoveManager class >> create [
 	^self new intialize.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 MoveManager >> block: aShip by: timeout [
 
-	aShip shiptimeout: timeout.
+	aShip increaseTimeoutBy: timeout.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 MoveManager >> blockDueToFuel: aShip [
 
-	aShip shiptimeout: 2.
+	aShip increaseTimeoutBy: 2.
 	aShip moveToFirstPosition.
 	aShip refillFuel
 ]
 
-{ #category : 'private - initialization' }
+{ #category : 'initialize' }
 MoveManager >> intialize [
 	listofblockship := OrderedCollection new
 ]
 
-{ #category : 'public' }
+{ #category : 'method' }
 MoveManager >> move: aShip by: steps [
 
 	aShip moveBy: steps moveManager: self
@@ -53,7 +53,7 @@ MoveManager >> move: aShip by: steps [
 	aShip shiptimeout:1  movemanger:self"
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 MoveManager >> resetPosition: aShip [
 	aShip moveToFirstPosition
 ]

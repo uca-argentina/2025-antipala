@@ -18,7 +18,7 @@ HyperJumpTest >> testAShipAdvancesWhenTriggersTheEffect [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 1
 		        lengthOfBoard: 20
 		        dices: dices
@@ -43,7 +43,7 @@ HyperJumpTest >> testHyperJumpCanReciveSeveralJumpValues [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 3
 		        lengthOfBoard: 20
 		        dices: dices
@@ -68,7 +68,7 @@ HyperJumpTest >> testHyperJumpShouldBeCiclical [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	ship := Ship2
+	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 50
 		        andwithlapmanager: (Lapmanager createWith: 10).
@@ -77,7 +77,7 @@ HyperJumpTest >> testHyperJumpShouldBeCiclical [
 		                 createWith: effectlist
 		                 and: aMoveManager.
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 1
 		        lengthOfBoard: 10
 		        dices: dices
@@ -109,7 +109,7 @@ HyperJumpTest >> testHyperJumpShouldManageFuelCases [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 3
 		        lengthOfBoard: 20
 		        dices: dices
@@ -132,7 +132,7 @@ HyperJumpTest >> testHyperJumpShouldSortTheJumpValues [
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
 
-	game := ShipGame
+	game := Game
 		        createShipPlayer: 3
 		        lengthOfBoard: 20
 		        dices: dices

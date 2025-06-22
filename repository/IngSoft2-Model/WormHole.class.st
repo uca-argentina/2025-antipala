@@ -27,7 +27,7 @@ WormHole class >> effectProbability [
 	^ 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 WormHole >> applyEffectTo: aShip with: anEffectManager [
 
 	| originalPosition |
@@ -39,7 +39,7 @@ WormHole >> applyEffectTo: aShip with: anEffectManager [
 		anEffectManager move: aShip by: positionY - positionZ ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 WormHole >> initializeWith: aPositionY and: aPositionZ [
 	aPositionY negative ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
 	aPositionZ negative ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
