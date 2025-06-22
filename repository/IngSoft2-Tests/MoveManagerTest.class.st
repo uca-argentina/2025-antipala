@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-MoveManagerTest >> testBlocks [
+MoveManagerTest >> testBlockedShipsShouldntMoveForSomeTurns [
 
 	| ship manager alapmanager |
 	alapmanager := Lapmanager createWith: 30.
@@ -43,16 +43,24 @@ self assert: (ship isAt: 4).
 
 { #category : 'tests' }
 MoveManagerTest >> testMoveManagerCanHandleSeveralShips [
-| manager alapmanager ship1 ship2 |
-alapmanager:=Lapmanager createWith:30.
-ship1 := Ship createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
-ship2 := Ship createWhithId:1 andWithFuel:20 andwithlapmanager:alapmanager.
-manager := MoveManager create.
-manager move: ship1 by: 15.
-manager move: ship2 by: 15.
-self assert: (ship1 isAt: 0). 
-self assert: (ship2 isAt: 15). 
 
+	| manager alapmanager ship1 ship2 |
+	alapmanager := Lapmanager createWith: 30.
+	ship1 := Ship
+		         createWhithId: 1
+		         andWithFuel: 10
+		         andwithlapmanager: alapmanager.
+	ship2 := Ship
+		         createWhithId: 2
+		         andWithFuel: 20
+		         andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship1 by: 15.
+	manager move: ship2 by: 15.
+	self assert: (ship1 isAt: 0).
+	self assert: (ship2 isAt: 15).
+	self assert: ship1 id equals: 1.
+	self assert: ship2 id equals: 2
 ]
 
 { #category : 'tests' }
@@ -93,4 +101,80 @@ manager := MoveManager create.
 manager move: ship by: 20.
 self assert: (ship isAt: 0). 
 
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testMoveManagerShouldHandleTheFuelOfTheShips [
+
+	| ship manager alapmanager |
+	alapmanager := Lapmanager createWith: 30.
+	ship := Ship
+		        createWhithId: 1
+		        andWithFuel: 10
+		        andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship by: 3.
+	self assert: ship fuel equals: 7.
+	manager move: ship by: 3.
+	self assert: ship fuel equals: 4.
+	manager move: ship by: 10. 
+	self assert: ship fuel equals: 10.
+	manager move: ship by: 5. "Ship Bloqueada"
+	self assert: ship fuel equals: 10
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testShipShouldHandleReffils [
+
+	| ship manager alapmanager |
+	alapmanager := Lapmanager createWith: 30.
+	ship := Ship
+		        createWhithId: 1
+		        andWithFuel: 10
+		        andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship by: 6.
+	self assert: ship fuel equals: 4.
+	ship refillFuel. 
+	self assert: ship fuel equals: 10.
+	manager move: ship by: 5. 
+	self assert: ship fuel equals: 5.
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testTimeoutGeneratedByEffects [
+
+	| ship manager alapmanager |
+	alapmanager := Lapmanager createWith: 30.
+	ship := Ship
+		        createWhithId: 1
+		        andWithFuel: 10
+		        andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship by: 5.
+	self assert: (ship isWithTimeout: 0).
+	manager block: ship by: 2.
+	self assert: (ship isWithTimeout: 2).
+	manager move: ship by: 5.
+	self assert: (ship isWithTimeout: 1).
+	manager move: ship by: 5.
+	self assert: (ship isWithTimeout: 0)
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testTimeoutGeneratedByLowFuel [
+
+	| ship manager alapmanager |
+	alapmanager := Lapmanager createWith: 30.
+	ship := Ship
+		        createWhithId: 1
+		        andWithFuel: 10
+		        andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship by: 10.
+	self assert: (ship isWithTimeout: 0).
+	manager move: ship by: 10. "Ship se bloquea, agrega un timeout de 2, pero reduce en 1 ese turno"
+	self assert: (ship isWithTimeout: 1).
+	manager move: ship by: 2.
+	self assert: (ship isWithTimeout: 0).
 ]

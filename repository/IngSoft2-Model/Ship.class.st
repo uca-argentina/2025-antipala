@@ -84,15 +84,23 @@ Ship >> isAt: aPosition [
 	^position =aPosition 
 ]
 
+{ #category : 'methods' }
+Ship >> isAtLap: lap [
+	"este metodo solo debe ser usado por los tests"
+
+	^ laps = lap
+]
+
 { #category : 'private - methods' }
 Ship >> isBlocked [
 	^ timeout > 0.
 ]
 
 { #category : 'private - testing' }
-Ship >> laps [
+Ship >> isWithTimeout: amount [
 	"este metodo solo debe ser usado por los tests"
-	^laps.
+
+	^ timeout = amount
 ]
 
 { #category : 'methods' }
@@ -138,11 +146,4 @@ Ship >> reduceTimeout [
 { #category : 'methods' }
 Ship >> refillFuel [
     fuel := maxfuel .
-]
-
-{ #category : 'private - testing' }
-Ship >> timeout [
-	"este metodo solo debe ser usado por los tests"
-
-	^ timeout
 ]

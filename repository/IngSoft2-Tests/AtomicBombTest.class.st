@@ -5,7 +5,7 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 AtomicBombTest >> testAtomicBombAffectsAllShips [
 
 	| alapmanager anAtomicBomb effectlist game dices |

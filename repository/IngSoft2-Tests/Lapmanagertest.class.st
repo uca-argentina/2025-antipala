@@ -5,34 +5,46 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'test' }
+{ #category : 'tests' }
 LapManagertest >> testNegativeLaps [
-| ship manager  alapmanager|
-alapmanager:=Lapmanager createWith:10.
-ship := Ship createWhithId:1 andWithFuel:100 andwithlapmanager:alapmanager.
-manager := MoveManager create.
-manager move: ship by: 25.
-self assert: ship laps equals:2. 
-manager move: ship by: -25.
-self assert: ship laps equals:0. 
+
+	| ship manager alapmanager |
+	alapmanager := Lapmanager createWith: 10.
+	ship := Ship
+		        createWhithId: 1
+		        andWithFuel: 100
+		        andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship by: 25.
+	self assert: (ship isAtLap: 2).
+	manager move: ship by: -25.
+	self assert: (ship isAtLap: 0)
 ]
 
-{ #category : 'test' }
+{ #category : 'tests' }
 LapManagertest >> testTheShipCannotHaveNegativeLaps [
-| ship manager  alapmanager|
-alapmanager:=Lapmanager createWith:10.
-ship := Ship createWhithId:1 andWithFuel:100 andwithlapmanager:alapmanager.
-manager := MoveManager create.
-manager move: ship by: -25.
-self assert: ship laps equals:0. 
+
+	| ship manager alapmanager |
+	alapmanager := Lapmanager createWith: 10.
+	ship := Ship
+		        createWhithId: 1
+		        andWithFuel: 100
+		        andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship by: -25.
+	self assert: (ship isAtLap: 0)
 ]
 
-{ #category : 'test' }
+{ #category : 'tests' }
 LapManagertest >> testWhenShipsPassTheBoardLenghtThenIncreaseTheLapNumber [
-| ship manager  alapmanager|
-alapmanager:=Lapmanager createWith:10.
-ship := Ship createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
-manager := MoveManager create.
-manager move: ship by: 10.
-self assert: ship laps equals:1. 
+
+	| ship manager alapmanager |
+	alapmanager := Lapmanager createWith: 10.
+	ship := Ship
+		        createWhithId: 1
+		        andWithFuel: 10
+		        andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship by: 10.
+	self assert: (ship isAtLap: 1)
 ]

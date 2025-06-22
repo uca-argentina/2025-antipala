@@ -5,7 +5,7 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 
 	| alapmanager effectlist game dices anHyperGravity |
@@ -35,7 +35,7 @@ HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 	"en teoria nunca puede salir del HyperGravity con ese dado"
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 
 	| alapmanager effectlist game dices anHyperGravity |

@@ -17,14 +17,14 @@ ChargeDice class >> createWith: aSetOfValues [
 	^ self new initializeWith: aSetOfValues
 ]
 
-{ #category : 'method' }
+{ #category : 'initialize' }
 ChargeDice >> initializeWith: aSetOfValues [
 
 	values := aSetOfValues.
 	currentIndex := 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 ChargeDice >> max [
 
 	^ values max
