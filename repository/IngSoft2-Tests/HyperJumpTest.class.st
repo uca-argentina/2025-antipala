@@ -5,51 +5,143 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'as yet unclassified' }
-HyperJumpTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
+{ #category : 'tests' }
+HyperJumpTest >> testAShipAdvancesWhenTriggersTheEffect [
 
-	| gameboard actualShip hyperJump aCollectionOfEffects totalSquares anEffectManager |
-	totalSquares := 100.
-	hyperJump := HyperJump at: 5 and: totalSquares.
-	aCollectionOfEffects := OrderedCollection new.
-	aCollectionOfEffects add: hyperJump .
-	anEffectManager := EffectManager createWith: aCollectionOfEffects .
-	gameboard := GameBoard
-		             with: totalSquares 
-		             including: anEffectManager.
-	actualShip := Ship create: 1.
-	gameboard move: actualShip with: 5.
+	| alapmanager effectlist game dices anHyperJump |
+	alapmanager := Lapmanager createWith: 20.
 
-	self assert: (actualShip isAt: 20) "5 (throw) + 15 (15% of 100)"
-	
+	effectlist := OrderedCollection new.
+	anHyperJump := HyperJump at: 5 with: #( 2 ).
+	effectlist add: anHyperJump.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #(5)).
+
+	game := ShipGame
+		        createShipPlayer: 1
+		        lengthOfBoard: 20
+		        dices: dices
+		        and: effectlist.
+
+	self assert: ((game ship: 1) isAt: 0).
+
+	game play.
+	self assert: ((game ship: 1) isAt: 7)
 ]
 
-{ #category : 'as yet unclassified' }
-HyperJumpTest >> testWhenTheShipEntersMultipleTimesThenItAdvancesDiferentSquares [
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpCanReciveSeveralJumpValues [
 
-	| gameboard actualShip hyperJump aCollectionOfEffects totalSquares anEffectManager |
-	totalSquares := 20. "15% = 3, 10% = 2, 5% = 1"
-	hyperJump := HyperJump at: 5 and: totalSquares.
-	aCollectionOfEffects := OrderedCollection new.
-	aCollectionOfEffects add: hyperJump.
-	anEffectManager := EffectManager createWith: aCollectionOfEffects .
-	gameboard := GameBoard
-		             with: totalSquares 
-		             including: anEffectManager.
-	actualShip := Ship create: 1.
+	| alapmanager effectlist game dices anHyperJump |
+	alapmanager := Lapmanager createWith: 20.
 
-	gameboard move: actualShip with: 5.
-	self assert: (actualShip isAt: 8).
-	
-	actualShip := Ship create: 2.
-	gameboard move: actualShip with: 5.
-	self assert: (actualShip isAt: 7).
-	
-	actualShip := Ship create: 3.
-	gameboard move: actualShip with: 5.
-	self assert: (actualShip isAt: 6).
-	
-	actualShip := Ship create: 4.
-	gameboard move: actualShip with: 5.
-	self assert: (actualShip isAt: 8).
+	effectlist := OrderedCollection new.
+	anHyperJump := HyperJump at: 5 with: #( 5 3 2 ) asSortedCollection.
+	effectlist add: anHyperJump.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #(5)).
+
+	game := ShipGame
+		        createShipPlayer: 3
+		        lengthOfBoard: 20
+		        dices: dices
+		        and: effectlist.
+
+	game play.
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 10).
+	self assert: ((game ship: 2) isAt: 8).
+	self assert: ((game ship: 3) isAt: 7)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpShouldBeCiclical [
+
+	| effectlist game dices anHyperJump effectManager aMoveManager ship |
+	effectlist := OrderedCollection new.
+	anHyperJump := HyperJump at: 5 with: #( 3 1 ) asSortedCollection.
+	effectlist add: anHyperJump.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #(5)).
+
+	ship := Ship2
+		        createWhithId: 1
+		        andWithFuel: 50
+		        andwithlapmanager: (Lapmanager createWith: 10).
+	aMoveManager := MoveManager create.
+	effectManager := Effectsmanager
+		                 createWith: effectlist
+		                 and: aMoveManager.
+
+	game := ShipGame
+		        createShipPlayer: 1
+		        lengthOfBoard: 10
+		        dices: dices
+		        and: effectlist. "no es necesario que haga nada, pero se pide para otros efectos"
+
+	aMoveManager move: ship by: 5.
+	effectManager applyAnEffectTo: ship in: game with: 5.
+	self assert: (ship isAt: 8).
+
+	aMoveManager move: ship by: -3.
+	effectManager applyAnEffectTo: ship in: game with: 5.
+	self assert: (ship isAt: 6).
+
+	aMoveManager move: ship by: -1.
+	effectManager applyAnEffectTo: ship in: game with: 5.
+	self assert: (ship isAt: 8)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpShouldManageFuelCases [
+
+	| alapmanager effectlist game dices anHyperJump |
+	alapmanager := Lapmanager createWith: 20.
+
+	effectlist := OrderedCollection new.
+	anHyperJump := HyperJump at: 5 with: #( 10 ) asSortedCollection.
+	effectlist add: anHyperJump.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #(5)).
+
+	game := ShipGame
+		        createShipPlayer: 3
+		        lengthOfBoard: 20
+		        dices: dices
+		        and: effectlist.
+
+	game play.
+	self assert: ((game ship: 1) isAt: 0)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpShouldSortTheJumpValues [
+
+	| alapmanager effectlist game dices anHyperJump |
+	alapmanager := Lapmanager createWith: 20.
+
+	effectlist := OrderedCollection new.
+	anHyperJump := HyperJump at: 5 with: #( 3 1 2 ) asSortedCollection.
+	effectlist add: anHyperJump.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #(5)).
+
+	game := ShipGame
+		        createShipPlayer: 3
+		        lengthOfBoard: 20
+		        dices: dices
+		        and: effectlist.
+
+	game play.
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 8).
+	self assert: ((game ship: 2) isAt: 7).
+	self assert: ((game ship: 3) isAt: 6)
 ]

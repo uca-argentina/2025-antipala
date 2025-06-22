@@ -20,9 +20,9 @@ DiceTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 DiceTest >> testCreateAChargeDiceReturn5 [
 
 	| aDice result |
-	aDice := ChargeDice new.
+	aDice := ChargeDice createWith: #(5).
 	result := aDice roll.
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : 'tests' }

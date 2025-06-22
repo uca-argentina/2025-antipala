@@ -26,7 +26,7 @@ NoEffect class >> effectProbability [
 { #category : 'as yet unclassified' }
 NoEffect >> applyEffectTo: ship with: effectManager [
 
-	^0
+	^ nil
 ]
 
 { #category : 'as yet unclassified' }
@@ -35,6 +35,7 @@ NoEffect >> initializeWith: position [
 ]
 
 { #category : 'method' }
-NoEffect >> validatePosition: aPosition [ 
-	^(effectposition == aPosition).
+NoEffect >> shouldApplyTo: aShip [
+
+	^ aShip isAt: effectposition
 ]

@@ -5,19 +5,17 @@ Class {
 	#name : 'HyperJump',
 	#superclass : 'Effect',
 	#instVars : [
-		'effectposition',
-		'squares',
 		'parsecs',
-		'currentIndex'
+		'currentIndex',
+		'hyperJumpPosition'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-HyperJump class >> at: positions and: totalSquares [
-
-	^ self new initializeWith: positions and: totalSquares
+HyperJump class >> at: positions with: aListOfJumps [
+	^ self new initializeWith: positions withJumps: aListOfJumps
 ]
 
 { #category : 'as yet unclassified' }
@@ -27,33 +25,29 @@ HyperJump class >> effectProbability [
 ]
 
 { #category : 'as yet unclassified' }
-HyperJump >> applyEffectTo: aShip [
+HyperJump >> applyEffectTo: aShip with: anEffectManager [
 
-	| percentage jumpSquares |
-    
-    percentage := parsecs at: currentIndex.
-    
-    "Avanza el índice cíclicamente"
-    currentIndex := currentIndex = parsecs size
-        ifTrue: [ 1 ]
-        ifFalse: [ currentIndex + 1 ].
-    
-    jumpSquares := ((percentage / 100) * squares ) rounded.
+	| jumpSquares |
+	jumpSquares := parsecs at: currentIndex.
 
-    ^ jumpSquares
+	"Avanza el índice cíclicamente"
+	currentIndex := currentIndex = parsecs size
+		                ifTrue: [ 1 ]
+		                ifFalse: [ currentIndex + 1 ].
+
+	anEffectManager move:aShip by: jumpSquares.
 ]
 
 { #category : 'as yet unclassified' }
-HyperJump >> initializeWith: position and: totalSquares [
+HyperJump >> initializeWith: position withJumps: aList [
 
-	parsecs := #( 15 10 5 ).
-	effectposition := position.
-	squares := totalSquares.
-	currentIndex := 1.
+	parsecs := aList sort: [:a :b | a > b].
+	hyperJumpPosition := position.
+	currentIndex := 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'asserting' }
 HyperJump >> shouldApplyTo: aShip [
 
-	^ aShip isAt: effectposition 
+	^ aShip isAt: hyperJumpPosition 
 ]

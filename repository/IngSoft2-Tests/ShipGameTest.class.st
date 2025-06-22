@@ -17,8 +17,8 @@ ShipGameTest >> testShipGameCanMoveTheCreatedShips [
 	effectlist := OrderedCollection new.
 
 	dices := OrderedCollection new.
-	dices add: ChargeDice new.
-	dices add: ChargeDice new.
+	dices add: (ChargeDice createWith: #( 5 )).
+	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := ShipGame
 		        createShipPlayer: 1
@@ -27,7 +27,7 @@ ShipGameTest >> testShipGameCanMoveTheCreatedShips [
 		        and: effectlist.
 
 	game play.
-	self assert: ((game ship: 1) isAt: 10).
+	self assert: ((game ship: 1) isAt: 10)
 ]
 
 { #category : 'tests' }
@@ -39,8 +39,8 @@ ShipGameTest >> testcreateAShipGamepasaturnoconatomicbomb [
 	effectlist := OrderedCollection new.
 	effectlist add: (AtomicBomb at: 20).
 	dices := OrderedCollection new.
-	dices add: ChargeDice new.
-	dices add: ChargeDice new.
+	dices add: (ChargeDice createWith: #( 5 )).
+	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := ShipGame
 		        createShipPlayer: 2
@@ -54,5 +54,5 @@ ShipGameTest >> testcreateAShipGamepasaturnoconatomicbomb [
 	self assert: ((game ship: 2) isAt: 10).
 	game play.
 	self assert: ((game ship: 1) isAt: 0).
-	self assert: ((game ship: 2) isAt: 0).
+	self assert: ((game ship: 2) isAt: 0)
 ]

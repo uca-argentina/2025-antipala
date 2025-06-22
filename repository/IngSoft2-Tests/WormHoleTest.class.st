@@ -18,16 +18,45 @@ self
 ]
 
 { #category : 'tests' }
+WormHoleTest >> testAShipCanEnterTheWormHole [
+
+	| wormhole aPositionY aPositionZ |
+	aPositionY := 5.
+	aPositionZ := 10.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+
+
+]
+
+{ #category : 'tests' }
 WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceToBeInZ [
 
-	| aPositionY aPositionZ wormhole myActualPosition result |
-	aPositionY:=10.
-	aPositionZ:=20.
-	myActualPosition:= 10.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	result:= wormhole applyWormEffectTo: myActualPosition.
-	self assert:(result = 10).
+	| wormhole effectlist dices ship aMoveManager effectManager game |
+	effectlist := OrderedCollection new.
+	wormhole := WormHole at: 10 and: 12.
+	effectlist add: wormhole.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
+
+	ship := Ship2
+		        createWhithId: 1
+		        andWithFuel: 50
+		        andwithlapmanager: (Lapmanager createWith: 50).
+	aMoveManager := MoveManager create.
+	effectManager := Effectsmanager
+		                 createWith: effectlist
+		                 and: aMoveManager.
+
+	game := ShipGame
+		        createShipPlayer: 1
+		        lengthOfBoard: 50
+		        dices: dices
+		        and: effectlist. "no es necesario que haga nada, pero se pide para otros efectos"
+
+	aMoveManager move: ship by: 10.
+	effectManager applyAnEffectTo: ship in: game with: 5.
+	self assert: (ship isAt: 12)
 ]
 
 { #category : 'tests' }
@@ -56,58 +85,28 @@ self
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenWeAreInTheZTheWormHoleKnowsHowMuchToSubTractToTheDiceToBeInY [
-	| aPositionY aPositionZ wormhole myActualPosition result |
-	aPositionY:=10.
-	aPositionZ:=30.
-	myActualPosition:= 30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	result:= wormhole applyWormEffectTo: myActualPosition.
-	self assert:(result = -20).
-]
-
-{ #category : 'tests' }
-WormHoleTest >> testWhenWeAreNotInAWormHolePositionThenStaysInTheSamePosition [ 
-	| aPositionY aPositionZ wormhole myActualPosition result |
-	aPositionY:=10.
-	aPositionZ:=20.
-	myActualPosition:= 50.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	result:= wormhole applyWormEffectTo: myActualPosition.
-	self assert:(result = 0).
-]
-
-{ #category : 'tests' }
-WormHoleTest >> testWhenWeAskToTheWormHoleWhereIsPositionYHeCanAnswerIt [
-
-	| wormhole aPositionY |
-	aPositionY:=10.
-	wormhole:= WormHole at:aPositionY.
-	
-	self assert:(wormhole whereIsMyPositionY=10).
-	
-	
-]
-
-{ #category : 'tests' }
-WormHoleTest >> testWhenWeAskToThenWormHoleWhereIsPositionZHeCanAnswerIt [
-	| aPositionY aPositionZ wormhole |
-	aPositionY:=10.
-	aPositionZ:=20.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	
-	self assert:(wormhole whereIsMyPositionZ=20).
-]
-
-{ #category : 'tests' }
 WormHoleTest >> testWhenWeReceiveAPositionWeCanCheckIfItIsAWormHolePosition [
-	| aPositionY aPositionZ wormhole |
-	aPositionY:=10.
-	aPositionZ:=20.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
+
+	| aPositionY aPositionZ wormhole ship aMoveManager |
+	aPositionY := 10.
+	aPositionZ := 15.
+	wormhole := WormHole at: aPositionY and: aPositionZ.
+
+	ship := Ship2
+		        createWhithId: 1
+		        andWithFuel: 50
+		        andwithlapmanager: (Lapmanager createWith: 50).
+	aMoveManager := MoveManager create.
+	aMoveManager move: ship by: 10.
+
+
+	self assert: (wormhole shouldApplyTo: ship).
 	
+	aMoveManager move: ship by: 5.
 	
-	self assert:(wormhole validatePosition: 20).
+	self assert: (wormhole shouldApplyTo: ship).
+	
+	aMoveManager move: ship by: 5.
+	
+	self deny: (wormhole shouldApplyTo: ship).
 ]

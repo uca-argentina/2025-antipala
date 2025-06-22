@@ -5,45 +5,35 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
-AtomicBombTest >> testSeveralShipsCanGetAffected [
-| alapmanager anAtomicBomb  effectlist game dices |
-alapmanager:=Lapmanager createWith:20.
+{ #category : 'as yet unclassified' }
+AtomicBombTest >> testAtomicBombAffectsAllShips [
 
-effectlist:=OrderedCollection new.
-anAtomicBomb :=AtomicBomb at:10.
-effectlist add:anAtomicBomb.
+	| alapmanager anAtomicBomb effectlist game dices |
+	alapmanager := Lapmanager createWith: 20.
 
-dices:=OrderedCollection new.
-dices add: ChargeDice new.
+	effectlist := OrderedCollection new.
+	anAtomicBomb := AtomicBomb at: 10.
+	effectlist add: anAtomicBomb.
 
-game:= ShipGame createShipPlayer: 3 lengthOfBoard: 20 dices: dices and: effectlist.
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #(5)).
 
-
-game play.
-game play.
-game play.
-	self assert: ((game ship:1) isAt: 5).
-	self assert: ((game ship:2) isAt: 5).
-	self assert: ((game ship:3) isAt: 5).
-game play.
-
-	self assert: ((game ship:1) isAt: 0).
-	self assert: ((game ship:2) isAt: 0).
-	self assert: ((game ship:3) isAt: 0).
-
-]
-
-{ #category : 'tests' }
-AtomicBombTest >> testWhenTheShipEnterAtomicBomb [
-| ship manager alapmanager anAtomicBomb|
-alapmanager:=Lapmanager createWith:20.
-ship := Ship2 createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
-manager := MoveManager create.
-manager move: ship by: 10.
-anAtomicBomb :=AtomicBomb at:10.
-anAtomicBomb applyEffectTo:ship.
-self assert: ship position equals: 0. 
+	game := ShipGame
+		        createShipPlayer: 3
+		        lengthOfBoard: 20
+		        dices: dices
+		        and: effectlist.
 
 
+	game play.
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 5).
+	self assert: ((game ship: 2) isAt: 5).
+	self assert: ((game ship: 3) isAt: 5).
+	game play.
+
+	self assert: ((game ship: 1) isAt: 0).
+	self assert: ((game ship: 2) isAt: 0).
+	self assert: ((game ship: 3) isAt: 0)
 ]

@@ -6,8 +6,7 @@ Class {
 	#superclass : 'Effect',
 	#instVars : [
 		'hyperGravityPosition',
-		'hyperGravityXValue',
-		'hyperGravityStatus'
+		'hyperGravityXValue'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -26,28 +25,21 @@ HyperGravity class >> effectProbability [
 
 { #category : 'as yet unclassified' }
 HyperGravity >> applyEffectTo: aShip with: anEffectManager [
-	| throw |
-	anEffectManager block:aShip.
-	"throw:= dices throwDices"
-	throw:= false.
-	(self validateCondition: throw) ifTrue: [anEffectManager unblock:aShip].
-	
+
+	anEffectManager
+		handleHyperGravityCondition: hyperGravityXValue
+		in: aShip
 ]
 
 { #category : 'initialization' }
-HyperGravity >> initializeWith: aPosition and: aXvalue [ 
-	hyperGravityPosition:=aPosition.
-	hyperGravityXValue:= aXvalue.
-	hyperGravityStatus:= 0. "0 significa que no esta activado"
+HyperGravity >> initializeWith: aPosition and: aXvalue [
+
+	hyperGravityPosition := aPosition.
+	hyperGravityXValue := aXvalue.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'asserting' }
 HyperGravity >> shouldApplyTo: aShip [
 
 	^ aShip isAt: hyperGravityPosition 
-]
-
-{ #category : 'as yet unclassified' }
-HyperGravity >> validateCondition: aThrowDice [
-^aThrowDice>=hyperGravityXValue.
 ]

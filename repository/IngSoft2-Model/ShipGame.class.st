@@ -41,27 +41,30 @@ ShipGame >> initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: 
 ]
 
 { #category : 'playing' }
+ShipGame >> moveAllShipsExcept: shipToExclude by: walk [
+
+    ships do: [ :aShip |
+        aShip == shipToExclude ifFalse: [
+            movemanager move: aShip by: walk
+        ].
+    ].
+]
+
+{ #category : 'playing' }
 ShipGame >> moveAllShipsToTheInitialPosition [
 	ships do: [:ship | movemanager resetPosition: ship].
 ]
 
 { #category : 'playing' }
 ShipGame >> play [
-|player playerthrow|
 
+	| player playerthrow |
+	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
+	player := ships at: currentPlayerIndex.
+	playerthrow := self throwdice.
 
-currentPlayerIndex := currentPlayerIndex \\ ships size + 1. 
-player:=ships at: currentPlayerIndex.
-playerthrow:=self throwdice.
-
-movemanager move: player  by: playerthrow.
-manageeffects applyAnEffectTo: player in: self.
-
-]
-
-{ #category : 'as yet unclassified' }
-ShipGame >> playerpostion: anID [ 
-	^(ships at:anID) position.
+	movemanager move: player by: playerthrow.
+	manageeffects applyAnEffectTo: player in: self with: playerthrow.
 ]
 
 { #category : 'tests - accessing' }

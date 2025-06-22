@@ -28,28 +28,15 @@ WormHole class >> effectProbability [
 ]
 
 { #category : 'as yet unclassified' }
-WormHole >> applyEffectTo: aShip [
-	| effect |
-	effect := self applyWormEffectTo: aShip position.
-	^effect
-]
+WormHole >> applyEffectTo: aShip with: anEffectManager [
 
-{ #category : 'as yet unclassified' }
-WormHole >> applyWormEffectTo: myActualPosition [ 
-    | isInPositionY isInPositionZ |
-    isInPositionY := myActualPosition = positionY.
-    isInPositionZ := myActualPosition = positionZ.
+	| originalPosition |
+	originalPosition := aShip position.
+	(originalPosition = positionY) ifTrue: [
+		anEffectManager move: aShip by: positionZ - positionY ].
 
-    isInPositionY ifTrue: [ ^ (positionZ - positionY) ].
-    isInPositionZ ifTrue: [ ^ (positionZ - positionY) negated ].
-    ^ 0
-
-]
-
-{ #category : 'initialization' }
-WormHole >> initializeWith: arg1 [
-
-	positionY := arg1
+	(originalPosition = positionZ) ifTrue: [
+		anEffectManager move: aShip by: positionY - positionZ ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -61,18 +48,7 @@ WormHole >> initializeWith: aPositionY and: aPositionZ [
 ]
 
 { #category : 'method' }
-WormHole >> validatePosition: aPosition [ 
-	^(positionY == aPosition) or: (positionZ == aPosition).
-]
+WormHole >> shouldApplyTo: aShip [
 
-{ #category : 'as yet unclassified' }
-WormHole >> whereIsMyPositionY [
-
-	^ positionY
-]
-
-{ #category : 'as yet unclassified' }
-WormHole >> whereIsMyPositionZ [
-
-	^ positionZ
+	^ (aShip isAt: positionY) or: (aShip isAt: positionZ)
 ]

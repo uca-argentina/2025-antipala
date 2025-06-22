@@ -5,31 +5,35 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'as yet unclassified' }
-MoonWalkTest >> testWhenTheShipEnterInAMoonWalkThenTheOtherShipsRetroced [
+{ #category : 'tests' }
+MoonWalkTest >> testMoonWalkAffectsAllShipsExceptTheOneThatTriggersIt [
 
-	| gameboard  moonWalk aCollectionOfEffects totalSquares ships anEffectManager |
-	totalSquares := 100.
-	ships := OrderedCollection new.
-	ships add: (Ship create: 1).
-	ships add: (Ship create: 2).
-	ships add: (Ship create: 3).
-	moonWalk := MoonWalk at: 10 and: ships and: 2 and: 100.
-	aCollectionOfEffects := OrderedCollection new.
-	aCollectionOfEffects add: moonWalk.
-	anEffectManager := EffectManager createWith: aCollectionOfEffects .
-	gameboard := GameBoard
-		             with: totalSquares 
-		             including: anEffectManager.
-	
-		
-	gameboard move: (ships at: 1) with: 5.
-	gameboard move: (ships at: 2) with: 5.
-	gameboard move: (ships at: 3) with: 5.
-	gameboard move: (ships at: 1) with: 5.
-	
-	
-	self assert: ((ships at: 1) isAt: 10).
-	self assert: ((ships at: 2) isAt: 3).
-	self assert: ((ships at: 3) isAt: 3)
+	| alapmanager effectlist game dices anMoonWalk |
+	alapmanager := Lapmanager createWith: 20.
+
+	effectlist := OrderedCollection new.
+	anMoonWalk := MoonWalk at: 10 and: 3.
+	effectlist add: anMoonWalk.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #(5)).
+
+	game := ShipGame
+		        createShipPlayer: 3
+		        lengthOfBoard: 20
+		        dices: dices
+		        and: effectlist.
+
+
+	game play.
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 5).
+	self assert: ((game ship: 2) isAt: 5).
+	self assert: ((game ship: 3) isAt: 5).
+	game play.
+
+	self assert: ((game ship: 1) isAt: 10).
+	self assert: ((game ship: 2) isAt: 2).
+	self assert: ((game ship: 3) isAt: 2)
 ]

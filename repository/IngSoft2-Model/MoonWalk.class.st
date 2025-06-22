@@ -6,9 +6,7 @@ Class {
 	#superclass : 'Effect',
 	#instVars : [
 		'effectposition',
-		'ships',
-		'walk',
-		'squares'
+		'walk'
 	],
 	#classInstVars : [
 		'positionY'
@@ -18,10 +16,11 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-MoonWalk class >> at: position and: aCollectionOfShips and: n and: boardLenght [
+MoonWalk class >> at: position and: n [
 
-	^ self new initializeWith: position and: aCollectionOfShips and: n and: boardLenght
-
+	^ self new
+		  initializeWith: position
+		  and: n
 ]
 
 { #category : 'as yet unclassified' }
@@ -32,31 +31,20 @@ MoonWalk class >> effectProbability [
 ]
 
 { #category : 'as yet unclassified' }
-MoonWalk >> applyEffectTo: aShip [
+MoonWalk >> applyEffectTo: ship with: effectManager [
 
-	(ships select: [ :ship | ship ~= aShip ]) do: [
-		:ship |
-		ship advance: 0-walk.
-		(ship position <0 and: ship laps >0) ifTrue: [
-			ship advance: squares.
-			ship returnLap ] .
-		(ship laps == 0 and:ship position<0) ifTrue:  [ 
-			ship setPosition:0 ]
-		].
-
-	^ 0
+	effectManager moveAllShipsExcept: ship by: walk.
 ]
 
-{ #category : 'as yet unclassified' }
-MoonWalk >> initializeWith: position and: aCollectionOfShips and: n and: boardLenght [
+{ #category : 'initialization' }
+MoonWalk >> initializeWith: position and: aWalk [
 
 	effectposition := position.
-	ships := aCollectionOfShips.
-	squares:=boardLenght .
-	walk := n.
+	walk := aWalk negated.
 ]
 
-{ #category : 'as yet unclassified' }
-MoonWalk >> validatePosition: aPosition [ 
-	^(effectposition == aPosition).
+{ #category : 'asserting' }
+MoonWalk >> shouldApplyTo: aShip [
+
+	^ aShip isAt: effectposition 
 ]
