@@ -18,13 +18,12 @@ Lapmanager class >> createWith: aBoardSize [
 
 { #category : 'as yet unclassified' }
 Lapmanager >> handle: aship with: aMoveManager [
-	
-	| lapsDoneByTheShip |
 
-	lapsDoneByTheShip := aship lapsToApplyWith: boardSize .
-	lapsDoneByTheShip = 0 ifTrue: [^self].
-	aship changeLapsBy: lapsDoneByTheShip .
-	aship moveBy: (boardSize * lapsDoneByTheShip negated) moveManager: aMoveManager
+	| lapsDoneByTheShip |
+	lapsDoneByTheShip := aship lapsToApplyWith: boardSize.
+	aship changeLapsBy: lapsDoneByTheShip.
+	aship
+		moveBy: boardSize * lapsDoneByTheShip negated
 ]
 
 { #category : 'as yet unclassified' }

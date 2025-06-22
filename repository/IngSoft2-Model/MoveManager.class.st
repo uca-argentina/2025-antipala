@@ -19,24 +19,35 @@ MoveManager class >> create [
 ]
 
 { #category : 'as yet unclassified' }
-MoveManager >> block:aship [
+MoveManager >> block: aShip by: timeout [
 
- listofblockship add:aship.
- aship moveToFirstPosition.
+	aShip shiptimeout: timeout.
+]
+
+{ #category : 'as yet unclassified' }
+MoveManager >> blockDueToFuel: aShip [
+
+	aShip shiptimeout: 2.
+	aShip moveToFirstPosition.
+	aShip refillFuel
 ]
 
 { #category : 'private - initialization' }
 MoveManager >> intialize [
-"	id:=0."
-	listofblockship:= OrderedCollection new.
+	listofblockship := OrderedCollection new
 ]
 
 { #category : 'public' }
 MoveManager >> move: aShip by: steps [
-	| isitblock |
-	isitblock:=listofblockship anySatisfy: [:each | each == aShip ] .
-	isitblock ifTrue: [ aShip shiptimeout:1  movemanger:self] ifFalse:[aShip moveBy:steps  moveManager:self.].
-	
+
+	aShip moveBy: steps moveManager: self
+
+	"| isitblock |
+	isitblock := listofblockship anySatisfy: [ :each | each == aShip ].
+	isitblock
+		ifTrue: [ aShip shiptimeout: 1 movemanger: self ]
+		ifFalse: [ aShip moveBy: steps moveManager: self ]"
+
 	"Tambien puede ser esta variante:
 	listofblockship detect:[ :each | each == aShip ] ifNone: [aShip moveBy:steps  moveManager:self. ^nil].
 	aShip shiptimeout:1  movemanger:self"
@@ -45,10 +56,4 @@ MoveManager >> move: aShip by: steps [
 { #category : 'as yet unclassified' }
 MoveManager >> resetPosition: aShip [
 	aShip moveToFirstPosition
-]
-
-{ #category : 'as yet unclassified' }
-MoveManager >> unblock:aship [
-
-listofblockship removeAllSuchThat: [:each | each == aship ].
 ]

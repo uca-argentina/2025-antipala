@@ -31,6 +31,14 @@ Ship2 >> consumeFuel:amount [
 ]
 
 { #category : 'as yet unclassified' }
+Ship2 >> handleBlock: steps with: aMoveManager [
+
+	(fuel < steps abs and: timeout == 0)
+		ifTrue: [
+	aMoveManager blockDueToFuel: self.]
+]
+
+{ #category : 'as yet unclassified' }
 Ship2 >> id [
 	"este metodo solo debe ser usado por los tests"
 	^id.
@@ -43,7 +51,7 @@ Ship2 >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 	id:=anId. 
 	position:=0.
 	lapmanger:=anlapmanager.
-	timeout:=1.
+	timeout:=0.
 	laps:=0.
 	
 ]
@@ -51,6 +59,11 @@ Ship2 >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 { #category : 'initialization' }
 Ship2 >> isAt: aPosition [
 	^position =aPosition 
+]
+
+{ #category : 'as yet unclassified' }
+Ship2 >> isBlocked [
+	^ timeout > 0.
 ]
 
 { #category : 'as yet unclassified' }
@@ -65,10 +78,19 @@ Ship2 >> lapsToApplyWith: boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Ship2 >> moveBy: steps moveManager: aMoveManager [ 
-	fuel < (steps abs) 
-    ifTrue: [aMoveManager block: self]
-    ifFalse: [position := position + steps. self consumeFuel: steps. lapmanger handle:self with: aMoveManager].
+Ship2 >> moveBy: steps [
+	
+	position := position + steps
+]
+
+{ #category : 'as yet unclassified' }
+Ship2 >> moveBy: steps moveManager: aMoveManager [
+
+	self handleBlock: steps with: aMoveManager.
+	self isBlocked ifTrue: [ self reduceTimeout. ^ self ].
+	self moveBy: steps.
+	self consumeFuel: steps.
+	lapmanger handle: self with: aMoveManager
 ]
 
 { #category : 'as yet unclassified' }
@@ -83,12 +105,27 @@ Ship2 >> position [
     ^ position
 ]
 
+{ #category : 'as yet unclassified' }
+Ship2 >> reduceTimeout [
+
+	timeout := timeout - 1 max: 0.
+	timeout == 0 ifTrue: [ self refillFuel ].
+]
+
 { #category : 'initialization' }
 Ship2 >> refillFuel [
     fuel := maxfuel .
 ]
 
 { #category : 'as yet unclassified' }
-Ship2 >> shiptimeout:anumber  movemanger:amanager [
-timeout==2 ifTrue: [ amanager unblock:self. timeout:=1. self refillFuel] ifFalse: [timeout:=timeout+1].
+Ship2 >> shiptimeout: anumber [
+	timeout := timeout + anumber
+
+
+	"	timeout == anumber
+		ifTrue: [
+			amanager unblock: self.
+			timeout := 0.
+			self refillFuel ]
+		ifFalse: [ timeout := timeout + 1 ]"
 ]

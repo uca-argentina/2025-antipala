@@ -8,32 +8,51 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'test' }
-ShipGameTest >> testcreateAShipGameconatomicbomb [
-game := ShipGame createShipPlayer:3 lengthOfBoard:30 diceAmount:2 withfaces:5.
+{ #category : 'tests' }
+ShipGameTest >> testShipGameCanMoveTheCreatedShips [
 
-game play.
-self assert: (game playerpostion:1) equals:0.
-self assert: (game playerpostion:3) equals:0.
+	| alapmanager effectlist dices |
+	alapmanager := Lapmanager createWith: 20.
 
+	effectlist := OrderedCollection new.
+
+	dices := OrderedCollection new.
+	dices add: ChargeDice new.
+	dices add: ChargeDice new.
+
+	game := ShipGame
+		        createShipPlayer: 1
+		        lengthOfBoard: 30
+		        dices: dices
+		        and: effectlist.
+
+	game play.
+	self assert: ((game ship: 1) isAt: 10).
 ]
 
-{ #category : 'test' }
+{ #category : 'tests' }
 ShipGameTest >> testcreateAShipGamepasaturnoconatomicbomb [
-game := ShipGame createShipPlayer:3 lengthOfBoard:30 diceAmount:2 withfaces:5.
-game play.
-self assert: (game playerpostion:1) equals:0.
-game play.
-self assert: (game playerpostion:2) equals:0.
 
-]
+	| alapmanager effectlist dices |
+	alapmanager := Lapmanager createWith: 30.
 
-{ #category : 'test' }
-ShipGameTest >> testcreateAShipGamepasaturnoconatomicbombperonocaen [
-game := ShipGame createShipPlayer:3 lengthOfBoard:30 diceAmount:1 withfaces:5.
-game play.
-self assert: (game playerpostion:1) equals:5.
-game play.
-self assert: (game playerpostion:2) equals:5.
+	effectlist := OrderedCollection new.
+	effectlist add: (AtomicBomb at: 20).
+	dices := OrderedCollection new.
+	dices add: ChargeDice new.
+	dices add: ChargeDice new.
 
+	game := ShipGame
+		        createShipPlayer: 2
+		        lengthOfBoard: 30
+		        dices: dices
+		        and: effectlist.
+
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 10).
+	self assert: ((game ship: 2) isAt: 10).
+	game play.
+	self assert: ((game ship: 1) isAt: 0).
+	self assert: ((game ship: 2) isAt: 0).
 ]
