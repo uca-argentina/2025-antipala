@@ -11,37 +11,44 @@ Class {
 		'movemanager',
 		'manageeffects',
 		'currentPlayerIndex',
-		'lapsToWin'
+		'lapsToWin',
+		'shipbuilder'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-Game class >> createShipPlayer: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects [
+Game class >> createWith:anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
+	^ self new initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin
+]
 
-	^self new initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects 
-   
+{ #category : 'playing' }
+Game >> addShip [
+	currentPlayerIndex > 0 ifTrue: [
+		Error signal: 'The game started, you cant add ships' ].
+	ships add: shipbuilder build
 ]
 
 { #category : 'initialize' }
-Game >> initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: dices and: aCollectionofeffects [ 
-	    
-	| alapmanager shipbuilder |
-	setofdices := dices.
+Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
+
+	dices isEmpty ifTrue: [
+		Error signal: 'you cant play without dices' ].
 	boardlength := anBoardlength.
+	setofdices := dices.
+	lapsToWin := numberOfLapsToWin.
 	currentPlayerIndex := 0.
-	alapmanager := Lapmanager createWith: anBoardlength.
-	movemanager := MoveManager createWith: alapmanager.
+
+	movemanager := MoveManager createWith:
+		               (Lapmanager createWith: anBoardlength).
 	manageeffects := Effectsmanager
 		                 createWith: aCollectionofeffects
 		                 and: movemanager.
-	
+
 
 	shipbuilder := Shipbuilder buildWith: dices.
-	ships := OrderedCollection new.
-	anAmountofShips timesRepeat: [ ships add: shipbuilder build ]
-
+	ships := OrderedCollection new
 ]
 
 { #category : 'playing' }
@@ -63,12 +70,14 @@ Game >> moveAllShipsToTheInitialPosition [
 Game >> play [
 
 	| player playerthrow |
+	ships isEmpty ifTrue: [ Error signal: 'you cant play without ships' ].
+	self winner ifNotNil: [ Error signal: 'the game ended' ].
 	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
 	player := ships at: currentPlayerIndex.
 	playerthrow := self throwdice.
 
 	movemanager move: player by: playerthrow.
-	manageeffects applyAnEffectTo: player in: self with: playerthrow.
+	manageeffects applyAnEffectTo: player in: self with: playerthrow
 ]
 
 { #category : 'playing' }
@@ -81,9 +90,11 @@ Game >> ranking [
 Game >> repostFuel [
 
 	| player |
+	ships isEmpty ifTrue: [ Error signal: 'you cant play without ships' ].
+	self winner ifNotNil: [ Error signal: 'the game ended' ].
 	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
 	player := ships at: currentPlayerIndex.
-	player refillFuel.
+	player refillFuel
 ]
 
 { #category : 'private - testing' }
@@ -99,4 +110,10 @@ totalThrow:= setofdices
 		         inject: 0
 		         into: [ :sum :eachDice | sum + eachDice roll ]. 
 		^totalThrow.
+]
+
+{ #category : 'playing' }
+Game >> winner [
+
+	^ships detect: [:ship | ship isAtLap:lapsToWin ] ifNone: [nil]
 ]

@@ -8,23 +8,23 @@ Class {
 { #category : 'tests' }
 MoonWalkTest >> testMoonWalkAffectsAllShipsExceptTheOneThatTriggersIt [
 
-	| alapmanager effectlist game dices anMoonWalk |
-	alapmanager := Lapmanager createWith: 20.
+	| effectlist game dices anMoonWalk |
 
 	effectlist := OrderedCollection new.
 	anMoonWalk := MoonWalk at: 10 and: 3.
 	effectlist add: anMoonWalk.
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #(5)).
+	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := Game
-		        createShipPlayer: 3
-		        lengthOfBoard: 20
-		        dices: dices
-		        and: effectlist.
-
-
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game addShip.
+	game addShip.
 	game play.
 	game play.
 	game play.

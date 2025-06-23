@@ -8,30 +8,20 @@ Class {
 { #category : 'tests' }
 BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 
-	| ship blackhole effectlist dices aMoveManager effectManager game alapmanager |
-	
+	| effectlist dices game |
 	effectlist := OrderedCollection new.
-	blackhole := BlackHole at: 5.
-	effectlist add: blackhole.
+	effectlist add: (BlackHole at: 5).
 
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
-	alapmanager := Lapmanager createWith: 20.
-	ship := Ship
-		        createWhithId: 1
-		        andWithFuel: 10.
-	aMoveManager :=  MoveManager createWith: alapmanager.
-	effectManager := Effectsmanager
-		                 createWith: effectlist
-		                 and: aMoveManager.
 
 	game := Game
-		        createShipPlayer: 1
-		        lengthOfBoard: 20
-		        dices: dices
-		        and: effectlist. "no es necesario que haga nada, pero se pide para otros efectos"
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
 
-	aMoveManager move: ship by: 5.
-	effectManager applyAnEffectTo: ship in: game with: 5.
-	self assert: (ship isAt: 1).
+	game play.
+	self assert: ((game ship:1) isAt: 1)
 ]

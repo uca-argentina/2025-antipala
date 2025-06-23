@@ -1,11 +1,10 @@
 "
-Clase MoveManager: Se encarga de mover correctamente las naves, teniendo en cuenta bloqueos dados por efectos
+Clase MoveManager: Se encarga de mover correctamente las naves, teniendo en cuenta bloqueos dados por efectos o por falta de combustible
 "
 Class {
 	#name : 'MoveManager',
 	#superclass : 'Object',
 	#instVars : [
-		'listofblockship',
 		'lapManager'
 	],
 	#category : 'IngSoft2-Model',

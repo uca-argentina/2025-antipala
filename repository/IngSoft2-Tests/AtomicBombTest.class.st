@@ -16,14 +16,16 @@ AtomicBombTest >> testAtomicBombAffectsAllShips [
 	effectlist add: anAtomicBomb.
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #(5)).
+	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := Game
-		        createShipPlayer: 3
-		        lengthOfBoard: 20
-		        dices: dices
-		        and: effectlist.
-
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game addShip.
+	game addShip.
 
 	game play.
 	game play.

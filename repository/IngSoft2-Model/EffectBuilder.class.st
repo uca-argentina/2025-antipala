@@ -1,3 +1,6 @@
+"
+clase EffectBuilder: Recibe un dado de 100 caras y un array de posiciones para llenar con efectos en base a la probabilidad que reciba del dado.
+"
 Class {
 	#name : 'EffectBuilder',
 	#superclass : 'Object',

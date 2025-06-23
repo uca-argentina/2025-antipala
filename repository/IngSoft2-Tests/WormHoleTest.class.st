@@ -31,31 +31,21 @@ WormHoleTest >> testAShipCanEnterTheWormHole [
 { #category : 'tests' }
 WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceToBeInZ [
 
-	| wormhole effectlist dices ship aMoveManager effectManager game alapmanager |
+	|  effectlist dices game |
 	effectlist := OrderedCollection new.
-	wormhole := WormHole at: 10 and: 12.
-	effectlist add: wormhole.
+	effectlist add:( WormHole at: 10 and: 12).
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 )).
-	alapmanager:=(Lapmanager createWith: 50).
-	ship := Ship
-		        createWhithId: 1
-		        andWithFuel: 50.
-	aMoveManager := MoveManager createWith: alapmanager.
-	effectManager := Effectsmanager
-		                 createWith: effectlist
-		                 and: aMoveManager.
+	dices add: (ChargeDice createWith: #( 10 )).
 
 	game := Game
-		        createShipPlayer: 1
-		        lengthOfBoard: 50
-		        dices: dices
-		        and: effectlist. "no es necesario que haga nada, pero se pide para otros efectos"
-
-	aMoveManager move: ship by: 10.
-	effectManager applyAnEffectTo: ship in: game with: 5.
-	self assert: (ship isAt: 12)
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game play.
+	self assert: ((game ship:1) isAt: 12)
 ]
 
 { #category : 'tests' }

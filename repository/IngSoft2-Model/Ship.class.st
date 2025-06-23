@@ -1,5 +1,5 @@
 "
-clase Ship: Se encarga de conocer una nave, de avisar al moveManager si se queda sin combustible y de manejar el numero de vueltas junto con LapManager
+clase Ship: Se encarga de conocer una nave, no puede hacer mucho sin un MoveManager.
 "
 Class {
 	#name : 'Ship',
@@ -9,7 +9,6 @@ Class {
 		'fuel',
 		'id',
 		'maxfuel',
-		'lapmanger',
 		'timeout',
 		'laps'
 	],
@@ -27,7 +26,7 @@ Ship >> changeLapsBy: someLaps [
 	laps:=laps+someLaps max:0.
 ]
 
-{ #category : 'private - methods' }
+{ #category : 'methods' }
 Ship >> consumeFuel:amount [
    
     fuel := fuel - amount.
@@ -40,7 +39,7 @@ Ship >> fuel [
 	^ fuel
 ]
 
-{ #category : 'private - methods' }
+{ #category : 'methods' }
 Ship >> hasFuelFor: steps [
    
     ^ fuel >= (steps abs).
@@ -69,7 +68,7 @@ Ship >> initializewith: anId andfuel: afuel [
 	
 ]
 
-{ #category : 'private - methods' }
+{ #category : 'methods' }
 Ship >> isAhead: otherShipPosition with: otherShipLaps [
     laps < otherShipLaps ifTrue: [ ^ true ].
     laps > otherShipLaps ifTrue: [ ^ false ].
@@ -97,7 +96,7 @@ Ship >> isAtLap: lap [
 	^ laps = lap
 ]
 
-{ #category : 'private - methods' }
+{ #category : 'methods' }
 Ship >> isBlocked [
 	^ timeout > 0.
 ]
@@ -126,7 +125,7 @@ Ship >> moveToFirstPosition [
 	position:=0.
 ]
 
-{ #category : 'private - methods' }
+{ #category : 'methods' }
 Ship >> reduceTimeout [
 
 	timeout := timeout - 1 max: 0.

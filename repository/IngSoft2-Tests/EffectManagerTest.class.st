@@ -8,26 +8,19 @@ Class {
 { #category : 'tests' }
 EffectManagerTest >> testEffectHandlerCanHandleAnAtomicBomb [
 
-	| ship manager alapmanager effectmanager effectlist anAtomicBomb dices game |
-	alapmanager := Lapmanager createWith: 30.
-	ship := Ship
-		        createWhithId: 1
-		        andWithFuel: 20.
-	manager := MoveManager createWith: alapmanager.
+	|  effectlist  dices game |
 	effectlist := OrderedCollection new.
-	anAtomicBomb := AtomicBomb at: 10.
-	effectlist add: anAtomicBomb.
-	effectmanager := Effectsmanager createWith: effectlist and: manager.
+	effectlist add:( AtomicBomb at: 10).
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #(5)).
+	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := Game
-		        createShipPlayer: 1
-		        lengthOfBoard: 20
-		        dices: dices
-		        and: effectlist.
-
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
 	game play.
 	self assert: ((game ship: 1) isAt: 5).
 	game play.

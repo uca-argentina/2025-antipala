@@ -1,5 +1,5 @@
 "
-clase ShipBuilder: Se encarga de crear diferentes naves. Se puede cambiar el combustible de las naves a contruir con maxFuelWith: 
+clase ShipBuilder: Se encarga de crear diferentes naves.
 
 "
 Class {
@@ -7,8 +7,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'actualId',
-		'maxFuel',
-		'lapmanager'
+		'maxFuel'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'

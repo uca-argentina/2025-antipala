@@ -8,8 +8,7 @@ Class {
 { #category : 'tests' }
 HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 
-	| alapmanager effectlist game dices anHyperGravity |
-	alapmanager := Lapmanager createWith: 20.
+	| effectlist game dices anHyperGravity |
 
 	effectlist := OrderedCollection new.
 	anHyperGravity := HyperGravity at: 5 with: 10.
@@ -19,11 +18,11 @@ HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := Game
-		        createShipPlayer: 1
-		        lengthOfBoard: 20
-		        dices: dices
-		        and: effectlist.
-
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
 	self assert: ((game ship: 1) isAt: 0).
 
 	game play.
@@ -31,15 +30,16 @@ HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 	game play.
 	self assert: ((game ship: 1) isAt: 5).
 	game play.
+	self assert: ((game ship: 1) isAt: 5).
+	game play.
 	self assert: ((game ship: 1) isAt: 5)
-	"en teoria nunca puede salir del HyperGravity con ese dado"
+	"en teoria nunca puede salir del HyperGravity con ese dado, tampoco se deberia quedar sin combustible"
 ]
 
 { #category : 'tests' }
 HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 
-	| alapmanager effectlist game dices anHyperGravity |
-	alapmanager := Lapmanager createWith: 20.
+	| effectlist game dices anHyperGravity |
 
 	effectlist := OrderedCollection new.
 	anHyperGravity := HyperGravity at: 5 with: 10.
@@ -49,11 +49,13 @@ HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := Game
-		        createShipPlayer: 3
-		        lengthOfBoard: 20
-		        dices: dices
-		        and: effectlist.
-
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game addShip.
+	game addShip.
 	game play.
 	game play.
 	game play.
@@ -72,8 +74,7 @@ HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 { #category : 'tests' }
 HyperGravityTest >> testShipsCanExitTheHyperGravity [
 
-	| alapmanager effectlist game dices anHyperGravity |
-	alapmanager := Lapmanager createWith: 20.
+	| effectlist game dices anHyperGravity |
 
 	effectlist := OrderedCollection new.
 	anHyperGravity := HyperGravity at: 5 with: 10.
@@ -83,11 +84,11 @@ HyperGravityTest >> testShipsCanExitTheHyperGravity [
 	dices add: (ChargeDice createWith: #( 5 15 10 )).
 
 	game := Game
-		        createShipPlayer: 1
-		        lengthOfBoard: 20
-		        dices: dices
-		        and: effectlist.
-
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
 	game play.
 	self assert: ((game ship: 1) isAt: 5).
 	game play.
