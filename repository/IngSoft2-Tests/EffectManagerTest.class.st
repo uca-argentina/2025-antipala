@@ -12,9 +12,8 @@ EffectManagerTest >> testEffectHandlerCanHandleAnAtomicBomb [
 	alapmanager := Lapmanager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 20
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 20.
+	manager := MoveManager createWith: alapmanager.
 	effectlist := OrderedCollection new.
 	anAtomicBomb := AtomicBomb at: 10.
 	effectlist add: anAtomicBomb.

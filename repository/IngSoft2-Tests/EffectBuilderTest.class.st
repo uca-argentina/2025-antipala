@@ -8,16 +8,16 @@ Class {
 { #category : 'tests' }
 EffectBuilderTest >> testEffectManagerShoudStartBuildingAWormHole [
 
-	| builder effects chargeDice ship moveManager  aCollectionOfPositions  effectAtPosition |
+	| builder effects chargeDice ship moveManager  aCollectionOfPositions  effectAtPosition alapmanager |
 	aCollectionOfPositions := { 5. 9. 7.} asOrderedCollection .
 	chargeDice := ChargeDice createWith: #( 1 2 3 4 5 6 7 8 9 10 ).
 	builder := EffectBuilder createWith: chargeDice and: aCollectionOfPositions.
 	effects := builder build.
+	alapmanager := Lapmanager createWith: 100.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 1000
-		        andwithlapmanager: (Lapmanager createWith: 100).
-	moveManager := MoveManager new.
+		        andWithFuel: 1000.
+	moveManager := MoveManager createWith: alapmanager.
 	
 	moveManager move: ship by: 5.
 	effectAtPosition := effects detect: [ :e | e shouldApplyTo: ship ].

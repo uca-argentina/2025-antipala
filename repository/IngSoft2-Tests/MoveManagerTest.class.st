@@ -12,9 +12,8 @@ MoveManagerTest >> testBlockedShipsShouldntMoveForSomeTurns [
 	alapmanager := Lapmanager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 10
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 10.
+	manager := MoveManager createWith: alapmanager .
 	manager move: ship by: 10.
 	self assert: (ship isAt: 10).
 	manager move: ship by: 10. "Ship se bloquea, agrega un timeout de 2, pero reduce en 1 ese turno"
@@ -29,8 +28,8 @@ MoveManagerTest >> testBlockedShipsShouldntMoveForSomeTurns [
 MoveManagerTest >> testMoveManagerBlocksTheShipsForSeveralTurnsWhenOutOfFuel [
 | ship manager alapmanager|
 alapmanager:=Lapmanager createWith:30.
-ship := Ship createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
-manager := MoveManager create.
+ship := Ship createWhithId:1 andWithFuel:10.
+manager := MoveManager createWith: alapmanager.
 manager move: ship by: 10.
 manager move: ship by: 10.
 self assert: (ship isAt: 0). 
@@ -48,13 +47,11 @@ MoveManagerTest >> testMoveManagerCanHandleSeveralShips [
 	alapmanager := Lapmanager createWith: 30.
 	ship1 := Ship
 		         createWhithId: 1
-		         andWithFuel: 10
-		         andwithlapmanager: alapmanager.
+		         andWithFuel: 10.
 	ship2 := Ship
 		         createWhithId: 2
-		         andWithFuel: 20
-		         andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		         andWithFuel: 20.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship1 by: 15.
 	manager move: ship2 by: 15.
 	self assert: (ship1 isAt: 0).
@@ -70,9 +67,8 @@ MoveManagerTest >> testMoveManagerCanMoveShips [
 	alapmanager := Lapmanager createWith: 15.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 10
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 10.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship by: 10.
 	"ship changePositionTo: 10. no te deja porq es privado"
 	"positionValue := ship instVarNamed: 'position'."
@@ -84,8 +80,8 @@ MoveManagerTest >> testMoveManagerCanMoveShips [
 MoveManagerTest >> testMoveManagerResetThePositionOfShipsWhenOutOfFuel [
 | ship manager  alapmanager|
 alapmanager:=Lapmanager createWith:30.
-ship := Ship createWhithId:1 andWithFuel:10 andwithlapmanager:alapmanager.
-manager := MoveManager create.
+ship := Ship createWhithId:1 andWithFuel:10.
+manager := MoveManager createWith: alapmanager.
 manager move: ship by: 10.
 manager move: ship by: 10.
 self assert: (ship isAt: 0). 
@@ -96,8 +92,8 @@ self assert: (ship isAt: 0).
 MoveManagerTest >> testMoveManagerResetThePositionOfShipsWhenTheShipsShouldntMove [
 | ship manager  alapmanager|
 alapmanager:=Lapmanager createWith:30.
-ship := Ship createWhithId:1 andWithFuel:15 andwithlapmanager:alapmanager.
-manager := MoveManager create.
+ship := Ship createWhithId:1 andWithFuel:15.
+manager := MoveManager createWith: alapmanager.
 manager move: ship by: 20.
 self assert: (ship isAt: 0). 
 
@@ -110,9 +106,8 @@ MoveManagerTest >> testMoveManagerShouldHandleTheFuelOfTheShips [
 	alapmanager := Lapmanager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 10
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 10.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship by: 3.
 	self assert: ship fuel equals: 7.
 	manager move: ship by: 3.
@@ -130,9 +125,8 @@ MoveManagerTest >> testShipShouldHandleReffils [
 	alapmanager := Lapmanager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 10
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 10.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship by: 6.
 	self assert: ship fuel equals: 4.
 	ship refillFuel. 
@@ -148,13 +142,11 @@ MoveManagerTest >> testShipsCanTellIfTheyAreAheadOfAnotherShip [
 	alapmanager := Lapmanager createWith: 30.
 	ship1 := Ship
 		         createWhithId: 1
-		         andWithFuel: 10
-		         andwithlapmanager: alapmanager.
+		         andWithFuel: 10.
 	ship2 := Ship
 		         createWhithId: 2
-		         andWithFuel: 20
-		         andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		         andWithFuel: 20.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship1 by: 10.
 	manager move: ship2 by: 10.
 	self deny: (ship1 isAheadOf: ship2 ).
@@ -173,9 +165,8 @@ MoveManagerTest >> testTimeoutGeneratedByEffects [
 	alapmanager := Lapmanager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 10
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 10.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship by: 5.
 	self assert: (ship isWithTimeout: 0).
 	manager block: ship by: 2.
@@ -193,9 +184,8 @@ MoveManagerTest >> testTimeoutGeneratedByLowFuel [
 	alapmanager := Lapmanager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 10
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 10.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship by: 10.
 	self assert: (ship isWithTimeout: 0).
 	manager move: ship by: 10. "Ship se bloquea, agrega un timeout de 2, pero reduce en 1 ese turno"

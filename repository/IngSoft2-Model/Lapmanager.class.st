@@ -17,7 +17,7 @@ Lapmanager class >> createWith: aBoardSize [
 ]
 
 { #category : 'method' }
-Lapmanager >> handle: aship with: aMoveManager [
+Lapmanager >> handle: aship [
 
 	| lapsDoneByTheShip |
 	lapsDoneByTheShip := aship lapsToApplyWith: boardSize.

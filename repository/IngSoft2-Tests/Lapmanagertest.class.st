@@ -12,9 +12,8 @@ LapManagertest >> testNegativeLaps [
 	alapmanager := Lapmanager createWith: 10.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 100
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 100.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship by: 25.
 	self assert: (ship isAtLap: 2).
 	manager move: ship by: -25.
@@ -28,9 +27,8 @@ LapManagertest >> testTheShipCannotHaveNegativeLaps [
 	alapmanager := Lapmanager createWith: 10.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 100
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 100.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship by: -25.
 	self assert: (ship isAtLap: 0)
 ]
@@ -42,9 +40,8 @@ LapManagertest >> testWhenShipsPassTheBoardLenghtThenIncreaseTheLapNumber [
 	alapmanager := Lapmanager createWith: 10.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 10
-		        andwithlapmanager: alapmanager.
-	manager := MoveManager create.
+		        andWithFuel: 10.
+	manager := MoveManager createWith: alapmanager.
 	manager move: ship by: 10.
 	self assert: (ship isAtLap: 1)
 ]

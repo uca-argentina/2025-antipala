@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 
-	| ship blackhole effectlist dices aMoveManager effectManager game |
+	| ship blackhole effectlist dices aMoveManager effectManager game alapmanager |
 	
 	effectlist := OrderedCollection new.
 	blackhole := BlackHole at: 5.
@@ -16,12 +16,11 @@ BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
-
+	alapmanager := Lapmanager createWith: 20.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 10
-		        andwithlapmanager: (Lapmanager createWith: 20).
-	aMoveManager := MoveManager create.
+		        andWithFuel: 10.
+	aMoveManager :=  MoveManager createWith: alapmanager.
 	effectManager := Effectsmanager
 		                 createWith: effectlist
 		                 and: aMoveManager.

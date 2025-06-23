@@ -18,8 +18,8 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Ship class >> createWhithId: anId andWithFuel: anFuel andwithlapmanager: anlapmanager [
-	^self new initializewith:anId andfuel:anFuel andlapmanger:anlapmanager.
+Ship class >> createWhithId: anId andWithFuel: anFuel [ 
+	^self new initializewith: anId andfuel: anFuel.
 ]
 
 { #category : 'methods' }
@@ -41,11 +41,9 @@ Ship >> fuel [
 ]
 
 { #category : 'private - methods' }
-Ship >> handleBlock: steps with: aMoveManager [
-
-	(fuel < steps abs and: timeout == 0)
-		ifTrue: [
-	aMoveManager blockDueToFuel: self.]
+Ship >> hasFuelFor: steps [
+   
+    ^ fuel >= (steps abs).
 ]
 
 { #category : 'private - testing' }
@@ -58,31 +56,32 @@ Ship >> id [
 Ship >> increaseTimeoutBy: anumber [
 	timeout := timeout + anumber
 
-
-	"	timeout == anumber
-		ifTrue: [
-			amanager unblock: self.
-			timeout := 0.
-			self refillFuel ]
-		ifFalse: [ timeout := timeout + 1 ]"
 ]
 
 { #category : 'initialize' }
-Ship >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
+Ship >> initializewith: anId andfuel: afuel [
 	fuel:=afuel.
 	maxfuel:=afuel.
 	id:=anId. 
 	position:=0.
-	lapmanger:=anlapmanager.
 	timeout:=0.
 	laps:=0.
+	
+]
+
+{ #category : 'private - methods' }
+Ship >> isAhead: otherShipPosition with: otherShipLaps [
+    laps < otherShipLaps ifTrue: [ ^ true ].
+    laps > otherShipLaps ifTrue: [ ^ false ].
+    ^ position < otherShipPosition.
+
 	
 ]
 
 { #category : 'methods' }
 Ship >> isAheadOf: aSecondShip [
 
-	^ aSecondShip isBehind: position with: laps.
+	^ aSecondShip isAhead: position with: laps.
 	
 ]
 
@@ -96,15 +95,6 @@ Ship >> isAtLap: lap [
 	"este metodo solo debe ser usado por los tests"
 
 	^ laps = lap
-]
-
-{ #category : 'private - methods' }
-Ship >> isBehind: otherShipPosition with: otherShipLaps [
-    laps < otherShipLaps ifTrue: [ ^ true ].
-    laps > otherShipLaps ifTrue: [ ^ false ].
-    ^ position < otherShipPosition.
-
-	
 ]
 
 { #category : 'private - methods' }
@@ -128,16 +118,6 @@ Ship >> lapsToApplyWith: boardSize [
 Ship >> moveBy: steps [
 	
 	position := position + steps
-]
-
-{ #category : 'methods' }
-Ship >> moveBy: steps moveManager: aMoveManager [
-
-	self handleBlock: steps with: aMoveManager.
-	self isBlocked ifTrue: [ self reduceTimeout. ^ self ].
-	self moveBy: steps.
-	self consumeFuel: steps.
-	lapmanger handle: self with: aMoveManager
 ]
 
 { #category : 'methods' }

@@ -5,15 +5,16 @@ Class {
 	#name : 'MoveManager',
 	#superclass : 'Object',
 	#instVars : [
-		'listofblockship'
+		'listofblockship',
+		'lapManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'operations' }
-MoveManager class >> create [
-	^self new intialize.
+MoveManager class >> createWith: aLapManager [
+	^self new intializeWith: aLapManager.
 ]
 
 { #category : 'method' }
@@ -23,32 +24,29 @@ MoveManager >> block: aShip by: timeout [
 ]
 
 { #category : 'method' }
-MoveManager >> blockDueToFuel: aShip [
+MoveManager >> handleBlockOf: aShip with: steps [
 
+	((aShip hasFuelFor: steps )not and: aShip isBlocked not) ifFalse: [
+		^ self ].
 	aShip increaseTimeoutBy: 2.
 	aShip moveToFirstPosition.
 	aShip refillFuel
 ]
 
 { #category : 'initialize' }
-MoveManager >> intialize [
-	listofblockship := OrderedCollection new
+MoveManager >> intializeWith: aLapManager [
+	lapManager := aLapManager.
 ]
 
 { #category : 'method' }
 MoveManager >> move: aShip by: steps [
 
-	aShip moveBy: steps moveManager: self
+	self handleBlockOf: aShip with: steps.
+	aShip isBlocked ifTrue:[aShip reduceTimeout. ^self].
+	aShip moveBy: steps.
+	aShip consumeFuel: steps.
+	lapManager handle: aShip.
 
-	"| isitblock |
-	isitblock := listofblockship anySatisfy: [ :each | each == aShip ].
-	isitblock
-		ifTrue: [ aShip shiptimeout: 1 movemanger: self ]
-		ifFalse: [ aShip moveBy: steps moveManager: self ]"
-
-	"Tambien puede ser esta variante:
-	listofblockship detect:[ :each | each == aShip ] ifNone: [aShip moveBy:steps  moveManager:self. ^nil].
-	aShip shiptimeout:1  movemanger:self"
 ]
 
 { #category : 'method' }

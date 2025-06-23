@@ -13,12 +13,12 @@ alapmanager := Lapmanager createWith: 15.
 dices := OrderedCollection new.
 dices add: (Dice with: 6).
 
-ashipBuilder := Shipbuilder buildWith: alapmanager and: dices.
+ashipBuilder := Shipbuilder buildWith: dices.
 aship := ashipBuilder build.
 "Comprobar normal Funcionamiento de nave"
-manager := MoveManager create.
+manager := MoveManager createWith: alapmanager.
 manager move: aship by: 10.
-self assert: aship position equals: 10
+self assert: (aship isAt: 10)
 
 ]
 
@@ -30,7 +30,7 @@ alapmanager := Lapmanager createWith: 20.
 dices1 := OrderedCollection new.
 dices1 add: (Dice with: 5).
 
-ashipBuilder := Shipbuilder buildWith: alapmanager and: dices1.
+ashipBuilder := Shipbuilder buildWith: dices1.
 ship1 := ashipBuilder build.
 
 dices2 := OrderedCollection new.
@@ -39,7 +39,7 @@ dices2 add: (Dice with: 10).
 ashipBuilder maxFuelWith: dices2.
 ship2 := ashipBuilder build.
 
-manager := MoveManager create.
+manager := MoveManager createWith: alapmanager.
 manager move: ship1 by: 15.
 manager move: ship2 by: 15.
 self assert: (ship1 isAt: 0). 
@@ -57,7 +57,7 @@ alapmanager := Lapmanager createWith: 15.
 dices := OrderedCollection new.
 dices add: (Dice with: 6).
 
-ashipBuilder := Shipbuilder buildWith: alapmanager and: dices.
+ashipBuilder := Shipbuilder buildWith: dices.
 ship1 := ashipBuilder build.
 ship2 := ashipBuilder build.
 ship3 := ashipBuilder build.

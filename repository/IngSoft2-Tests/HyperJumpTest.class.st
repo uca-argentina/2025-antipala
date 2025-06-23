@@ -60,19 +60,18 @@ HyperJumpTest >> testHyperJumpCanReciveSeveralJumpValues [
 { #category : 'tests' }
 HyperJumpTest >> testHyperJumpShouldBeCiclical [
 
-	| effectlist game dices anHyperJump effectManager aMoveManager ship |
+	| effectlist game dices anHyperJump effectManager aMoveManager ship alapmanager |
 	effectlist := OrderedCollection new.
 	anHyperJump := HyperJump at: 5 with: #( 3 1 ) asSortedCollection.
 	effectlist add: anHyperJump.
 
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(5)).
-
+	alapmanager := Lapmanager createWith: 10.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 50
-		        andwithlapmanager: (Lapmanager createWith: 10).
-	aMoveManager := MoveManager create.
+		        andWithFuel: 50.
+	aMoveManager := MoveManager createWith: alapmanager.
 	effectManager := Effectsmanager
 		                 createWith: effectlist
 		                 and: aMoveManager.

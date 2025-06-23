@@ -31,19 +31,18 @@ WormHoleTest >> testAShipCanEnterTheWormHole [
 { #category : 'tests' }
 WormHoleTest >> testIfWeAreInTheYPositionTheWormHoleKnowsHowMuchToAddToTheDiceToBeInZ [
 
-	| wormhole effectlist dices ship aMoveManager effectManager game |
+	| wormhole effectlist dices ship aMoveManager effectManager game alapmanager |
 	effectlist := OrderedCollection new.
 	wormhole := WormHole at: 10 and: 12.
 	effectlist add: wormhole.
 
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
-
+	alapmanager:=(Lapmanager createWith: 50).
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 50
-		        andwithlapmanager: (Lapmanager createWith: 50).
-	aMoveManager := MoveManager create.
+		        andWithFuel: 50.
+	aMoveManager := MoveManager createWith: alapmanager.
 	effectManager := Effectsmanager
 		                 createWith: effectlist
 		                 and: aMoveManager.
@@ -87,16 +86,15 @@ self
 { #category : 'tests' }
 WormHoleTest >> testWhenWeReceiveAPositionWeCanCheckIfItIsAWormHolePosition [
 
-	| aPositionY aPositionZ wormhole ship aMoveManager |
+	| aPositionY aPositionZ wormhole ship aMoveManager alapmanager |
 	aPositionY := 10.
 	aPositionZ := 15.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
-
+	alapmanager:= Lapmanager createWith: 50.
 	ship := Ship
 		        createWhithId: 1
-		        andWithFuel: 50
-		        andwithlapmanager: (Lapmanager createWith: 50).
-	aMoveManager := MoveManager create.
+		        andWithFuel: 50.
+	aMoveManager := MoveManager createWith: alapmanager.
 	aMoveManager move: ship by: 10.
 
 

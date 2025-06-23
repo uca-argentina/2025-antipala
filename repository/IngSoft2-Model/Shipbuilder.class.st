@@ -15,14 +15,14 @@ Class {
 }
 
 { #category : 'private - initialization' }
-Shipbuilder class >> buildWith: alapmanager and: dices [
-	^self new initializewith: alapmanager and: dices.
+Shipbuilder class >> buildWith: dices [
+	^self new initializewith: dices.
 ]
 
 { #category : 'method' }
 Shipbuilder >> build [
 	|newship|
-	newship := Ship createWhithId:actualId andWithFuel:maxFuel andwithlapmanager:lapmanager.
+	newship := Ship createWhithId:actualId andWithFuel:maxFuel.
 	actualId:= actualId+1.
 	^newship.
 
@@ -30,9 +30,8 @@ Shipbuilder >> build [
 ]
 
 { #category : 'initialize' }
-Shipbuilder >> initializewith: alapmanager and: aSetOfDices [
+Shipbuilder >> initializewith: aSetOfDices [
 	actualId:=1.
-	lapmanager := alapmanager.
 	self maxFuelWith: aSetOfDices
 ]
 

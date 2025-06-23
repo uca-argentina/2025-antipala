@@ -31,14 +31,14 @@ Game >> initializeWith: anAmountofShips lengthOfBoard: anBoardlength dices: dice
 	setofdices := dices.
 	boardlength := anBoardlength.
 	currentPlayerIndex := 0.
-
-	movemanager := MoveManager create.
+	alapmanager := Lapmanager createWith: anBoardlength.
+	movemanager := MoveManager createWith: alapmanager.
 	manageeffects := Effectsmanager
 		                 createWith: aCollectionofeffects
 		                 and: movemanager.
-	alapmanager := Lapmanager createWith: anBoardlength.
+	
 
-	shipbuilder := Shipbuilder buildWith: alapmanager and: dices.
+	shipbuilder := Shipbuilder buildWith: dices.
 	ships := OrderedCollection new.
 	anAmountofShips timesRepeat: [ ships add: shipbuilder build ]
 
