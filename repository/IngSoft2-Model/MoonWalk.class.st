@@ -7,19 +7,14 @@ Class {
 	#instVars : [
 		'walk'
 	],
-	#classInstVars : [
-		'positionY'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-MoonWalk class >> at: position and: n [
+MoonWalk class >> at: position and: walk [
 
-	^ self new
-		  initializeWith: position
-		  and: n
+	^ self new initializeWith: position and: walk
 ]
 
 { #category : 'as yet unclassified' }

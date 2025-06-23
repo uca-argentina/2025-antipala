@@ -9,9 +9,9 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-NoEffect class >> at: positions [
+NoEffect class >> at: position [
 
-	^ self new initializeWith: positions 
+	^ self new initializeWith: position
 ]
 
 { #category : 'as yet unclassified' }

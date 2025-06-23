@@ -13,8 +13,9 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-HyperJump class >> at: positions with: aListOfJumps [
-	^ self new initializeWith: positions withJumps: aListOfJumps
+HyperJump class >> at: position with: aListOfJumps [
+
+	^ self new initializeWith: position withJumps: aListOfJumps
 ]
 
 { #category : 'as yet unclassified' }
@@ -23,7 +24,7 @@ HyperJump class >> effectProbability [
 	^ 0.08
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 HyperJump >> applyEffectTo: aShip with: anEffectManager [
 
 	anEffectManager move: aShip by: (parsecs at: currentIndex).

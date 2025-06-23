@@ -12,11 +12,11 @@ HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 	alapmanager := Lapmanager createWith: 20.
 
 	effectlist := OrderedCollection new.
-	anHyperGravity := HyperGravity atPosition: 5 withValue: 10.
+	anHyperGravity := HyperGravity at: 5 with: 10.
 	effectlist add: anHyperGravity.
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #(5)).
+	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := Game
 		        createShipPlayer: 1
@@ -42,11 +42,11 @@ HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 	alapmanager := Lapmanager createWith: 20.
 
 	effectlist := OrderedCollection new.
-	anHyperGravity := HyperGravity atPosition: 5 withValue: 10.
+	anHyperGravity := HyperGravity at: 5 with: 10.
 	effectlist add: anHyperGravity.
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #(5)).
+	dices add: (ChargeDice createWith: #( 5 )).
 
 	game := Game
 		        createShipPlayer: 3
@@ -76,7 +76,7 @@ HyperGravityTest >> testShipsCanExitTheHyperGravity [
 	alapmanager := Lapmanager createWith: 20.
 
 	effectlist := OrderedCollection new.
-	anHyperGravity := HyperGravity atPosition: 5 withValue: 10.
+	anHyperGravity := HyperGravity at: 5 with: 10.
 	effectlist add: anHyperGravity.
 
 	dices := OrderedCollection new.
@@ -87,11 +87,11 @@ HyperGravityTest >> testShipsCanExitTheHyperGravity [
 		        lengthOfBoard: 20
 		        dices: dices
 		        and: effectlist.
-	
+
 	game play.
 	self assert: ((game ship: 1) isAt: 5).
 	game play.
 	self assert: ((game ship: 1) isAt: 5). "Sale del HyperGravity"
 	game play.
-	self assert: ((game ship: 1) isAt: 15).
+	self assert: ((game ship: 1) isAt: 15)
 ]

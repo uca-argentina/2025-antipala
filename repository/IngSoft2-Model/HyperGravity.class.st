@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-HyperGravity class >> atPosition: aPosition withValue: xValue [ 
-	^ self new initializeWith: aPosition and: xValue.
+HyperGravity class >> at: position with: xValue [
+
+	^ self new initializeWith: position and: xValue
 ]
 
 { #category : 'accessing' }
@@ -22,7 +23,7 @@ HyperGravity class >> effectProbability [
 	^ 0.2
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 HyperGravity >> applyEffectTo: aShip with: anEffectManager [
 
 	anEffectManager

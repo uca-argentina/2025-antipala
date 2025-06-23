@@ -4,17 +4,14 @@ Clase BlackHole. Efecto negativo, que hace retroceder 4 casilleros a la nave que
 Class {
 	#name : 'BlackHole',
 	#superclass : 'Effect',
-	#classInstVars : [
-		'positionY'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-BlackHole class >> at: aPosition [
+BlackHole class >> at: position [
 
-	^ self new initializeWith: aPosition
+	^ self new initializeWith: position
 ]
 
 { #category : 'as yet unclassified' }

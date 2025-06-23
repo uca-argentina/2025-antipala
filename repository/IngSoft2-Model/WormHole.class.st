@@ -8,17 +8,14 @@ Class {
 		'positionY',
 		'positionZ'
 	],
-	#classInstVars : [
-		'positionY'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-WormHole class >> at: start and: finish [
+WormHole class >> at: positionY and: positionZ [
 
-	^ self new initializeWith: start and: finish
+	^ self new initializeWith: positionY and: positionZ
 ]
 
 { #category : 'as yet unclassified' }

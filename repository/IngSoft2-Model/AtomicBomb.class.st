@@ -4,17 +4,14 @@ Clase AtomicBomb. Efecto que hace volver a cada nave a 1er posicion del tablero,
 Class {
 	#name : 'AtomicBomb',
 	#superclass : 'Effect',
-	#classInstVars : [
-		'positionY'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'initialize' }
-AtomicBomb class >> at: positions [ 
+AtomicBomb class >> at: position [
 
-	^ self new initializeWith: positions
+	^ self new initializeWith: position
 ]
 
 { #category : 'as yet unclassified' }
