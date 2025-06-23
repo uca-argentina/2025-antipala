@@ -5,8 +5,6 @@ Class {
 	#name : 'MoveManager',
 	#superclass : 'Object',
 	#instVars : [
-		'fuelManager',
-		'id',
 		'listofblockship'
 	],
 	#category : 'IngSoft2-Model',

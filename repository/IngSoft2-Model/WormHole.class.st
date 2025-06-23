@@ -27,13 +27,15 @@ WormHole class >> effectProbability [
 { #category : 'method' }
 WormHole >> applyEffectTo: aShip with: anEffectManager [
 
-	| originalPosition |
-	originalPosition := aShip position.
-	(originalPosition = positionY) ifTrue: [
-		anEffectManager move: aShip by: positionZ - positionY ].
+	| displacement |
+	displacement := 0.
+	(aShip isAt: positionY) ifTrue: [
+		displacement := positionZ - positionY ].
 
-	(originalPosition = positionZ) ifTrue: [
-		anEffectManager move: aShip by: positionY - positionZ ]
+	(aShip isAt: positionZ) ifTrue: [
+		displacement := positionY - positionZ ].
+	
+	anEffectManager move: aShip by: displacement.
 ]
 
 { #category : 'initialize' }

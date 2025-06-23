@@ -80,6 +80,13 @@ Ship >> initializewith: anId andfuel: afuel andlapmanger: anlapmanager [
 ]
 
 { #category : 'methods' }
+Ship >> isAheadOf: aSecondShip [
+
+	^ aSecondShip isBehind: position with: laps.
+	
+]
+
+{ #category : 'methods' }
 Ship >> isAt: aPosition [
 	^position =aPosition 
 ]
@@ -89,6 +96,15 @@ Ship >> isAtLap: lap [
 	"este metodo solo debe ser usado por los tests"
 
 	^ laps = lap
+]
+
+{ #category : 'private - methods' }
+Ship >> isBehind: otherShipPosition with: otherShipLaps [
+    laps < otherShipLaps ifTrue: [ ^ true ].
+    laps > otherShipLaps ifTrue: [ ^ false ].
+    ^ position < otherShipPosition.
+
+	
 ]
 
 { #category : 'private - methods' }
@@ -128,13 +144,6 @@ Ship >> moveBy: steps moveManager: aMoveManager [
 Ship >> moveToFirstPosition [
 
 	position:=0.
-]
-
-{ #category : 'private - testing' }
-Ship >> position [
-	"este metodo solo debe ser usado por los tests"
-
-	^ position
 ]
 
 { #category : 'private - methods' }

@@ -9,6 +9,35 @@ Class {
 }
 
 { #category : 'tests' }
+ShipGameTest >> testRanking [
+
+	| alapmanager effectlist dices ranking |
+	alapmanager := Lapmanager createWith: 30.
+
+	effectlist := OrderedCollection new.
+	effectlist add: (AtomicBomb at: 20).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 10 7)).
+
+	game := Game
+		        createShipPlayer: 3
+		        lengthOfBoard: 30
+		        dices: dices
+		        and: effectlist.
+	ranking:= game ranking.
+	self assert: (ranking first id) equals: 3 .
+	self assert: (ranking second id) equals: 2 .
+	self assert: (ranking third id) equals: 1 .
+	game play.
+	game play.
+	game play.
+	ranking:= game ranking.
+	self assert: (ranking first id) equals: 2 .
+	self assert: (ranking second id) equals: 3 .
+	self assert: (ranking third id) equals: 1 .
+]
+
+{ #category : 'tests' }
 ShipGameTest >> testShipGameCanMoveTheCreatedShips [
 
 	| alapmanager effectlist dices |

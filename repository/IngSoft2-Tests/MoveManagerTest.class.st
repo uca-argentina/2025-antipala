@@ -142,6 +142,31 @@ MoveManagerTest >> testShipShouldHandleReffils [
 ]
 
 { #category : 'tests' }
+MoveManagerTest >> testShipsCanTellIfTheyAreAheadOfAnotherShip [
+
+	| manager alapmanager ship1 ship2 |
+	alapmanager := Lapmanager createWith: 30.
+	ship1 := Ship
+		         createWhithId: 1
+		         andWithFuel: 10
+		         andwithlapmanager: alapmanager.
+	ship2 := Ship
+		         createWhithId: 2
+		         andWithFuel: 20
+		         andwithlapmanager: alapmanager.
+	manager := MoveManager create.
+	manager move: ship1 by: 10.
+	manager move: ship2 by: 10.
+	self deny: (ship1 isAheadOf: ship2 ).
+	self deny: (ship2 isAheadOf: ship1 ).
+	
+	manager move: ship2 by: 10.
+	self deny: (ship1 isAheadOf: ship2 ).
+	self assert: (ship2 isAheadOf: ship1 ).
+
+]
+
+{ #category : 'tests' }
 MoveManagerTest >> testTimeoutGeneratedByEffects [
 
 	| ship manager alapmanager |

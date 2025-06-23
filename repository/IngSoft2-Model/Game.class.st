@@ -10,7 +10,8 @@ Class {
 		'boardlength',
 		'movemanager',
 		'manageeffects',
-		'currentPlayerIndex'
+		'currentPlayerIndex',
+		'lapsToWin'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -68,6 +69,12 @@ Game >> play [
 
 	movemanager move: player by: playerthrow.
 	manageeffects applyAnEffectTo: player in: self with: playerthrow.
+]
+
+{ #category : 'playing' }
+Game >> ranking [
+
+	^ (ships copy) sort: [:shipA :shipB | shipA isAheadOf: shipB].
 ]
 
 { #category : 'playing' }
