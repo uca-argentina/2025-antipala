@@ -38,3 +38,7 @@ AtomicBombTest >> testAtomicBombAffectsAllShips [
 	self assert: ((game ship: 2) isAt: 0).
 	self assert: ((game ship: 3) isAt: 0)
 ]
+
+{ #category : 'tests' }
+AtomicBombTest >> testBanana [
+]
