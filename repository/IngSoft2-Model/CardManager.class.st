@@ -2,17 +2,30 @@ Class {
 	#name : 'CardManager',
 	#superclass : 'Object',
 	#instVars : [
-		'activeCards'
+		'activeCards',
+		'targetShip'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-CardManager >> apply: Acard from: aShip to: aTargetShip [
+CardManager >> addPermanentCard: card [.
+	activeCards add: card.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> apply: aCard from: aShip to: aTargetShip [
+
+	targetShip := aTargetShip.
+	aCard applyeffect: aShip with: self.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> applyAllyWith: aShip [
 	
-	Acard applyeffect:aShip to:aTargetShip.
-	
+	aShip allywith: targetShip.
+	targetShip allywith: aShip
 ]
 
 { #category : 'as yet unclassified' }

@@ -1,19 +1,17 @@
 Class {
-	#name : 'Ally',
+	#name : 'Acceleration',
 	#superclass : 'Object',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-Ally >> applyeffect: aShip with: cardManager [
+Acceleration >> applyeffect: aShip with: cardManager [
 
-	cardManager applyAllyWith: aShip .
-	
-
+	cardManager addPermanentCard: self.
 ]
 
 { #category : 'as yet unclassified' }
-Ally >> effectAppliedTo: aShip [
-	^0
+Acceleration >> effectAppliedTo: aShip [
+	^1
 ]
