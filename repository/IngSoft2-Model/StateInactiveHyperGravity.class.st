@@ -21,7 +21,7 @@ StateInactiveHyperGravity >> activateWith: anEffectManager on: aShip [
 	effect changeState: (StateActiveHyperGravity createWith: effect and: hyperGravityXValue)
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialize' }
 StateInactiveHyperGravity >> initializeWith: hyperGravity and: anHyperGravityXValue [
 
 	effect := hyperGravity.

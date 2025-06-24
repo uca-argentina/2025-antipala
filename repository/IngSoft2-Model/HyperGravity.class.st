@@ -19,6 +19,11 @@ HyperGravity class >> at: position with: xValue [
 	^ self new initializeWith: position and: xValue
 ]
 
+{ #category : 'creation' }
+HyperGravity class >> createWith: hyperGravity and: hyperGravityXValue [ 
+	^ self subclassResponsibility
+]
+
 { #category : 'method' }
 HyperGravity >> activateWith: anEffectManager on: aShip [ 
 	^ self subclassResponsibility

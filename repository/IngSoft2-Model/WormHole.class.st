@@ -35,8 +35,7 @@ WormHole >> applyEffectTo: aShip with: anEffectManager [
 
 { #category : 'initialize' }
 WormHole >> initializeWith: aPositionY and: aPositionZ [
-	aPositionY negative ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
-	aPositionZ negative ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
+	(aPositionY negative or: aPositionZ negative) ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
 	positionY:=aPositionY.
 	positionZ:=aPositionZ.
 ]
