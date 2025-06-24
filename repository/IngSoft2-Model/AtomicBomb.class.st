@@ -8,23 +8,17 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'initialize' }
+{ #category : 'creation' }
 AtomicBomb class >> at: position [
 
 	^ self new initializeWith: position
 ]
 
-{ #category : 'as yet unclassified' }
-AtomicBomb class >> effectProbability [
+{ #category : 'method' }
+AtomicBomb >> applyEffectTo: aShip with: effectManager [
 
-	^ 0.02
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBomb >> applyEffectTo: ship with: effectManager [
-	
-	effectManager triggerAtomicBomb
-	
+	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
+		effectManager triggerAtomicBomb 
 ]
 
 { #category : 'initialize' }

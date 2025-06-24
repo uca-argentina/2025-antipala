@@ -1,15 +1,15 @@
 Class {
-	#name : 'LapManagertest',
+	#name : 'LapManagerTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'tests' }
-LapManagertest >> testNegativeLaps [
+LapManagerTest >> testNegativeLaps [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 10.
+	alapmanager := LapManager createWith: 10.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 100.
@@ -21,10 +21,10 @@ LapManagertest >> testNegativeLaps [
 ]
 
 { #category : 'tests' }
-LapManagertest >> testTheShipCannotHaveNegativeLaps [
+LapManagerTest >> testTheShipCannotHaveNegativeLaps [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 10.
+	alapmanager := LapManager createWith: 10.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 100.
@@ -34,10 +34,10 @@ LapManagertest >> testTheShipCannotHaveNegativeLaps [
 ]
 
 { #category : 'tests' }
-LapManagertest >> testWhenShipsPassTheBoardLenghtThenIncreaseTheLapNumber [
+LapManagerTest >> testWhenShipsPassTheBoardLenghtThenIncreaseTheLapNumber [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 10.
+	alapmanager := LapManager createWith: 10.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10.

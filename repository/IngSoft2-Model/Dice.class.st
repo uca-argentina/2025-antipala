@@ -18,7 +18,7 @@ Dice class >> validLength: aFace [
     ].
 ]
 
-{ #category : 'initialize' }
+{ #category : 'creation' }
 Dice class >> with:aFace [
 
 self validLength: aFace.

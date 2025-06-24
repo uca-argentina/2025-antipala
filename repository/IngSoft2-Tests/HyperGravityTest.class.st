@@ -75,13 +75,12 @@ HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 HyperGravityTest >> testShipsCanExitTheHyperGravity [
 
 	| effectlist game dices anHyperGravity |
-
 	effectlist := OrderedCollection new.
 	anHyperGravity := HyperGravity at: 5 with: 10.
 	effectlist add: anHyperGravity.
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 15 10 )).
+	dices add: (ChargeDice createWith: #( 5 5 10 )).
 
 	game := Game
 		        createWith: 20
@@ -92,7 +91,28 @@ HyperGravityTest >> testShipsCanExitTheHyperGravity [
 	game play.
 	self assert: ((game ship: 1) isAt: 5).
 	game play.
-	self assert: ((game ship: 1) isAt: 5). "Sale del HyperGravity"
+	self assert: ((game ship: 1) isAt: 5). 
 	game play.
-	self assert: ((game ship: 1) isAt: 15)
+	self assert: ((game ship: 1) isAt: 15) 
+]
+
+{ #category : 'tests' }
+HyperGravityTest >> testShipsShouldntGoForwardWhenTheyStepOnTheBlackHoleForTheFirstTime [
+
+	| effectlist game dices anHyperGravity |
+	effectlist := OrderedCollection new.
+	anHyperGravity := HyperGravity at: 10 with: 5.
+	effectlist add: anHyperGravity.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 10 )).
+
+	game := Game
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game play.
+	self assert: ((game ship: 1) isAt: 10)
 ]

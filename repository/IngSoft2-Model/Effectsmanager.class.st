@@ -2,7 +2,7 @@
 clase EffectManager: Se encarga de conocer los efectos y de aplicarlos si corresponde.
 "
 Class {
-	#name : 'Effectsmanager',
+	#name : 'EffectsManager',
 	#superclass : 'Object',
 	#instVars : [
 		'effectlist',
@@ -14,51 +14,47 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-Effectsmanager class >> createWith: aCollectionofeffects and: aMoveManager [
+{ #category : 'creation' }
+EffectsManager class >> createWith: aCollectionofeffects and: aMoveManager [
 	^self new initwitheffects:aCollectionofeffects and: aMoveManager.
 ]
 
 { #category : 'method' }
-Effectsmanager >> applyAnEffectTo: aShip2 in: aGameState with: playerthrow [
+EffectsManager >> applyAnEffectTo: aShip2 in: aGameState with: playerthrow [
 
 	| effect |
 	actualThrow := playerthrow.
 	game := aGameState.
 	effect := effectlist
-		          detect: [ :each | each shouldApplyTo: aShip2 ]
-		          ifNone: [ NoEffect new ].
-	effect applyEffectTo: aShip2 with: self
-
-	"Rompe tell dont ask"
+		          do: [ :each | each applyEffectTo: aShip2 with: self ]
 ]
 
 { #category : 'method effects' }
-Effectsmanager >> handleHyperGravityCondition: hyperGravityXValue in: aShip [
+EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip [
 
 	actualThrow < hyperGravityXValue ifTrue: [
-		moveManager block: aShip by: 1 ]
+		moveManager block: aShip by: 1 ] ifFalse: [ self move: aShip by: actualThrow ]
 ]
 
 { #category : 'initialize' }
-Effectsmanager >> initwitheffects: aCollectionofeffects and: aMoveManager [
+EffectsManager >> initwitheffects: aCollectionofeffects and: aMoveManager [
 	effectlist:=aCollectionofeffects.
 	moveManager:= aMoveManager.
 ]
 
 { #category : 'method effects' }
-Effectsmanager >> move: aShip by: jumpSquares [
+EffectsManager >> move: aShip by: jumpSquares [
 
 	moveManager move: aShip by: jumpSquares
 ]
 
 { #category : 'method effects' }
-Effectsmanager >> moveAllShipsExcept: ship by: walk [
+EffectsManager >> moveAllShipsExcept: ship by: walk [
 
 	game moveAllShipsExcept: ship by: walk
 ]
 
 { #category : 'method effects' }
-Effectsmanager >> triggerAtomicBomb [
+EffectsManager >> triggerAtomicBomb [
 	game moveAllShipsToTheInitialPosition.
 ]

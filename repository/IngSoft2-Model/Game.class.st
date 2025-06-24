@@ -18,7 +18,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'creation' }
 Game class >> createWith:anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
 	^ self new initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin
 ]
@@ -41,13 +41,13 @@ Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: 
 	currentPlayerIndex := 0.
 
 	movemanager := MoveManager createWith:
-		               (Lapmanager createWith: anBoardlength).
-	manageeffects := Effectsmanager
+		               (LapManager createWith: anBoardlength).
+	manageeffects := EffectsManager
 		                 createWith: aCollectionofeffects
 		                 and: movemanager.
 
 
-	shipbuilder := Shipbuilder buildWith: dices.
+	shipbuilder := ShipBuilder buildWith: dices.
 	ships := OrderedCollection new
 ]
 

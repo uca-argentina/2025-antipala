@@ -11,7 +11,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'operations' }
+{ #category : 'creation' }
 MoveManager class >> createWith: aLapManager [
 	^self new intializeWith: aLapManager.
 ]

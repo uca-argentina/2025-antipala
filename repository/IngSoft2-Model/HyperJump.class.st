@@ -12,34 +12,33 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'creation' }
 HyperJump class >> at: position with: aListOfJumps [
 
 	^ self new initializeWith: position withJumps: aListOfJumps
 ]
 
-{ #category : 'as yet unclassified' }
-HyperJump class >> effectProbability [
-
-	^ 0.08
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 HyperJump >> applyEffectTo: aShip with: anEffectManager [
 
+	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 	anEffectManager move: aShip by: (parsecs at: currentIndex).
-	
+
 	currentIndex := currentIndex = parsecs size
 		                ifTrue: [ 1 ]
-		                ifFalse: [ currentIndex + 1 ].
+		                ifFalse: [ currentIndex + 1 ]
+]
 
-	
+{ #category : 'initialize' }
+HyperJump >> convertToParsec: aList [
+
+	^ aList * 0.5
 ]
 
 { #category : 'initialize' }
 HyperJump >> initializeWith: position withJumps: aList [
 
-	parsecs := aList sort: [ :a :b | a > b ].
+	parsecs := self convertToParsec: (aList sort: [ :a :b | a > b ]).
 	effectPosition := position.
 	currentIndex := 1
 ]

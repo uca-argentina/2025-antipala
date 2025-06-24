@@ -8,22 +8,16 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'creation' }
 NoEffect class >> at: position [
 
 	^ self new initializeWith: position
 ]
 
-{ #category : 'as yet unclassified' }
-NoEffect class >> effectProbability [
-
-	^ 0.4
-]
-
 { #category : 'method' }
 NoEffect >> applyEffectTo: ship with: effectManager [
 
-	^ nil
+	^ self
 ]
 
 { #category : 'initialize' }

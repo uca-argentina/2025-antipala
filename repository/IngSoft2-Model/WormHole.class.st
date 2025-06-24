@@ -12,30 +12,25 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'creation' }
 WormHole class >> at: positionY and: positionZ [
 
 	^ self new initializeWith: positionY and: positionZ
 ]
 
-{ #category : 'as yet unclassified' }
-WormHole class >> effectProbability [
-
-	^ 0
-]
-
 { #category : 'method' }
 WormHole >> applyEffectTo: aShip with: anEffectManager [
-
+	
 	| displacement |
+	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 	displacement := 0.
 	(aShip isAt: positionY) ifTrue: [
 		displacement := positionZ - positionY ].
 
 	(aShip isAt: positionZ) ifTrue: [
 		displacement := positionY - positionZ ].
-	
-	anEffectManager move: aShip by: displacement.
+
+	anEffectManager move: aShip by: displacement
 ]
 
 { #category : 'initialize' }

@@ -9,7 +9,7 @@ Class {
 MoveManagerTest >> testBlockedShipsShouldntMoveForSomeTurns [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 30.
+	alapmanager := LapManager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10.
@@ -27,7 +27,7 @@ MoveManagerTest >> testBlockedShipsShouldntMoveForSomeTurns [
 { #category : 'tests' }
 MoveManagerTest >> testMoveManagerBlocksTheShipsForSeveralTurnsWhenOutOfFuel [
 | ship manager alapmanager|
-alapmanager:=Lapmanager createWith:30.
+alapmanager:=LapManager createWith:30.
 ship := Ship createWhithId:1 andWithFuel:10.
 manager := MoveManager createWith: alapmanager.
 manager move: ship by: 10.
@@ -44,7 +44,7 @@ self assert: (ship isAt: 4).
 MoveManagerTest >> testMoveManagerCanHandleSeveralShips [
 
 	| manager alapmanager ship1 ship2 |
-	alapmanager := Lapmanager createWith: 30.
+	alapmanager := LapManager createWith: 30.
 	ship1 := Ship
 		         createWhithId: 1
 		         andWithFuel: 10.
@@ -64,7 +64,7 @@ MoveManagerTest >> testMoveManagerCanHandleSeveralShips [
 MoveManagerTest >> testMoveManagerCanMoveShips [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 15.
+	alapmanager := LapManager createWith: 15.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10.
@@ -79,7 +79,7 @@ MoveManagerTest >> testMoveManagerCanMoveShips [
 { #category : 'tests' }
 MoveManagerTest >> testMoveManagerResetThePositionOfShipsWhenOutOfFuel [
 | ship manager  alapmanager|
-alapmanager:=Lapmanager createWith:30.
+alapmanager:=LapManager createWith:30.
 ship := Ship createWhithId:1 andWithFuel:10.
 manager := MoveManager createWith: alapmanager.
 manager move: ship by: 10.
@@ -91,7 +91,7 @@ self assert: (ship isAt: 0).
 { #category : 'tests' }
 MoveManagerTest >> testMoveManagerResetThePositionOfShipsWhenTheShipsShouldntMove [
 | ship manager  alapmanager|
-alapmanager:=Lapmanager createWith:30.
+alapmanager:=LapManager createWith:30.
 ship := Ship createWhithId:1 andWithFuel:15.
 manager := MoveManager createWith: alapmanager.
 manager move: ship by: 20.
@@ -103,7 +103,7 @@ self assert: (ship isAt: 0).
 MoveManagerTest >> testMoveManagerShouldHandleTheFuelOfTheShips [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 30.
+	alapmanager := LapManager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10.
@@ -122,7 +122,7 @@ MoveManagerTest >> testMoveManagerShouldHandleTheFuelOfTheShips [
 MoveManagerTest >> testShipShouldHandleReffils [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 30.
+	alapmanager := LapManager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10.
@@ -139,7 +139,7 @@ MoveManagerTest >> testShipShouldHandleReffils [
 MoveManagerTest >> testShipsCanTellIfTheyAreAheadOfAnotherShip [
 
 	| manager alapmanager ship1 ship2 |
-	alapmanager := Lapmanager createWith: 30.
+	alapmanager := LapManager createWith: 30.
 	ship1 := Ship
 		         createWhithId: 1
 		         andWithFuel: 10.
@@ -162,7 +162,7 @@ MoveManagerTest >> testShipsCanTellIfTheyAreAheadOfAnotherShip [
 MoveManagerTest >> testTimeoutGeneratedByEffects [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 30.
+	alapmanager := LapManager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10.
@@ -181,7 +181,7 @@ MoveManagerTest >> testTimeoutGeneratedByEffects [
 MoveManagerTest >> testTimeoutGeneratedByLowFuel [
 
 	| ship manager alapmanager |
-	alapmanager := Lapmanager createWith: 30.
+	alapmanager := LapManager createWith: 30.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 10.

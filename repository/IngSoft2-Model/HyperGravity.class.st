@@ -11,24 +11,19 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
+{ #category : 'creation' }
 HyperGravity class >> at: position with: xValue [
 
 	^ self new initializeWith: position and: xValue
 ]
 
-{ #category : 'accessing' }
-HyperGravity class >> effectProbability [
-
-	^ 0.2
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 HyperGravity >> applyEffectTo: aShip with: anEffectManager [
 
-	anEffectManager
-		handleHyperGravityCondition: hyperGravityXValue
-		in: aShip
+	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
+		anEffectManager
+			handleHyperGravityCondition: hyperGravityXValue
+			in: aShip 
 ]
 
 { #category : 'initialize' }

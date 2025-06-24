@@ -80,7 +80,7 @@ WormHoleTest >> testWhenWeReceiveAPositionWeCanCheckIfItIsAWormHolePosition [
 	aPositionY := 10.
 	aPositionZ := 15.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
-	alapmanager:= Lapmanager createWith: 50.
+	alapmanager:= LapManager createWith: 50.
 	ship := Ship
 		        createWhithId: 1
 		        andWithFuel: 50.

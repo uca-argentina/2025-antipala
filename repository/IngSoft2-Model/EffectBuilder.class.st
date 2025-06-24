@@ -1,22 +1,26 @@
 "
-clase EffectBuilder: Recibe un dado de 100 caras y un array de posiciones para llenar con efectos en base a la probabilidad que reciba del dado.
+clase EffectBuilder: Recibe un dado de 100 caras, un array de posiciones para llenar con efectos en base a la probabilidad que reciba del dado de 100 caras y un array de dados a usar en el juego real para los efectos que necesitan usarlos.
 "
 Class {
 	#name : 'EffectBuilder',
 	#superclass : 'Object',
 	#instVars : [
 		'collectionOfEffects',
-		'dice',
-		'positions'
+		'positions',
+		'realDices',
+		'diceOf100Faces'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-EffectBuilder class >> createWith: aDice and: aCollectionOfPositions [
+{ #category : 'creation' }
+EffectBuilder class >> createWith: aDiceOf100Faces and: aCollectionOfPositions and: dicesToUse [
 
-	^ self new initializeWith: aDice and: aCollectionOfPositions
+	^ self new
+		  initializeWith: aDiceOf100Faces
+		  and: aCollectionOfPositions
+		  and: dicesToUse
 ]
 
 { #category : 'building' }
@@ -48,8 +52,8 @@ EffectBuilder >> buildBlackHoleAt: pos with: prob [
 { #category : 'building' }
 EffectBuilder >> buildHyperGravityAt: pos with: prob [
 
-	prob > 60 ifTrue: [ ^ HyperGravity at: pos with: dice roll ].
-	^nil.
+	prob > 60 ifTrue: [ ^ HyperGravity at: pos with: self throwRealDices ].
+	^ nil
 ]
 
 { #category : 'building' }
@@ -57,18 +61,18 @@ EffectBuilder >> buildHyperJumpAt: pos with: prob [
 
 	| listOfJumps |
 	listOfJumps := OrderedCollection new.
-	listOfJumps add: dice roll.
-	listOfJumps add: dice roll.
-	listOfJumps add: dice roll.
+	listOfJumps add: self throwRealDices.
+	listOfJumps add: self throwRealDices.
+	listOfJumps add: self throwRealDices.
 	prob > 90 ifTrue: [ ^ HyperJump at: pos with: listOfJumps ].
-	^nil.
+	^ nil
 ]
 
 { #category : 'building' }
 EffectBuilder >> buildMoonWalkAt: pos with: prob [
 
-	prob > 80 ifTrue: [ ^ MoonWalk at: pos and: dice roll ].
-	^nil.
+	prob > 80 ifTrue: [ ^ MoonWalk at: pos and: self throwRealDices ].
+	^ nil
 ]
 
 { #category : 'building' }
@@ -85,18 +89,19 @@ EffectBuilder >> buildWormHoleOn: positionY and: positionZ [
 ]
 
 { #category : 'initialization' }
-EffectBuilder >> initializeWith: aDice and: aCollectionOfPositions [
+EffectBuilder >> initializeWith: aDiceOf100Faces and: aCollectionOfPositions and: dicesToUse [
 
 	collectionOfEffects := OrderedCollection new.
-	dice := aDice.
-	positions := aCollectionOfPositions.
+	diceOf100Faces := aDiceOf100Faces.
+	realDices := dicesToUse.
+	positions := aCollectionOfPositions
 ]
 
-{ #category : 'accessing' }
+{ #category : 'method' }
 EffectBuilder >> randomEffectAt: position [
 
 	| effectBuilders probability |
-	probability := dice roll.
+	probability := diceOf100Faces roll.
 	effectBuilders := {
 		                  (self
 			                   buildAtomicBombAt: position
@@ -117,4 +122,14 @@ EffectBuilder >> randomEffectAt: position [
 									 buildNoEffectAt: position 
 									 with: probability) }.
 	^ effectBuilders detect: [ :block | block value notNil ]
+]
+
+{ #category : 'accessing' }
+EffectBuilder >> throwRealDices [
+
+	| totalThrow |
+	totalThrow := realDices 
+		              inject: 0
+		              into: [ :sum :eachDice | sum + eachDice roll ].
+	^ totalThrow
 ]

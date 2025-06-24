@@ -11,23 +11,17 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'creation' }
 MoonWalk class >> at: position and: walk [
 
 	^ self new initializeWith: position and: walk
 ]
 
-{ #category : 'as yet unclassified' }
-MoonWalk class >> effectProbability [
-
-	^ 0.1
-
-]
-
 { #category : 'method' }
-MoonWalk >> applyEffectTo: ship with: effectManager [
-
-	effectManager moveAllShipsExcept: ship by: walk.
+MoonWalk >> applyEffectTo: aShip with: effectManager [
+	
+	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
+	effectManager moveAllShipsExcept: aShip by: walk
 ]
 
 { #category : 'initialize' }

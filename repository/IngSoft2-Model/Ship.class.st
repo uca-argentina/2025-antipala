@@ -16,7 +16,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'creation' }
 Ship class >> createWhithId: anId andWithFuel: anFuel [ 
 	^self new initializewith: anId andfuel: anFuel.
 ]
@@ -86,7 +86,8 @@ Ship >> isAheadOf: aSecondShip [
 
 { #category : 'methods' }
 Ship >> isAt: aPosition [
-	^position =aPosition 
+
+	^ position truncated = aPosition
 ]
 
 { #category : 'methods' }

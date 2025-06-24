@@ -9,11 +9,11 @@ Class {
 ShipBuilderTest >> testShipBuilderCanCreateAShip [
 	
 | ashipBuilder aship manager alapmanager dices |
-alapmanager := Lapmanager createWith: 15.
+alapmanager := LapManager createWith: 15.
 dices := OrderedCollection new.
 dices add: (Dice with: 6).
 
-ashipBuilder := Shipbuilder buildWith: dices.
+ashipBuilder := ShipBuilder buildWith: dices.
 aship := ashipBuilder build.
 "Comprobar normal Funcionamiento de nave"
 manager := MoveManager createWith: alapmanager.
@@ -26,11 +26,11 @@ self assert: (aship isAt: 10)
 ShipBuilderTest >> testShipBuilderCanCreateSeveralShipsWithDiferentFuel [
 	
 | ashipBuilder alapmanager dices1 dices2 ship1 ship2  manager |
-alapmanager := Lapmanager createWith: 20.
+alapmanager := LapManager createWith: 20.
 dices1 := OrderedCollection new.
 dices1 add: (Dice with: 5).
 
-ashipBuilder := Shipbuilder buildWith: dices1.
+ashipBuilder := ShipBuilder buildWith: dices1.
 ship1 := ashipBuilder build.
 
 dices2 := OrderedCollection new.
@@ -53,11 +53,11 @@ self assert: (ship2 isAt: 15).
 ShipBuilderTest >> testShipBuilderCanCreateSeveralShipsWithDiferentId [
 	
 | ashipBuilder alapmanager dices ship1 ship2 ship3 |
-alapmanager := Lapmanager createWith: 15.
+alapmanager := LapManager createWith: 15.
 dices := OrderedCollection new.
 dices add: (Dice with: 6).
 
-ashipBuilder := Shipbuilder buildWith: dices.
+ashipBuilder := ShipBuilder buildWith: dices.
 ship1 := ashipBuilder build.
 ship2 := ashipBuilder build.
 ship3 := ashipBuilder build.

@@ -3,7 +3,7 @@ clase ShipBuilder: Se encarga de crear diferentes naves.
 
 "
 Class {
-	#name : 'Shipbuilder',
+	#name : 'ShipBuilder',
 	#superclass : 'Object',
 	#instVars : [
 		'actualId',
@@ -13,13 +13,13 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'private - initialization' }
-Shipbuilder class >> buildWith: dices [
+{ #category : 'creation' }
+ShipBuilder class >> buildWith: dices [
 	^self new initializewith: dices.
 ]
 
 { #category : 'method' }
-Shipbuilder >> build [
+ShipBuilder >> build [
 	|newship|
 	newship := Ship createWhithId:actualId andWithFuel:maxFuel.
 	actualId:= actualId+1.
@@ -29,13 +29,13 @@ Shipbuilder >> build [
 ]
 
 { #category : 'initialize' }
-Shipbuilder >> initializewith: aSetOfDices [
+ShipBuilder >> initializewith: aSetOfDices [
 	actualId:=1.
 	self maxFuelWith: aSetOfDices
 ]
 
 { #category : 'method' }
-Shipbuilder >> maxFuelWith: aSetOfDices [
+ShipBuilder >> maxFuelWith: aSetOfDices [
 	| maxDices sumOfMaxDices |
 	maxDices:=(aSetOfDices collect: [:d | d max]) .
 	sumOfMaxDices:=maxDices inject: 0 into: [:sum :each | sum + each].
