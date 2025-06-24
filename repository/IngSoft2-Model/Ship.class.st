@@ -10,7 +10,8 @@ Class {
 		'id',
 		'maxfuel',
 		'timeout',
-		'laps'
+		'laps',
+		'ally'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -19,6 +20,16 @@ Class {
 { #category : 'creation' }
 Ship class >> createWhithId: anId andWithFuel: anFuel [ 
 	^self new initializewith: anId andfuel: anFuel.
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> allywith: aTargetShip [ 
+	ally:=aTargetShip
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> askforfuel [
+ ally donatefuel:self.
 ]
 
 { #category : 'methods' }
@@ -32,11 +43,22 @@ Ship >> consumeFuel:amount [
     fuel := fuel - amount.
 ]
 
+{ #category : 'as yet unclassified' }
+Ship >> donatefuel:aShip [
+aShip givefuel:fuel.
+self consumeFuel:fuel.
+]
+
 { #category : 'private - testing' }
 Ship >> fuel [
 	"este metodo solo debe ser usado por los tests"
 
 	^ fuel
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> givefuel:afuel [
+fuel:=fuel+afuel.
 ]
 
 { #category : 'methods' }
@@ -65,6 +87,7 @@ Ship >> initializewith: anId andfuel: afuel [
 	position:=0.
 	timeout:=0.
 	laps:=0.
+	ally:=self
 	
 ]
 

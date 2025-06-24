@@ -32,6 +32,12 @@ MoveManager >> handleBlockOf: aShip with: steps [
 	aShip refillFuel
 ]
 
+{ #category : 'as yet unclassified' }
+MoveManager >> handleally:aShip step:steps [
+	
+( aShip hasFuelFor: steps )not ifTrue:[aShip askforfuel] 
+]
+
 { #category : 'initialize' }
 MoveManager >> intializeWith: aLapManager [
 	lapManager := aLapManager.
@@ -39,7 +45,7 @@ MoveManager >> intializeWith: aLapManager [
 
 { #category : 'method' }
 MoveManager >> move: aShip by: steps [
-
+   self handleally:aShip step:steps.
 	self handleBlockOf: aShip with: steps.
 	aShip isBlocked ifTrue:[aShip reduceTimeout. ^self].
 	aShip moveBy: steps.
