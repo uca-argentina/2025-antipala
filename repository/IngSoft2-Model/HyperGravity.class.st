@@ -38,7 +38,8 @@ HyperGravity >> changeState: aState [
 
 { #category : 'initialize' }
 HyperGravity >> initializeWith: aPosition and: aXvalue [
-
+	aXvalue < 0 ifTrue: [self error: 'The Hypergravity X value must be positive'].
+	aPosition < 0 ifTrue: [self error: 'The Hypergravity position must be positive'].
 	effectPosition := aPosition.
 	hyperGravityXValue := aXvalue.
 	state := StateInactiveHyperGravity createWith: self and: hyperGravityXValue

@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+HyperGravityTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
 HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 
@@ -143,4 +152,20 @@ HyperGravityTest >> testTheHyperGravityCanBeActivatedSeveralTimes [
 	game play.
 	self assert: ((game ship: 1) isAt: 20).
 	self assert: ((game ship: 2) isAt: 10). "si sigue activo, lo mandaria al casillero 20"
+]
+
+{ #category : 'tests' }
+HyperGravityTest >> testTheHypergravityPositionCannotBeNegative [
+	self
+		should: [ HyperGravity new initializeWith: -4 and: 10 ]
+		raise: Error
+		withMessageText: 'The Hypergravity position must be positive'
+]
+
+{ #category : 'tests' }
+HyperGravityTest >> testTheHypergravityXValueCannotBeNegative [
+	self
+		should: [ HyperGravity new initializeWith: 10 and: -4 ]
+		raise: Error
+		withMessageText: 'The Hypergravity X value must be positive'
 ]
