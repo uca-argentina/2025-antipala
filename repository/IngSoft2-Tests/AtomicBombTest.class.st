@@ -5,33 +5,53 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+AtomicBombTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
-AtomicBombTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
+AtomicBombTest >> testAtomicBombAffectsAllShips [
 
-	| gameboard  aCollectionOfEffects totalSquares ships atomicBomb |
-	totalSquares := 100.
-	ships := OrderedCollection new.
-	ships add: (Ship create: 1).
-	ships add: (Ship create: 2).
-	ships add: (Ship create: 3).
-	atomicBomb := AtomicBomb at: 10 and: ships.
-	aCollectionOfEffects := OrderedCollection new.
-	aCollectionOfEffects add: atomicBomb .
-	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
+	| anAtomicBomb effectlist game dices |
 
-	gameboard move: (ships at: 1) with: 5.
-	self assert: (ships at: 1) position equals: 5.
+	effectlist := OrderedCollection new.
+	anAtomicBomb := AtomicBomb at: 10.
+	effectlist add: anAtomicBomb.
 
-	gameboard move: (ships at: 2) with: 5.
-	self assert: (ships at: 2) position equals: 5.
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
 
-	gameboard move: (ships at: 3) with: 5.
-	self assert: (ships at: 3) position equals: 5.
+	game := Game
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game addShip.
+	game addShip.
 
-	gameboard move: (ships at: 1) with: 5.
-	self assert: (ships at: 1) position equals: 0.
-	self assert: (ships at: 2) position equals: 0.
-	self assert: (ships at: 3) position equals: 0.
+	game play.
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 5).
+	self assert: ((game ship: 2) isAt: 5).
+	self assert: ((game ship: 3) isAt: 5).
+	game play.
+
+	self assert: ((game ship: 1) isAt: 0).
+	self assert: ((game ship: 2) isAt: 0).
+	self assert: ((game ship: 3) isAt: 0)
+]
+
+{ #category : 'tests' }
+AtomicBombTest >> testAtomicBombPositionCannotBeNegative [
+	self
+		should: [ AtomicBomb new initializeWith: -5 ]
+		raise: Error
+		withMessageText: 'Atomic Bomb position must be positive'.
 ]

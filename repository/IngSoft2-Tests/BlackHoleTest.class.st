@@ -5,21 +5,40 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
-BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
-	| gameboard actualShip aPositionY aPositionZ wormhole aCollectionOfEffects blackhole |
+{ #category : 'asserting' }
+BlackHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
 
-	"despues setear el agujero"
-	aPositionY:=10.
-	aPositionZ:=30.
-	wormhole:= WormHole at:aPositionY and: aPositionZ.
-	blackhole:= BlackHole at: 5.
-	aCollectionOfEffects:= OrderedCollection new.
-	aCollectionOfEffects add: wormhole.
-	aCollectionOfEffects add: blackhole.
-	gameboard := GameBoard with: 40 including: aCollectionOfEffects.
-	actualShip:= Ship create:1.
-	gameboard move: actualShip with: 5.
-	
-	self assert: actualShip position equals: 1.
+{ #category : 'tests' }
+BlackHoleTest >> testBlackHolePositionCannotBeNegative [
+	self
+		should: [ BlackHole new initializeWith: -5 ]
+		raise: Error
+		withMessageText: 'Black Hole position must be positive'
+]
+
+{ #category : 'as yet unclassified' }
+BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
+
+	| effectlist dices game |
+	effectlist := OrderedCollection new.
+	effectlist add: (BlackHole at: 5).
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
+
+	game := Game
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+
+	game play.
+	self assert: ((game ship:1) isAt: 1)
 ]

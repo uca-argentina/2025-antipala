@@ -1,45 +1,28 @@
+"
+Clase BlackHole. Efecto negativo, que hace retroceder 4 casilleros a la nave que aterrize en este efecto.
+"
 Class {
 	#name : 'BlackHole',
 	#superclass : 'Effect',
-	#instVars : [
-		'positionY',
-		'positionZ',
-		'blackholeposition'
-	],
-	#classInstVars : [
-		'positionY'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-BlackHole class >> at: arg1 [
+{ #category : 'creation' }
+BlackHole class >> at: position [
 
-	^ self new initializeWith: arg1
+	^ self new initializeWith: position
 ]
 
-{ #category : 'as yet unclassified' }
-BlackHole class >> effectProbability [
+{ #category : 'method' }
+BlackHole >> applyEffectTo: aShip with: anEffectManager [
 
-	^ 0.2
+	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
+		anEffectManager move: aShip by: -4 
 ]
 
-{ #category : 'as yet unclassified' }
-BlackHole >> applyEffectTo: aShip [
-	| effect |
-	effect := -4.
-	aShip spendfuel: effect abs.
-	^effect
-]
-
-{ #category : 'as yet unclassified' }
-BlackHole >> initializeWith: arg1 [
-
-	blackholeposition := arg1
-]
-
-{ #category : 'as yet unclassified' }
-BlackHole >> validatePosition: aPosition [ 
-	^(blackholeposition == aPosition).
+{ #category : 'initialize' }
+BlackHole >> initializeWith: position [
+	position < 0 ifTrue: [self error: 'Black Hole position must be positive'].
+	effectPosition := position
 ]

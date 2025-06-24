@@ -1,8 +1,11 @@
+"
+Clase Dice. Representa un dado, se puede crear con una cantidad arbitraria (Positiva) de caras. Cuando se tire generara un numero aleatoreo entre 1 y la cantidad de caras.
+"
 Class {
 	#name : 'Dice',
 	#superclass : 'Object',
 	#instVars : [
-		'face'
+		'faces'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -15,7 +18,7 @@ Dice class >> validLength: aFace [
     ].
 ]
 
-{ #category : 'initialize' }
+{ #category : 'creation' }
 Dice class >> with:aFace [
 
 self validLength: aFace.
@@ -23,22 +26,20 @@ self validLength: aFace.
 ]
 
 { #category : 'initialize' }
-Dice >> initializeDiceWith:aFace [
-face:=aFace.
-
-
+Dice >> initializeDiceWith: maxFaces [
+	maxFaces < 0 ifTrue: [self error: 'The number of faces of the dice must be positive'].
+	faces := maxFaces
 ]
 
 { #category : 'method' }
 Dice >> max [
-^ face.
+^ faces.
 
 
 ]
 
 { #category : 'method' }
 Dice >> roll [
-^ (1 to: face ) atRandom.
 
-
+	^ faces atRandom
 ]

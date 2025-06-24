@@ -1,126 +1,135 @@
 "
-Clase Ship.
-se encarga de saber su propia posicion y poder cambiarla segun lo que le indique el GameBoard
+clase Ship: Se encarga de conocer una nave, no puede hacer mucho sin un MoveManager.
 "
 Class {
 	#name : 'Ship',
 	#superclass : 'Object',
 	#instVars : [
 		'position',
-		'id',
-		'turn',
 		'fuel',
-		'laps',
-		'hyperGravityStatus',
-		'maxAmount'
+		'id',
+		'maxfuel',
+		'timeout',
+		'laps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'operations' }
-Ship class >> create: id [
-	^ (self new) initializeWith: id .
+{ #category : 'creation' }
+Ship class >> createWhithId: anId andWithFuel: anFuel [ 
+	^self new initializewith: anId andfuel: anFuel.
 ]
 
-{ #category : 'accessing' }
-Ship >> advance: positions [
-	position := position + positions.
-
+{ #category : 'methods' }
+Ship >> changeLapsBy: someLaps [
+	laps:=laps+someLaps max:0.
 ]
 
-{ #category : 'accessing' }
-Ship >> advanceLap [
-	laps:= laps + 1.
+{ #category : 'methods' }
+Ship >> consumeFuel:amount [
+   
+    fuel := fuel - amount.
 ]
 
-{ #category : 'as yet unclassified' }
-Ship >> advanceTurn [
-	turn:=turn+1.
-]
-
-{ #category : 'as yet unclassified' }
-Ship >> changeHyperGravityStatus: aValue [
-Transcript show: 'Seteando hyperGravityStatus en: ', aValue printString ; cr.
-hyperGravityStatus := aValue.
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'private - testing' }
 Ship >> fuel [
-	^fuel.
+
+	^ fuel
 ]
 
-{ #category : 'initialization' }
-Ship >> getId [
-   ^id.
+{ #category : 'methods' }
+Ship >> hasFuelFor: steps [
+   
+    ^ fuel >= (steps abs).
 ]
 
-{ #category : 'accessing' }
-Ship >> hyperGravityStatus [
-^hyperGravityStatus.
+{ #category : 'private - testing' }
+Ship >> id [
+	
+	^ id
 ]
 
-{ #category : 'initialization' }
-Ship >> initializeWith: aId [
+{ #category : 'methods' }
+Ship >> increaseTimeoutBy: anumber [
+	timeout := timeout + anumber
 
-	position := 0.
-	id := aId.
-	turn := 0.
-	laps := 0.
-	fuel := 100.
-	maxAmount:=100.
-	hyperGravityStatus:=0.
 ]
 
-{ #category : 'as yet unclassified' }
-Ship >> laps [
-
-	^ laps
-]
-
-{ #category : 'accessing' }
-Ship >> position [
-	^position
-]
-
-{ #category : 'as yet unclassified' }
-Ship >> refill [
-	fuel:=maxAmount.
-]
-
-{ #category : 'as yet unclassified' }
-Ship >> refundFuel: quantity [ 
-	fuel := fuel + quantity.
-]
-
-{ #category : 'accessing' }
-Ship >> returnLap [
-
-	laps := laps > 0
-		        ifTrue: [ laps - 1 ]
-		        ifFalse: [ 0 ]
-]
-
-{ #category : 'accessing' }
-Ship >> setPosition:unNumero [
-		position:=unNumero.
-]
-
-{ #category : 'as yet unclassified' }
-Ship >> setfuel:adicemax [
-	maxAmount:=2*adicemax.
-	fuel:=maxAmount.
+{ #category : 'initialize' }
+Ship >> initializewith: anId andfuel: afuel [
+	fuel:=afuel.
+	maxfuel:=afuel.
+	id:=anId. 
+	position:=0.
+	timeout:=0.
+	laps:=0.
 	
 ]
 
-{ #category : 'as yet unclassified' }
-Ship >> spendfuel:aFuelamoutspend [ 
-fuel - aFuelamoutspend < 0
-    ifTrue: [ fuel := 0 ]
-    ifFalse: [ fuel := fuel - aFuelamoutspend ].
+{ #category : 'methods' }
+Ship >> isAhead: otherShipPosition with: otherShipLaps [
+    laps < otherShipLaps ifTrue: [ ^ true ].
+    laps > otherShipLaps ifTrue: [ ^ false ].
+    ^ position < otherShipPosition.
+
+	
 ]
 
-{ #category : 'as yet unclassified' }
-Ship >> turn [
-	^turn.
+{ #category : 'methods' }
+Ship >> isAheadOf: aSecondShip [
+
+	^ aSecondShip isAhead: position with: laps.
+	
+]
+
+{ #category : 'methods' }
+Ship >> isAt: aPosition [
+
+	^ position truncated = aPosition
+]
+
+{ #category : 'private - testing' }
+Ship >> isAtLap: lap [
+
+	^ laps = lap
+]
+
+{ #category : 'methods' }
+Ship >> isBlocked [
+	^ timeout > 0.
+]
+
+{ #category : 'private - testing' }
+Ship >> isWithTimeout: amount [
+
+	^ timeout = amount
+]
+
+{ #category : 'methods' }
+Ship >> lapsToApplyWith: boardSize [
+    ^ position // boardSize.
+]
+
+{ #category : 'methods' }
+Ship >> moveBy: steps [
+	
+	position := position + steps
+]
+
+{ #category : 'methods' }
+Ship >> moveToFirstPosition [
+
+	position:=0.
+]
+
+{ #category : 'methods' }
+Ship >> reduceTimeout [
+
+	timeout := timeout - 1 max: 0.
+]
+
+{ #category : 'methods' }
+Ship >> refillFuel [
+    fuel := maxfuel .
 ]

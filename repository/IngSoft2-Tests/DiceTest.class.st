@@ -20,9 +20,9 @@ DiceTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 DiceTest >> testCreateAChargeDiceReturn5 [
 
 	| aDice result |
-	aDice := ChargeDice new.
+	aDice := ChargeDice createWith: #(5).
 	result := aDice roll.
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : 'tests' }
@@ -53,6 +53,14 @@ DiceTest >> testCreateDiceOfXFaces [
 	100 timesRepeat: [
 		aNumber := aDice roll.
 		self assert: (aNumber between: 1 and: 10) ]
+]
+
+{ #category : 'tests' }
+DiceTest >> testTheNumberOfFacesOfADiceCannotBeNegative [
+	self
+		should: [ Dice new initializeDiceWith: -5 ]
+		raise: Error
+		withMessageText: 'The number of faces of the dice must be positive'
 ]
 
 { #category : 'tests' }

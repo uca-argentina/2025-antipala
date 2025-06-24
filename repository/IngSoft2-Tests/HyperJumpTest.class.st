@@ -5,46 +5,167 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'as yet unclassified' }
-HyperJumpTest >> testWhenTheShipEnterInAHyperJumpThenadvances [
-
-	| gameboard actualShip hyperJump aCollectionOfEffects totalSquares |
-	totalSquares := 100.
-	hyperJump := HyperJump at: 5 and: totalSquares.
-	aCollectionOfEffects := OrderedCollection new.
-	aCollectionOfEffects add: hyperJump .
-	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
-	actualShip := Ship create: 1.
-	gameboard move: actualShip with: 5.
-
-	self assert: actualShip position equals: 20 "5 (throw) + 15 (15% of 100)"
-	
+{ #category : 'asserting' }
+HyperJumpTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
 ]
 
-{ #category : 'as yet unclassified' }
-HyperJumpTest >> testWhenTheShipEntersMultipleTimesThenItAdvancesDiferentSquares [
+{ #category : 'tests' }
+HyperJumpTest >> testAShipAdvancesWhenTriggersTheEffect [
 
-	| gameboard actualShip hyperJump aCollectionOfEffects totalSquares |
-	totalSquares := 20. "15% = 3, 10% = 2, 5% = 1"
-	hyperJump := HyperJump at: 5 and: totalSquares.
-	aCollectionOfEffects := OrderedCollection new.
-	aCollectionOfEffects add: hyperJump.
-	gameboard := GameBoard
-		             with: totalSquares
-		             including: aCollectionOfEffects.
-	actualShip := Ship create: 1.
+	| effectlist game dices |
+	effectlist := OrderedCollection new.
+	effectlist add: (HyperJump at: 5 with: #( 5 )).
 
-	gameboard move: actualShip with: 5.
-	self assert: actualShip position equals: 8.
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
 
-	gameboard move: actualShip with: 17.
-	self assert: actualShip position equals: 7.
+	game := Game
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game addShip.
+	game addShip.
+	self assert: ((game ship: 1) isAt: 0).
 
-	gameboard move: actualShip with: 18.
-	self assert: actualShip position equals: 6.
-	
-	gameboard move: actualShip with: 19.
-	self assert: actualShip position equals: 8.
+	game play.
+	self assert: ((game ship: 1) isAt: 7)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpCanHandleDecimalJumps [
+
+	| effectlist game dices anHyperJump |
+	effectlist := OrderedCollection new.
+	anHyperJump := HyperJump at: 5 with: #( 3 ) asSortedCollection.
+	effectlist add: anHyperJump.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 -1)).
+
+	game := Game
+		        createWith: 10
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game play.
+	self assert: ((game ship: 1) isAt: 6). "Ship RealPosition => 6.5"
+	game play. "5.5"
+	self assert: ((game ship: 1) isAt: 7). "Ship RealPosition => 7.0"
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpCanReciveSeveralJumpValues [
+
+	| effectlist game dices |
+	effectlist := OrderedCollection new.
+	effectlist add: (HyperJump at: 5 with: #( 12 8 4 ) asSortedCollection).
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
+
+	game := Game
+		        createWith: 20
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game addShip.
+	game addShip.
+	game play.
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 0).
+	self assert: ((game ship: 2) isAt: 9).
+	self assert: ((game ship: 3) isAt: 7)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpShouldBeCiclical [
+
+	| effectlist game dices |
+	effectlist := OrderedCollection new.
+	effectlist add: (HyperJump at: 5 with: #( 12 4 ) asSortedCollection).
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 -6 -2 30 )).
+	game := Game
+		        createWith: 15
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game play.
+	self assert: ((game ship: 1) isAt: 11).
+
+	game play.
+	self assert: ((game ship: 1) isAt: 7).
+
+	game play.
+	self assert: ((game ship: 1) isAt: 11)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpShouldManageFuelCases [
+
+	| alapmanager effectlist game dices anHyperJump |
+	alapmanager := LapManager createWith: 20.
+
+	effectlist := OrderedCollection new.
+	anHyperJump := HyperJump at: 5 with: #( 10 ) asSortedCollection.
+	effectlist add: anHyperJump.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
+
+	game := Game
+		        createWith: 10
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game play.
+	self assert: ((game ship: 1) isAt: 0)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpShouldSortTheJumpValues [
+
+	| effectlist game dices anHyperJump |
+	effectlist := OrderedCollection new.
+	anHyperJump := HyperJump at: 5 with: #( 12 4 8 ) asSortedCollection.
+	effectlist add: anHyperJump.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
+
+	game := Game
+		        createWith: 10
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game addShip.
+	game addShip.
+	game play.
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 0).
+	self assert: ((game ship: 2) isAt: 9).
+	self assert: ((game ship: 3) isAt: 7)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testTheHyperJumpPositionCannotBeNegative [
+	self
+		should: [ HyperJump new initializeWith: -4 withJumps: #(1 2 3) asOrderedCollection ]
+		raise: Error
+		withMessageText: 'The HyperJump position must be positive'
 ]
