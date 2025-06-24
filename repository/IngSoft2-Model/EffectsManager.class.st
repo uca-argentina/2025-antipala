@@ -36,14 +36,6 @@ EffectsManager >> block: aShip [
 ]
 
 { #category : 'method effects' }
-EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip [
-
-	actualThrow < hyperGravityXValue
-		ifTrue: [ self block: aShip ]
-		ifFalse: [ self move: aShip by: actualThrow ]
-]
-
-{ #category : 'method effects' }
 EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip with: hyperGravity [
 
 	actualThrow < hyperGravityXValue

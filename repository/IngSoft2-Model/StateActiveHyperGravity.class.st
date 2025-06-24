@@ -4,9 +4,6 @@ clase StateActiveHyperGravity: Maneja el estado activo de Hypergravity
 Class {
 	#name : 'StateActiveHyperGravity',
 	#superclass : 'HyperGravity',
-	#instVars : [
-		'effect'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -17,7 +14,7 @@ StateActiveHyperGravity class >> createWith: hyperGravity and: hyperGravityXValu
 	^ self new initializeWith: hyperGravity and: hyperGravityXValue
 ]
 
-{ #category : 'operations' }
+{ #category : 'method' }
 StateActiveHyperGravity >> activateWith: anEffectManager on: aShip [
 
 	anEffectManager

@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Effect',
 	#instVars : [
 		'hyperGravityXValue',
-		'state'
+		'state',
+		'effect'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -19,13 +20,18 @@ HyperGravity class >> at: position with: xValue [
 ]
 
 { #category : 'method' }
+HyperGravity >> activateWith: anEffectManager on: aShip [ 
+	^ self subclassResponsibility
+]
+
+{ #category : 'method' }
 HyperGravity >> applyEffectTo: aShip with: anEffectManager [
 
 	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 	state activateWith: anEffectManager on: aShip.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 HyperGravity >> changeState: aState [
 	state := aState.
 ]

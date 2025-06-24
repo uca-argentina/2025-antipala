@@ -1,16 +1,16 @@
 Class {
-	#name : 'BlackHoleTest',
+	#name : 'NoEffectTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'as yet unclassified' }
-BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
+{ #category : 'tests' }
+NoEffectTest >> testNoEffectShouldntMoveTheShip [
 
 	| effectlist dices game |
 	effectlist := OrderedCollection new.
-	effectlist add: (BlackHole at: 5).
+	effectlist add: (NoEffect at: 5).
 
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
@@ -23,5 +23,5 @@ BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 	game addShip.
 
 	game play.
-	self assert: ((game ship:1) isAt: 1)
+	self assert: ((game ship: 1) isAt: 5)
 ]
