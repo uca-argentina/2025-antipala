@@ -38,7 +38,7 @@ HyperJumpTest >> testHyperJumpCanHandleDecimalJumps [
 	effectlist add: anHyperJump.
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 -1)).
+	dices add: (ChargeDice createWith: #( 5 0 -1)).
 
 	game := Game
 		        createWith: 10
@@ -49,7 +49,7 @@ HyperJumpTest >> testHyperJumpCanHandleDecimalJumps [
 	game play.
 	self assert: ((game ship: 1) isAt: 6). "Ship RealPosition => 6.5"
 	game play. "5.5"
-	self assert: ((game ship: 1) isAt: 7). "Ship RealPosition => 7.0"
+	self assert: ((game ship: 1) isAt: 7) "Ship RealPosition => 7.0"
 ]
 
 { #category : 'tests' }

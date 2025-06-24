@@ -126,7 +126,7 @@ HyperGravityTest >> testTheHyperGravityCanBeActivatedSeveralTimes [
 	effectlist add: anHyperGravity.
 
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 10 5 )).
+	dices add: (ChargeDice createWith: #( 10 5 5)).
 
 	game := Game
 		        createWith: 25
@@ -142,5 +142,5 @@ HyperGravityTest >> testTheHyperGravityCanBeActivatedSeveralTimes [
 	game play.
 	game play.
 	self assert: ((game ship: 1) isAt: 20).
-	self assert: ((game ship: 2) isAt: 10). "si sigue activo, lo mandaria al casillero 20"
+	self assert: ((game ship: 2) isAt: 10) "si sigue activo, lo mandaria al casillero 20"
 ]
