@@ -116,3 +116,31 @@ HyperGravityTest >> testShipsShouldntGoForwardWhenTheyStepOnTheBlackHoleForTheFi
 	game play.
 	self assert: ((game ship: 1) isAt: 10)
 ]
+
+{ #category : 'tests' }
+HyperGravityTest >> testTheHyperGravityCanBeActivatedSeveralTimes [
+
+	| effectlist game dices anHyperGravity |
+	effectlist := OrderedCollection new.
+	anHyperGravity := HyperGravity at: 10 with: 5.
+	effectlist add: anHyperGravity.
+
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 10 5 )).
+
+	game := Game
+		        createWith: 25
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game addShip.
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 10).
+	self assert: ((game ship: 2) isAt: 5).
+	game play.
+	game play.
+	self assert: ((game ship: 1) isAt: 20).
+	self assert: ((game ship: 2) isAt: 10). "si sigue activo, lo mandaria al casillero 20"
+]

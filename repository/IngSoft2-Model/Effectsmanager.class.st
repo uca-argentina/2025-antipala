@@ -30,10 +30,27 @@ EffectsManager >> applyAnEffectTo: aShip2 in: aGameState with: playerthrow [
 ]
 
 { #category : 'method effects' }
+EffectsManager >> block: aShip [
+
+	moveManager block: aShip by: 1
+]
+
+{ #category : 'method effects' }
 EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip [
 
-	actualThrow < hyperGravityXValue ifTrue: [
-		moveManager block: aShip by: 1 ] ifFalse: [ self move: aShip by: actualThrow ]
+	actualThrow < hyperGravityXValue
+		ifTrue: [ self block: aShip ]
+		ifFalse: [ self move: aShip by: actualThrow ]
+]
+
+{ #category : 'method effects' }
+EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip with: hyperGravity [
+
+	actualThrow < hyperGravityXValue
+		ifTrue: [ self block: aShip ]
+		ifFalse: [
+			self move: aShip by: actualThrow.
+			hyperGravity changeState: (StateInactiveHyperGravity createWith: hyperGravity and: hyperGravityXValue )]
 ]
 
 { #category : 'initialize' }

@@ -8,8 +8,7 @@ Class {
 { #category : 'tests' }
 AtomicBombTest >> testAtomicBombAffectsAllShips [
 
-	| alapmanager anAtomicBomb effectlist game dices |
-	alapmanager := LapManager createWith: 20.
+	| anAtomicBomb effectlist game dices |
 
 	effectlist := OrderedCollection new.
 	anAtomicBomb := AtomicBomb at: 10.
