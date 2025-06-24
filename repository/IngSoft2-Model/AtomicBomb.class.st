@@ -23,6 +23,6 @@ AtomicBomb >> applyEffectTo: aShip with: effectManager [
 
 { #category : 'initialize' }
 AtomicBomb >> initializeWith: position [
-
+	position < 0 ifTrue: [self error: 'Atomic Bomb position must be positive'].
 	effectPosition := position
 ]
