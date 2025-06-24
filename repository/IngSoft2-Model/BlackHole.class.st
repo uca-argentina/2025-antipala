@@ -23,6 +23,6 @@ BlackHole >> applyEffectTo: aShip with: anEffectManager [
 
 { #category : 'initialize' }
 BlackHole >> initializeWith: position [
-
+	position < 0 ifTrue: [self error: 'Black Hole position must be positive'].
 	effectPosition := position
 ]

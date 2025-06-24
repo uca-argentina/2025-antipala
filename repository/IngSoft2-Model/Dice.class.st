@@ -27,7 +27,7 @@ self validLength: aFace.
 
 { #category : 'initialize' }
 Dice >> initializeDiceWith: maxFaces [
-
+	maxFaces < 0 ifTrue: [self error: 'The number of faces of the dice must be positive'].
 	faces := maxFaces
 ]
 
