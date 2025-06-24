@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Acceleration >> applyeffect: aShip with: cardManager [
+Acceleration >> applyEffect: aShip with: cardManager [
 
 	cardManager addPermanentCard: self.
 ]

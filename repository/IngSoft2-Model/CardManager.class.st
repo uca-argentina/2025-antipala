@@ -9,8 +9,14 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'creation' }
+CardManager class >> createWith: someCards [
+^ self new initializeWith: someCards
+]
+
 { #category : 'as yet unclassified' }
-CardManager >> addPermanentCard: card [.
+CardManager >> addPermanentCard: card [
+
 	activeCards add: card.
 ]
 
@@ -18,7 +24,7 @@ CardManager >> addPermanentCard: card [.
 CardManager >> apply: aCard from: aShip to: aTargetShip [
 
 	targetShip := aTargetShip.
-	aCard applyeffect: aShip with: self.
+	aCard applyEffect: aShip with: self.
 ]
 
 { #category : 'as yet unclassified' }
@@ -26,6 +32,12 @@ CardManager >> applyAllyWith: aShip [
 	
 	aShip allywith: targetShip.
 	targetShip allywith: aShip
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> initializeWith: someCards [
+	activeCards := someCards.
+	
 ]
 
 { #category : 'as yet unclassified' }

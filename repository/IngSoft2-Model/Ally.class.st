@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Ally >> applyeffect: aShip with: cardManager [
+Ally >> applyEffect: aShip with: cardManager [
 
 	cardManager applyAllyWith: aShip .
 	

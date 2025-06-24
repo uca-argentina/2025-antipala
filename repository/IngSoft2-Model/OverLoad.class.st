@@ -6,11 +6,9 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-OverLoad >> applyeffect: aShip with: cardManager [
+OverLoad >> applyEffect: aShip with: cardManager [
 
-	cardManager applyAllyWith: aShip .
-	
-
+	cardManager overLoadAt: aShip
 ]
 
 { #category : 'as yet unclassified' }
