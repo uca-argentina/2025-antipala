@@ -45,11 +45,14 @@ MoveManager >> intializeWith: aLapManager [
 
 { #category : 'method' }
 MoveManager >> move: aShip by: steps [
-   self handleally:aShip step:steps.
-	self handleBlockOf: aShip with: steps.
+   |step|
+   step:=steps.
+   aShip isOverload ifTrue:[step:=steps-2]. 
+   self handleally:aShip step:step.
+	self handleBlockOf: aShip with: step.
 	aShip isBlocked ifTrue:[aShip reduceTimeout. ^self].
-	aShip moveBy: steps.
-	aShip consumeFuel: steps.
+	aShip moveBy: step.
+	aShip consumeFuel: step.
 	lapManager handle: aShip.
 
 ]

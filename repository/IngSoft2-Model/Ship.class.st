@@ -11,7 +11,8 @@ Class {
 		'maxfuel',
 		'timeout',
 		'laps',
-		'ally'
+		'ally',
+		'oveload'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -87,7 +88,8 @@ Ship >> initializewith: anId andfuel: afuel [
 	position:=0.
 	timeout:=0.
 	laps:=0.
-	ally:=self
+	ally:=self.
+	oveload:=false.
 	
 ]
 
@@ -125,6 +127,11 @@ Ship >> isBlocked [
 	^ timeout > 0.
 ]
 
+{ #category : 'accessing' }
+Ship >> isOverload [
+^oveload
+]
+
 { #category : 'private - testing' }
 Ship >> isWithTimeout: amount [
 	"este metodo solo debe ser usado por los tests"
@@ -139,14 +146,18 @@ Ship >> lapsToApplyWith: boardSize [
 
 { #category : 'methods' }
 Ship >> moveBy: steps [
-	
-	position := position + steps
+	position := position+steps
 ]
 
 { #category : 'methods' }
 Ship >> moveToFirstPosition [
 
 	position:=0.
+]
+
+{ #category : 'accessing' }
+Ship >> overload [
+	oveload:=true.
 ]
 
 { #category : 'methods' }
