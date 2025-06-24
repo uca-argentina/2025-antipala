@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+MoonWalkTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
 MoonWalkTest >> testMoonWalkAffectsAllShipsExceptTheOneThatTriggersIt [
 
@@ -36,4 +45,20 @@ MoonWalkTest >> testMoonWalkAffectsAllShipsExceptTheOneThatTriggersIt [
 	self assert: ((game ship: 1) isAt: 10).
 	self assert: ((game ship: 2) isAt: 2).
 	self assert: ((game ship: 3) isAt: 2)
+]
+
+{ #category : 'tests' }
+MoonWalkTest >> testMoonWalkPositionCannotBeNegative [
+	self
+		should: [ MoonWalk new initializeWith: -4 and: 5 ]
+		raise: Error
+		withMessageText: 'The MoonWalk position must be positive'.
+]
+
+{ #category : 'tests' }
+MoonWalkTest >> testMoonWalkwalkCannotBeNegative [
+	self
+		should: [ MoonWalk new initializeWith: 10 and: -5 ]
+		raise: Error
+		withMessageText: 'The MoonWalk walk must be positive'.
 ]

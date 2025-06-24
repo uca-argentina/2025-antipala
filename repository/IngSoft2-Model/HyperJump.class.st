@@ -37,7 +37,7 @@ HyperJump >> convertToParsec: aList [
 
 { #category : 'initialize' }
 HyperJump >> initializeWith: position withJumps: aList [
-
+	position < 0 ifTrue: [self error: 'The HyperJump position must be positive'].
 	parsecs := self convertToParsec: (aList sort: [ :a :b | a > b ]).
 	effectPosition := position.
 	currentIndex := 1

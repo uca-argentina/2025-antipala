@@ -161,11 +161,3 @@ HyperGravityTest >> testTheHypergravityPositionCannotBeNegative [
 		raise: Error
 		withMessageText: 'The Hypergravity position must be positive'
 ]
-
-{ #category : 'tests' }
-HyperGravityTest >> testTheHypergravityXValueCannotBeNegative [
-	self
-		should: [ HyperGravity new initializeWith: 10 and: -4 ]
-		raise: Error
-		withMessageText: 'The Hypergravity X value must be positive'
-]

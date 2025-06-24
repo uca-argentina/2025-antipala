@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+HyperJumpTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
 HyperJumpTest >> testAShipAdvancesWhenTriggersTheEffect [
 
@@ -151,4 +160,12 @@ HyperJumpTest >> testHyperJumpShouldSortTheJumpValues [
 	self assert: ((game ship: 1) isAt: 0).
 	self assert: ((game ship: 2) isAt: 9).
 	self assert: ((game ship: 3) isAt: 7)
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testTheHyperJumpPositionCannotBeNegative [
+	self
+		should: [ HyperJump new initializeWith: -4 withJumps: #(1 2 3) asOrderedCollection ]
+		raise: Error
+		withMessageText: 'The HyperJump position must be positive'
 ]

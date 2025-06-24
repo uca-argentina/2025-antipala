@@ -26,7 +26,8 @@ MoonWalk >> applyEffectTo: aShip with: effectManager [
 
 { #category : 'initialize' }
 MoonWalk >> initializeWith: position and: aWalk [
-
+	position < 0 ifTrue: [self error: 'The MoonWalk position must be positive'].
+	aWalk < 0 ifTrue: [self error: 'The MoonWalk walk must be positive'].
 	effectPosition := position.
 	walk := aWalk negated
 ]
