@@ -27,6 +27,12 @@ Ship >> changeLapsBy: someLaps [
 ]
 
 { #category : 'methods' }
+Ship >> changeMaxFuelBy: quanty [
+
+	maxfuel := maxfuel + quanty
+]
+
+{ #category : 'methods' }
 Ship >> consumeFuel:amount [
    
     fuel := fuel - amount.

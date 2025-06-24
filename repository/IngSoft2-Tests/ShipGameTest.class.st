@@ -183,6 +183,46 @@ ShipGameTest >> testTheGameCantBePlayedOnceItFinished [
 ]
 
 { #category : 'tests' }
+ShipGameTest >> testThePlayerCanReciveANegativeReward [
+
+	| effectlist dices |
+	effectlist := OrderedCollection new.
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 10 9 )).
+	game := Game
+		        createWith: 30
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+
+	game play.
+	self assert: ((game ship: 1) isAt: 10).
+	game repostFuel.
+	self assert: (game ship: 1) fuel equals: 19
+]
+
+{ #category : 'tests' }
+ShipGameTest >> testThePlayerCanReciveAPositiveReward [
+
+	| effectlist dices |
+	effectlist := OrderedCollection new.
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 10 5 )).
+	game := Game
+		        createWith: 30
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+
+	game play.
+	self assert: ((game ship: 1) isAt: 10).
+	game repostFuel.
+	self assert: (game ship: 1) fuel equals: 21
+]
+
+{ #category : 'tests' }
 ShipGameTest >> testThePlayerCantRepostFuelOnceItFinished [
 
 	| effectlist dices |

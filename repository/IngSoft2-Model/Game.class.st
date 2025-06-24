@@ -30,6 +30,20 @@ Game >> addShip [
 	ships add: shipbuilder build
 ]
 
+{ #category : 'playing' }
+Game >> giveRewardTo: player [
+
+	self throwdice / self maxThrow <= 0.8
+		ifTrue: [ player changeMaxFuelBy: 1 ]
+		ifFalse: [ player changeMaxFuelBy: -1 ]
+]
+
+{ #category : 'playing' }
+Game >> handleRewardsWith: playerthrow and: player [
+
+	self maxThrow = playerthrow ifTrue: [ self giveRewardTo: player ]
+]
+
 { #category : 'initialize' }
 Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
 
@@ -49,6 +63,14 @@ Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: 
 
 	shipbuilder := ShipBuilder buildWith: dices.
 	ships := OrderedCollection new
+]
+
+{ #category : 'playing' }
+Game >> maxThrow [
+
+	^ setofdices
+		            inject: 0
+		            into: [ :sum :eachDice | sum + eachDice max ].
 ]
 
 { #category : 'playing' }
@@ -74,7 +96,9 @@ Game >> play [
 	self winner ifNotNil: [ Error signal: 'the game ended' ].
 	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
 	player := ships at: currentPlayerIndex.
+
 	playerthrow := self throwdice.
+	self handleRewardsWith: playerthrow and: player.
 
 	movemanager move: player by: playerthrow.
 	manageeffects applyAnEffectTo: player in: self with: playerthrow
