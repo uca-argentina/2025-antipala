@@ -1,6 +1,9 @@
 Class {
 	#name : 'CardManagerTest',
 	#superclass : 'TestCase',
+	#classInstVars : [
+		'activeCards'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
