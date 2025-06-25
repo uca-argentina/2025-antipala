@@ -21,6 +21,12 @@ AtomicBomb >> applyEffectTo: aShip with: effectManager [
 		effectManager triggerAtomicBomb 
 ]
 
+{ #category : 'method' }
+AtomicBomb >> forceApplyTo: aShip with: effectManager [
+
+	effectManager triggerAtomicBomb
+]
+
 { #category : 'initialize' }
 AtomicBomb >> initializeWith: position [
 

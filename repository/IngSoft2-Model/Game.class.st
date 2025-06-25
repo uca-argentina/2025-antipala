@@ -47,15 +47,15 @@ Game >> handleRewardsWith: playerthrow and: player [
 { #category : 'initialize' }
 Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
 
-	dices isEmpty ifTrue: [
-		Error signal: 'you cant play without dices' ].
+	dices isEmpty ifTrue: [ Error signal: 'you cant play without dices' ].
 	boardlength := anBoardlength.
 	setofdices := dices.
 	lapsToWin := numberOfLapsToWin.
 	currentPlayerIndex := 0.
 
 	movemanager := MoveManager createWith:
-		               (LapManager createWith: anBoardlength).
+		               (LapManager createWith: anBoardlength) and: (CardManager createWith: #())
+.
 	manageeffects := EffectsManager
 		                 createWith: aCollectionofeffects
 		                 and: movemanager.

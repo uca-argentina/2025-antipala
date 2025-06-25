@@ -25,6 +25,7 @@ CardManager >> apply: aCard from: aShip to: aTargetShip [
 
 	targetShip := aTargetShip.
 	aCard applyEffect: aShip with: self.
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -35,9 +36,21 @@ CardManager >> applyAllyWith: aShip [
 ]
 
 { #category : 'as yet unclassified' }
+CardManager >> effectsFor: aShip [
+
+	^0
+]
+
+{ #category : 'as yet unclassified' }
 CardManager >> initializeWith: someCards [
-	activeCards := someCards.
-	
+
+	activeCards := someCards asOrderedCollection .
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> lastActiveEffect [
+
+	^activeCards last.
 ]
 
 { #category : 'as yet unclassified' }

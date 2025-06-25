@@ -24,6 +24,12 @@ MoonWalk >> applyEffectTo: aShip with: effectManager [
 	effectManager moveAllShipsExcept: aShip by: walk
 ]
 
+{ #category : 'method' }
+MoonWalk >> forceApplyTo: aShip with: effectManager [
+
+	effectManager moveAllShipsExcept: aShip by: walk
+]
+
 { #category : 'initialize' }
 MoonWalk >> initializeWith: position and: aWalk [
 

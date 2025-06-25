@@ -91,17 +91,16 @@ EffectBuilderTest >> testEffectBuilderShoudStartBuildingAWormHole [
 	| builder effects chargeDice ship moveManager aCollectionOfPositions effectAtPosition alapmanager aCollectionOfDices |
 	aCollectionOfPositions := { 5. 9. 7 } asOrderedCollection.
 	chargeDice := ChargeDice createWith: #( 1 2 3 4 5 6 7 8 9 10 ).
-	aCollectionOfDices:= OrderedCollection new.
+	aCollectionOfDices := OrderedCollection new.
 	aCollectionOfDices add: (ChargeDice createWith: #( 3 4 5 )).
 	builder := EffectBuilder
 		           createWith: chargeDice
 		           and: aCollectionOfPositions
-					  and: aCollectionOfDices.
+		           and: aCollectionOfDices.
 	effects := builder build.
 	alapmanager := LapManager createWith: 100.
 	ship := Ship createWhithId: 1 andWithFuel: 1000.
-	moveManager := MoveManager createWith: alapmanager.
-
+	moveManager := MoveManager createWith: alapmanager and: (CardManager createWith: #(  ))..
 	moveManager move: ship by: 5.
 	effectAtPosition := effects detect: [ :e | e shouldApplyTo: ship ].
 	self assert: effectAtPosition class equals: WormHole.

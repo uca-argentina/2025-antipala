@@ -20,6 +20,12 @@ NoEffect >> applyEffectTo: ship with: effectManager [
 	^ self
 ]
 
+{ #category : 'method' }
+NoEffect >> forceApplyTo: aShip with: effectManager [
+
+	^ self
+]
+
 { #category : 'initialize' }
 NoEffect >> initializeWith: position [
 

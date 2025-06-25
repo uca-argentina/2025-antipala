@@ -36,6 +36,12 @@ HyperGravity >> changeState: aState [
 	state := aState.
 ]
 
+{ #category : 'method' }
+HyperGravity >> forceApplyTo: aShip with: anEffectManager [
+
+	state activateWith: anEffectManager on: aShip.
+]
+
 { #category : 'initialize' }
 HyperGravity >> initializeWith: aPosition and: aXvalue [
 

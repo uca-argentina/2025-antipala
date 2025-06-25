@@ -35,6 +35,16 @@ HyperJump >> convertToParsec: aList [
 	^ aList * 0.5
 ]
 
+{ #category : 'method' }
+HyperJump >> forceApplyTo: aShip with: anEffectManager [
+
+	anEffectManager move: aShip by: (parsecs at: currentIndex).
+
+	currentIndex := currentIndex = parsecs size
+		                ifTrue: [ 1 ]
+		                ifFalse: [ currentIndex + 1 ]
+]
+
 { #category : 'initialize' }
 HyperJump >> initializeWith: position withJumps: aList [
 

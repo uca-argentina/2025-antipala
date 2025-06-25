@@ -16,12 +16,12 @@ AccelerationTest >> testBanana [
 	ship2 := builder build.
 
 	cardManager := CardManager new.
-	cardManager apply: Acceleration from: ship1 to: ship2.
+	cardManager apply: Acceleration new from: ship1 to: ship2.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 1.
-	
+
 	cardManager apply: Acceleration from: ship2 to: ship1.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 2.
-	
+
 	moveManager := MoveManager createWith: (LapManager createWith: 20).
 
 	moveManager move: ship1 by: 5.

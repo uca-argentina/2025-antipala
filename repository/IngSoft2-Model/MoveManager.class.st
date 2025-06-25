@@ -5,15 +5,17 @@ Class {
 	#name : 'MoveManager',
 	#superclass : 'Object',
 	#instVars : [
-		'lapManager'
+		'lapManager',
+		'cardManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-MoveManager class >> createWith: aLapManager [
-	^self new intializeWith: aLapManager.
+MoveManager class >> createWith: aLapManager and: aCardManager [
+
+	^ self new intializeWith: aLapManager and: aCardManager
 ]
 
 { #category : 'method' }
@@ -43,15 +45,25 @@ MoveManager >> intializeWith: aLapManager [
 	lapManager := aLapManager.
 ]
 
+{ #category : 'initialize' }
+MoveManager >> intializeWith: aLapManager and: aCardManager [
+	cardManager := aCardManager.
+	lapManager := aLapManager
+]
+
 { #category : 'method' }
 MoveManager >> move: aShip by: steps [
-   self handleally:aShip step:steps.
+
+	| newSteps |
+	newSteps := steps + (cardManager effectsFor: aShip).
+	self handleally: aShip step: steps.
 	self handleBlockOf: aShip with: steps.
-	aShip isBlocked ifTrue:[aShip reduceTimeout. ^self].
+	aShip isBlocked ifTrue: [
+		aShip reduceTimeout.
+		^ self ].
 	aShip moveBy: steps.
 	aShip consumeFuel: steps.
-	lapManager handle: aShip.
-
+	lapManager handle: aShip
 ]
 
 { #category : 'method' }

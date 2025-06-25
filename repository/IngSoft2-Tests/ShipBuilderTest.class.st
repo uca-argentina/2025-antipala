@@ -7,46 +7,42 @@ Class {
 
 { #category : 'tests' }
 ShipBuilderTest >> testShipBuilderCanCreateAShip [
-	
-| ashipBuilder aship manager alapmanager dices |
-alapmanager := LapManager createWith: 15.
-dices := OrderedCollection new.
-dices add: (Dice with: 6).
 
-ashipBuilder := ShipBuilder buildWith: dices.
-aship := ashipBuilder build.
-"Comprobar normal Funcionamiento de nave"
-manager := MoveManager createWith: alapmanager.
-manager move: aship by: 10.
-self assert: (aship isAt: 10)
+	| ashipBuilder aship manager alapmanager dices |
+	alapmanager := LapManager createWith: 15.
+	dices := OrderedCollection new.
+	dices add: (Dice with: 6).
 
+	ashipBuilder := ShipBuilder buildWith: dices.
+	aship := ashipBuilder build.
+	"Comprobar normal Funcionamiento de nave"
+	manager := MoveManager createWith: alapmanager and: (CardManager createWith: #(  )).
+	manager move: aship by: 10.
+	self assert: (aship isAt: 10)
 ]
 
 { #category : 'tests' }
 ShipBuilderTest >> testShipBuilderCanCreateSeveralShipsWithDiferentFuel [
-	
-| ashipBuilder alapmanager dices1 dices2 ship1 ship2  manager |
-alapmanager := LapManager createWith: 20.
-dices1 := OrderedCollection new.
-dices1 add: (Dice with: 5).
 
-ashipBuilder := ShipBuilder buildWith: dices1.
-ship1 := ashipBuilder build.
+	| ashipBuilder alapmanager dices1 dices2 ship1 ship2 manager |
+	alapmanager := LapManager createWith: 20.
+	dices1 := OrderedCollection new.
+	dices1 add: (Dice with: 5).
 
-dices2 := OrderedCollection new.
-dices2 add: (Dice with: 10).
+	ashipBuilder := ShipBuilder buildWith: dices1.
+	ship1 := ashipBuilder build.
 
-ashipBuilder maxFuelWith: dices2.
-ship2 := ashipBuilder build.
+	dices2 := OrderedCollection new.
+	dices2 add: (Dice with: 10).
 
-manager := MoveManager createWith: alapmanager.
-manager move: ship1 by: 15.
-manager move: ship2 by: 15.
-self assert: (ship1 isAt: 0). 
-self assert: (ship2 isAt: 15). 
+	ashipBuilder maxFuelWith: dices2.
+	ship2 := ashipBuilder build.
 
-
-
+	manager := MoveManager createWith: alapmanager and: (CardManager createWith: #(  )).
+	manager move: ship1 by: 15.
+	manager move: ship2 by: 15.
+	self assert: (ship1 isAt: 0).
+	self assert: (ship2 isAt: 15)
 ]
 
 { #category : 'tests' }

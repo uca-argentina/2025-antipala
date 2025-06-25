@@ -80,21 +80,19 @@ WormHoleTest >> testWhenWeReceiveAPositionWeCanCheckIfItIsAWormHolePosition [
 	aPositionY := 10.
 	aPositionZ := 15.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
-	alapmanager:= LapManager createWith: 50.
-	ship := Ship
-		        createWhithId: 1
-		        andWithFuel: 50.
-	aMoveManager := MoveManager createWith: alapmanager.
+	alapmanager := LapManager createWith: 50.
+	ship := Ship createWhithId: 1 andWithFuel: 50.
+	aMoveManager := MoveManager createWith: alapmanager and: (CardManager createWith: #(  )).
 	aMoveManager move: ship by: 10.
 
 
 	self assert: (wormhole shouldApplyTo: ship).
-	
+
 	aMoveManager move: ship by: 5.
-	
+
 	self assert: (wormhole shouldApplyTo: ship).
-	
+
 	aMoveManager move: ship by: 5.
-	
-	self deny: (wormhole shouldApplyTo: ship).
+
+	self deny: (wormhole shouldApplyTo: ship)
 ]

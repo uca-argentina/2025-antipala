@@ -23,6 +23,15 @@ StateActiveHyperGravity >> activateWith: anEffectManager on: aShip [
 		with: effect.
 ]
 
+{ #category : 'method' }
+StateActiveHyperGravity >> forceApplyTo: aShip with: anEffectManager [
+
+	anEffectManager
+		handleHyperGravityCondition: hyperGravityXValue
+		in: aShip
+		with: effect
+]
+
 { #category : 'initialization' }
 StateActiveHyperGravity >> initializeWith: hyperGravity and: anHyperGravityXValue [
 

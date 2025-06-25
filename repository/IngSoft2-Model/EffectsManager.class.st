@@ -8,7 +8,8 @@ Class {
 		'effectlist',
 		'moveManager',
 		'game',
-		'actualThrow'
+		'actualThrow',
+		'lastEffect'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -36,6 +37,12 @@ EffectsManager >> block: aShip [
 ]
 
 { #category : 'method effects' }
+EffectsManager >> forceApplyLastEffectTo: aShip [
+
+	lastEffect forceApplyTo: aShip with: self.
+]
+
+{ #category : 'method effects' }
 EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip with: hyperGravity [
 
 	actualThrow < hyperGravityXValue
@@ -47,8 +54,10 @@ EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip with
 
 { #category : 'initialize' }
 EffectsManager >> initwitheffects: aCollectionofeffects and: aMoveManager [
-	effectlist:=aCollectionofeffects.
-	moveManager:= aMoveManager.
+
+	effectlist := aCollectionofeffects.
+	moveManager := aMoveManager.
+	lastEffect := NoEffect at:0.
 ]
 
 { #category : 'method effects' }
@@ -61,6 +70,12 @@ EffectsManager >> move: aShip by: jumpSquares [
 EffectsManager >> moveAllShipsExcept: ship by: walk [
 
 	game moveAllShipsExcept: ship by: walk
+]
+
+{ #category : 'method' }
+EffectsManager >> putLastEffect: effect [
+
+	lastEffect := effect .
 ]
 
 { #category : 'method effects' }

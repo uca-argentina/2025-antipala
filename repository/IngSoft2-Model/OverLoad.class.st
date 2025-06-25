@@ -1,17 +1,38 @@
 Class {
 	#name : 'OverLoad',
 	#superclass : 'Object',
+	#instVars : [
+		'objetiveShip'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'creation' }
+OverLoad class >> create [
+
+	^ self new 
+]
+
 { #category : 'as yet unclassified' }
 OverLoad >> applyEffect: aShip with: cardManager [
-
-	cardManager overLoadAt: aShip
+	objetiveShip := aShip.
+	cardManager addPermanentCard:self
 ]
 
 { #category : 'as yet unclassified' }
 OverLoad >> effectAppliedTo: aShip [
-	^0
+
+	^ (objetiveShip = aShip) ifTrue: [ -2 ] ifFalse: [ 0 ].
+]
+
+{ #category : 'as yet unclassified' }
+OverLoad >> intialize [
+
+	objetiveShip := 0
+]
+
+{ #category : 'as yet unclassified' }
+OverLoad >> intializeWith: objetive [
+	objetiveShip := objetive 
 ]

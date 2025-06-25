@@ -18,7 +18,14 @@ BlackHole class >> at: position [
 BlackHole >> applyEffectTo: aShip with: anEffectManager [
 
 	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
-		anEffectManager move: aShip by: -4 
+	anEffectManager move: aShip by: -4.
+	anEffectManager putLastEffect: self.
+]
+
+{ #category : 'method' }
+BlackHole >> forceApplyTo: aShip with: effectManager [
+
+	effectManager move: aShip by: -4
 ]
 
 { #category : 'initialize' }
