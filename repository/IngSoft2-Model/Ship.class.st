@@ -32,6 +32,16 @@ Ship >> askforfuel [
  ally donatefuel:self.
 ]
 
+{ #category : 'as yet unclassified' }
+Ship >> attemptToMoveBy: steps [
+	self isBlocked 
+		ifTrue: [ ^ self reduceTimeout ] 
+		ifFalse: [
+			self moveBy: steps.
+			self consumeFuel: steps
+		].
+]
+
 { #category : 'methods' }
 Ship >> changeLapsBy: someLaps [
 	laps:=laps+someLaps max:0.
