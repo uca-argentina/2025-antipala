@@ -53,11 +53,7 @@ MoveManager >> move: aShip by: steps [
 	newSteps := steps + (cardManager effectsFor: aShip).
 	self handleally: aShip step: steps.
 	self handleBlockOf: aShip with: steps.
-	aShip isBlocked ifTrue: [
-		aShip reduceTimeout.
-		^ self ].
-	aShip moveBy: steps.
-	aShip consumeFuel: steps.
+	aShip attemptToMoveBy: steps. 
 	lapManager handle: aShip
 ]
 
