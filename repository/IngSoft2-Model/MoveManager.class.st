@@ -41,11 +41,6 @@ MoveManager >> handleally:aShip step:steps [
 ]
 
 { #category : 'initialize' }
-MoveManager >> intializeWith: aLapManager [
-	lapManager := aLapManager.
-]
-
-{ #category : 'initialize' }
 MoveManager >> intializeWith: aLapManager and: aCardManager [
 	cardManager := aCardManager.
 	lapManager := aLapManager

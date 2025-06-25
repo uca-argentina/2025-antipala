@@ -55,7 +55,7 @@ aShip givefuel:fuel.
 self consumeFuel:fuel.
 ]
 
-{ #category : 'private - testing' }
+{ #category : 'private accessing' }
 Ship >> fuel [
 	"este metodo solo debe ser usado por los tests"
 
@@ -73,7 +73,7 @@ Ship >> hasFuelFor: steps [
     ^ fuel >= (steps abs).
 ]
 
-{ #category : 'private - testing' }
+{ #category : 'private accessing' }
 Ship >> id [
 	"este metodo solo debe ser usado por los tests"
 	^ id
@@ -131,7 +131,7 @@ Ship >> isBlocked [
 	^ timeout > 0.
 ]
 
-{ #category : 'private - testing' }
+{ #category : 'private accessing' }
 Ship >> isWithTimeout: amount [
 	"este metodo solo debe ser usado por los tests"
 

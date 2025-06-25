@@ -9,10 +9,10 @@ Class {
 		'setofdices',
 		'boardlength',
 		'movemanager',
-		'manageeffects',
 		'currentPlayerIndex',
 		'lapsToWin',
-		'shipbuilder'
+		'shipbuilder',
+		'effectsManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -56,7 +56,7 @@ Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: 
 	movemanager := MoveManager createWith:
 		               (LapManager createWith: anBoardlength) and: (CardManager createWith: #())
 .
-	manageeffects := EffectsManager
+	effectsManager := EffectsManager
 		                 createWith: aCollectionofeffects
 		                 and: movemanager.
 
@@ -101,7 +101,7 @@ Game >> play [
 	self handleRewardsWith: playerthrow and: player.
 
 	movemanager move: player by: playerthrow.
-	manageeffects applyAnEffectTo: player in: self with: playerthrow
+	effectsManager applyAnEffectTo: player in: self with: playerthrow
 ]
 
 { #category : 'playing' }

@@ -21,13 +21,13 @@ EffectsManager class >> createWith: aCollectionofeffects and: aMoveManager [
 ]
 
 { #category : 'method' }
-EffectsManager >> applyAnEffectTo: aShip2 in: aGameState with: playerthrow [
+EffectsManager >> applyAnEffectTo: aShip in: aGame with: playerthrow [
 
 	| effect |
 	actualThrow := playerthrow.
-	game := aGameState.
-	effect := effectlist
-		          do: [ :each | each applyEffectTo: aShip2 with: self ]
+	game := aGame.
+	effect := effectlist do: [ :each |
+		          each applyEffectTo: aShip with: self ]
 ]
 
 { #category : 'method effects' }
