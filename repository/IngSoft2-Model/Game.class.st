@@ -129,11 +129,7 @@ Game >> ship:index [
 
 { #category : 'playing' }
 Game >> throwdice [
- | totalThrow |
-totalThrow:= setofdices
-		         inject: 0
-		         into: [ :sum :eachDice | sum + eachDice roll ]. 
-		^totalThrow.
+^ (setofdices collect: [:each | each roll]) sum.
 ]
 
 { #category : 'playing' }
