@@ -5,19 +5,19 @@ Class {
 	#name : 'EffectsManager',
 	#superclass : 'Object',
 	#instVars : [
-		'effectlist',
 		'moveManager',
 		'game',
 		'actualThrow',
-		'lastEffect'
+		'lastEffect',
+		'tileList'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-EffectsManager class >> createWith: aCollectionofeffects and: aMoveManager [
-	^self new initwitheffects:aCollectionofeffects and: aMoveManager.
+EffectsManager class >> createWith: aCollectionOfTilesWithEffects and: aMoveManager [
+	^self new initwitheffects: aCollectionOfTilesWithEffects and: aMoveManager.
 ]
 
 { #category : 'method' }
@@ -26,8 +26,7 @@ EffectsManager >> applyAnEffectTo: aShip in: aGame with: playerthrow [
 	| effect |
 	actualThrow := playerthrow.
 	game := aGame.
-	effect := effectlist do: [ :each |
-		          each applyEffectTo: aShip with: self ]
+	effect := (tileList at: aShip position) applyEffectTo: aShip with: self 
 ]
 
 { #category : 'method effects' }
@@ -53,9 +52,9 @@ EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip with
 ]
 
 { #category : 'initialize' }
-EffectsManager >> initwitheffects: aCollectionofeffects and: aMoveManager [
+EffectsManager >> initwitheffects: aCollectionOfTilesWithEffects and: aMoveManager [
 
-	effectlist := aCollectionofeffects.
+	tileList := aCollectionOfTilesWithEffects.
 	moveManager := aMoveManager.
 	lastEffect := NoEffect at:0.
 ]

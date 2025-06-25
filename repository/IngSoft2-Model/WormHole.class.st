@@ -22,7 +22,6 @@ WormHole class >> at: positionY and: positionZ [
 WormHole >> applyEffectTo: aShip with: anEffectManager [
 	
 	| displacement |
-	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 	displacement := 0.
 	(aShip isAt: positionY) ifTrue: [
 		displacement := positionZ - positionY ].
@@ -31,32 +30,4 @@ WormHole >> applyEffectTo: aShip with: anEffectManager [
 		displacement := positionY - positionZ ].
 
 	anEffectManager move: aShip by: displacement
-]
-
-{ #category : 'method' }
-WormHole >> forceApplyTo: aShip with: anEffectManager [
-
-	| displacement |
-	displacement := 0.
-	(aShip isAt: positionY) ifTrue: [
-		displacement := positionZ - positionY ].
-
-	(aShip isAt: positionZ) ifTrue: [
-		displacement := positionY - positionZ ].
-
-	anEffectManager move: aShip by: displacement
-]
-
-{ #category : 'initialize' }
-WormHole >> initializeWith: aPositionY and: aPositionZ [
-	aPositionY negative ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
-	aPositionZ negative ifTrue: [ Error signal: 'The WormHole Position can not be negative' ].
-	positionY:=aPositionY.
-	positionZ:=aPositionZ.
-]
-
-{ #category : 'method' }
-WormHole >> shouldApplyTo: aShip [
-
-	^ (aShip isAt: positionY) or: (aShip isAt: positionZ)
 ]

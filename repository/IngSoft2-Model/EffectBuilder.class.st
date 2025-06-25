@@ -103,24 +103,12 @@ EffectBuilder >> randomEffectAt: position [
 	| effectBuilders probability |
 	probability := diceOf100Faces roll.
 	effectBuilders := {
-		                  (self
-			                   buildAtomicBombAt: position
-			                   with: probability).
-		                  (self 
-									 buildHyperJumpAt: position
-									 with: probability).
-		                  (self 
-									 buildMoonWalkAt: position 
-									with: probability).
-		                  (self
-			                   buildHyperGravityAt: position
-			                   with: probability).
-		                  (self 
-									 buildBlackHoleAt: position 
-									 with: probability).
-		                  (self 
-									 buildNoEffectAt: position 
-									 with: probability) }.
+		                  (self buildAtomicBombAt: position with: probability).
+		                  (self buildHyperJumpAt: position with: probability).
+		                  (self buildMoonWalkAt: position with: probability).
+		                  (self buildHyperGravityAt: position with: probability).
+		                  (self buildBlackHoleAt: position with: probability).
+		                  (self buildNoEffectAt: position with: probability) }.
 	^ effectBuilders detect: [ :block | block value notNil ]
 ]
 

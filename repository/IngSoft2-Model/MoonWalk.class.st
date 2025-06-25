@@ -12,9 +12,9 @@ Class {
 }
 
 { #category : 'creation' }
-MoonWalk class >> at: position and: walk [
+MoonWalk class >> createWith: aWalk [
 
-	^ self new initializeWith: position and: walk
+	^ self new initializeWith: aWalk
 ]
 
 { #category : 'method' }
@@ -31,8 +31,7 @@ MoonWalk >> forceApplyTo: aShip with: effectManager [
 ]
 
 { #category : 'initialize' }
-MoonWalk >> initializeWith: position and: aWalk [
+MoonWalk >> initializeWith: aWalk [
 
-	effectPosition := position.
-	walk := aWalk negated
+	walk := aWalk
 ]

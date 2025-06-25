@@ -9,25 +9,13 @@ Class {
 }
 
 { #category : 'creation' }
-NoEffect class >> at: position [
+NoEffect class >> create [
 
-	^ self new initializeWith: position
+	^ self new 
 ]
 
 { #category : 'method' }
 NoEffect >> applyEffectTo: ship with: effectManager [
 
 	^ self
-]
-
-{ #category : 'method' }
-NoEffect >> forceApplyTo: aShip with: effectManager [
-
-	^ self
-]
-
-{ #category : 'initialize' }
-NoEffect >> initializeWith: position [
-
-	effectPosition := position
 ]

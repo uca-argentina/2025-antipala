@@ -9,27 +9,14 @@ Class {
 }
 
 { #category : 'creation' }
-BlackHole class >> at: position [
+BlackHole class >> create [
 
-	^ self new initializeWith: position
+	^ self new
 ]
 
 { #category : 'method' }
 BlackHole >> applyEffectTo: aShip with: anEffectManager [
 
-	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 	anEffectManager move: aShip by: -4.
-	anEffectManager putLastEffect: self.
-]
-
-{ #category : 'method' }
-BlackHole >> forceApplyTo: aShip with: effectManager [
-
-	effectManager move: aShip by: -4
-]
-
-{ #category : 'initialize' }
-BlackHole >> initializeWith: position [
-
-	effectPosition := position
+	"anEffectManager putLastEffect: self."
 ]

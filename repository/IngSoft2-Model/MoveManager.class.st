@@ -35,9 +35,9 @@ MoveManager >> handleBlockOf: aShip with: steps [
 ]
 
 { #category : 'as yet unclassified' }
-MoveManager >> handleally:aShip step:steps [
-	
-( aShip hasFuelFor: steps )not ifTrue:[aShip askforfuel] 
+MoveManager >> handleally: aShip step: steps [
+
+	(aShip hasFuelFor: steps) ifFalse: [ aShip askforfuel ]
 ]
 
 { #category : 'initialize' }

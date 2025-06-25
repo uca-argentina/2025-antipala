@@ -11,7 +11,7 @@ Class {
 { #category : 'creation' }
 OverLoad class >> create [
 
-	^ self new 
+	^ self new
 ]
 
 { #category : 'as yet unclassified' }
@@ -29,10 +29,5 @@ OverLoad >> effectAppliedTo: aShip [
 { #category : 'as yet unclassified' }
 OverLoad >> intialize [
 
-	objetiveShip := 0
-]
-
-{ #category : 'as yet unclassified' }
-OverLoad >> intializeWith: objetive [
-	objetiveShip := objetive 
+	objetiveShip := nil.
 ]

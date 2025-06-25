@@ -19,8 +19,8 @@ Class {
 }
 
 { #category : 'creation' }
-Game class >> createWith:anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
-	^ self new initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin
+Game class >> createOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers [
+	^ self new initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers
 ]
 
 { #category : 'playing' }
@@ -45,19 +45,19 @@ Game >> handleRewardsWith: playerthrow and: player [
 ]
 
 { #category : 'initialize' }
-Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
+Game >> initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers [
 
 	dices isEmpty ifTrue: [ Error signal: 'you cant play without dices' ].
-	boardlength := anBoardlength.
+	boardlength := aCollectionOfTilesWithEffects size.
 	setofdices := dices.
 	lapsToWin := numberOfLapsToWin.
 	currentPlayerIndex := 0.
 
 	movemanager := MoveManager createWith:
-		               (LapManager createWith: anBoardlength) and: (CardManager createWith: #())
+		               (LapManager createWith: boardlength) and: (CardManager createWith: #())
 .
 	effectsManager := EffectsManager
-		                 createWith: aCollectionofeffects
+		                 createWith: aCollectionOfTilesWithEffects
 		                 and: movemanager.
 
 
