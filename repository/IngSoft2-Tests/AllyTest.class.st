@@ -15,7 +15,7 @@ AllyTest >> testAShipCanUseTheFuelOfTheAlly [
 	ship1 := builder build.
 	ship2 := builder build.
 	aAlly:=Ally create.
-	cardManager :=CardManager createWith: #(  ).
+	cardManager :=CardManager create.
 	cardManager apply: aAlly from: ship1 to: ship2.
 	moveManager := MoveManager createWith: 20 and: (cardManager ).
 	moveManager move: ship1 by: 15.
@@ -33,7 +33,7 @@ AllyTest >> testAShipCantUseTheFuelOfTheAlly [
 	ship2 := builder build.
 	ship3 := builder build.
 	aAlly:=Ally create.
-	cardManager :=CardManager createWith: #(  ).
+	cardManager :=CardManager create.
 	cardManager apply: aAlly from: ship1 to: ship2.
 	moveManager := MoveManager createWith: 20 and: (cardManager ).
 	moveManager move: ship1 by: 15.

@@ -61,7 +61,7 @@ MoveManager >> move: aShip by: steps [
 
 	| newSteps |
 	newSteps := steps + (cardManager throwEffectsFor: aShip).
-	self handleally: aShip step: newSteps.
+	self askforally:aShip  step:steps.
 	self handleBlockOf: aShip with: newSteps.
 	aShip attemptToMoveBy: newSteps. 
 	self handleLaps: aShip 

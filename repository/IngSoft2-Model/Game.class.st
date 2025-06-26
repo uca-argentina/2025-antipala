@@ -47,7 +47,7 @@ Game >> initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequi
 	lapsToWin := numberOfLapsToWin.
 	currentPlayerIndex := 0.
 
-	movemanager := MoveManager createWith: boardlength and: (CardManager createWith: #()).
+	movemanager := MoveManager createWith: boardlength and: (CardManager create).
 		
 	effectsManager := EffectsManager
 		                 createWith: aCollectionOfTilesWithEffects

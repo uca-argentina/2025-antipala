@@ -10,9 +10,9 @@ CardManagerTest >> testapplycardeffectoshiptest [
 
 	| aCardManager aCard aShip aTargetShip manager |
 	manager := MoveManager createWith: 30 
-		               and: (CardManager createWith: #(  )).
-	aCardManager := CardManager new.
-	aCard := Ally new.
+		               and: (CardManager create).
+	aCardManager := CardManager create .
+	aCard := Ally create.
 	aShip := Ship createWhithId: 1 andWithFuel: 5.
 
 	aTargetShip := Ship createWhithId: 2 andWithFuel: 2.

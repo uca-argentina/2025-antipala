@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : 'creation' }
-CardManager class >> createWith: someCards [
-^ self new initializeWith: someCards
+CardManager class >> create [
+^ self new initialize
 ]
 
 { #category : 'as yet unclassified' }
@@ -50,7 +50,13 @@ CardManager >> handleally: aShip  step: steps [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> initializeWith: someCards [
+CardManager >> initialize [
+
+	activeCards := OrderedCollection new .
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> initializlalaeWith: someCards [
 
 	activeCards := OrderedCollection new .
 ]
@@ -63,8 +69,9 @@ CardManager >> lastActiveEffect [
 
 { #category : 'as yet unclassified' }
 CardManager >> throwEffectsFor: aShip [
-	| efectos |
-	efectos:= activeCards collect: [ :card | card effectAppliedTo: aShip ].
-	^ efectos sum 
+	| effects |
+	activeCards isEmpty ifTrue: [ ^ 0 ].
+	effects := activeCards collect: [ :card | card effectAppliedTo: aShip ].
+	^ effects sum 
 	
 ]

@@ -34,7 +34,7 @@ EffectManagerTest >> testEffectManagerCanForceAnEffect [
 
 	movemanager := MoveManager
 		               createWith: (20)
-		               and: (CardManager createWith: #(  )).
+		               and: (CardManager create).
 	manageeffects := EffectsManager
 		                 createWith: effectlist
 		                 and: movemanager.
@@ -59,7 +59,7 @@ EffectManagerTest >> testHyperGravityLastEffect [
 
 	movemanager := MoveManager
 		               createWith: (20)
-		               and: (CardManager createWith: #(  )).
+		               and: (CardManager create).
 	manageeffects := EffectsManager
 		                 createWith: tiles
 		                 and: movemanager.

@@ -15,7 +15,7 @@ ShipBuilderTest >> testShipBuilderCanCreateAShip [
 	ashipBuilder := ShipBuilder buildWith: dices.
 	aship := ashipBuilder build.
 	"Comprobar normal Funcionamiento de nave"
-	manager := MoveManager createWith: 15 and: (CardManager createWith: #(  )).
+	manager := MoveManager createWith: 15 and: (CardManager create).
 	manager move: aship by: 10.
 	self assert: (aship isAt: 11)
 ]
@@ -36,7 +36,7 @@ ShipBuilderTest >> testShipBuilderCanCreateSeveralShipsWithDiferentFuel [
 	ashipBuilder maxFuelWith: dices2.
 	ship2 := ashipBuilder build.
 
-	manager := MoveManager createWith: 20 and: (CardManager createWith: #(  )).
+	manager := MoveManager createWith: 20 and: (CardManager create).
 	manager move: ship1 by: 15.
 	manager move: ship2 by: 15.
 	self assert: (ship1 isAt: 1).

@@ -15,7 +15,7 @@ AccelerationTest >> testAccelerationCardShoulIncreaseTheMovementOfAllShips [
 	ship1 := builder build.
 	ship2 := builder build.
 
-	cardManager := CardManager createWith: #() asOrderedCollection .
+	cardManager := CardManager create .
 	
 	card := Acceleration create.
 	cardManager apply: card from: ship1 to: ship2.
