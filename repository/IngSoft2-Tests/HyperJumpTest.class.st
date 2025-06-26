@@ -17,22 +17,15 @@ HyperJumpTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 { #category : 'tests' }
 HyperJumpTest >> testAShipAdvancesWhenTriggersTheEffect [
 
-	| effectlist game dices |
-	effectlist := OrderedCollection new.
-	effectlist add: (HyperJump at: 5 with: #( 5 )).
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 6 put: (HyperJump createWith: #( 3 ) asSortedCollection).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game addShip.
-	game addShip.
-	self assert: ((game ship: 1) isAt: 0).
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
+	self assert: ((game ship: 1) isAt: 1).
 
 	game play.
 	self assert: ((game ship: 1) isAt: 7)
@@ -41,125 +34,102 @@ HyperJumpTest >> testAShipAdvancesWhenTriggersTheEffect [
 { #category : 'tests' }
 HyperJumpTest >> testHyperJumpCanHandleDecimalJumps [
 
-	| effectlist game dices anHyperJump |
-	effectlist := OrderedCollection new.
-	anHyperJump := HyperJump at: 5 with: #( 3 ) asSortedCollection.
-	effectlist add: anHyperJump.
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	10 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 5 put: (HyperJump createWith: #( 3 ) asSortedCollection).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 -1)).
+	dices add: (ChargeDice createWith: #( 4 0 -1)).
 
-	game := Game
-		        createWith: 10
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
 	self assert: ((game ship: 1) isAt: 6). "Ship RealPosition => 6.5"
 	game play. "5.5"
-	self assert: ((game ship: 1) isAt: 7). "Ship RealPosition => 7.0"
+	self assert: ((game ship: 1) isAt: 7) "Ship RealPosition => 7.0"
+	
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpCanNotBeCreatedWithAnInvaludListOfJumps [
+	self
+		should: [HyperJump createWith: (HyperJump createWith: #() asSortedCollection) ]
+		raise: Error
+		withMessageText: 'The HyperJump Squares must have a valid list of jumps'.
 ]
 
 { #category : 'tests' }
 HyperJumpTest >> testHyperJumpCanReciveSeveralJumpValues [
 
-	| effectlist game dices |
-	effectlist := OrderedCollection new.
-	effectlist add: (HyperJump at: 5 with: #( 12 8 4 ) asSortedCollection).
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 6 put: (HyperJump createWith: #( 12 8 4 ) asSortedCollection).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game addShip.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.
 	game play.
 	game play.
 	game play.
-	self assert: ((game ship: 1) isAt: 0).
-	self assert: ((game ship: 2) isAt: 9).
-	self assert: ((game ship: 3) isAt: 7)
+	self assert: ((game ship: 1) isAt: 1).
+	self assert: ((game ship: 2) isAt: 10).
+	self assert: ((game ship: 3) isAt: 8)
 ]
 
 { #category : 'tests' }
 HyperJumpTest >> testHyperJumpShouldBeCiclical [
 
-	| effectlist game dices |
-	effectlist := OrderedCollection new.
-	effectlist add: (HyperJump at: 5 with: #( 12 4 ) asSortedCollection).
-
+	
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 6 put: (HyperJump createWith: #( 12 4 ) asSortedCollection).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 -6 -2 30 )).
-	game := Game
-		        createWith: 15
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	dices add: (ChargeDice createWith: #( 5 -6 -2 30)).
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
-	self assert: ((game ship: 1) isAt: 11).
+	self assert: ((game ship: 1) isAt: 12).
 
 	game play.
-	self assert: ((game ship: 1) isAt: 7).
+	self assert: ((game ship: 1) isAt: 8).
 
 	game play.
-	self assert: ((game ship: 1) isAt: 11)
+	self assert: ((game ship: 1) isAt: 12)
 ]
 
 { #category : 'tests' }
 HyperJumpTest >> testHyperJumpShouldManageFuelCases [
 
-	| alapmanager effectlist game dices anHyperJump |
-	alapmanager := LapManager createWith: 20.
-
-	effectlist := OrderedCollection new.
-	anHyperJump := HyperJump at: 5 with: #( 10 ) asSortedCollection.
-	effectlist add: anHyperJump.
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	11 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 6 put: (HyperJump createWith: #( 10 ) asSortedCollection).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 
-	game := Game
-		        createWith: 10
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
-	self assert: ((game ship: 1) isAt: 0)
+	self assert: ((game ship: 1) isAt: 1)
 ]
 
 { #category : 'tests' }
 HyperJumpTest >> testHyperJumpShouldSortTheJumpValues [
 
-	| effectlist game dices anHyperJump |
-	effectlist := OrderedCollection new.
-	anHyperJump := HyperJump at: 5 with: #( 12 4 8 ) asSortedCollection.
-	effectlist add: anHyperJump.
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	15 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 6 put: (HyperJump createWith: #( 12 4 8 ) asSortedCollection).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 
-	game := Game
-		        createWith: 10
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game addShip.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.
 	game play.
 	game play.
 	game play.
-	self assert: ((game ship: 1) isAt: 0).
-	self assert: ((game ship: 2) isAt: 9).
-	self assert: ((game ship: 3) isAt: 7)
+	self assert: ((game ship: 1) isAt: 1).
+	self assert: ((game ship: 2) isAt: 10).
+	self assert: ((game ship: 3) isAt: 8)
 ]
 
 { #category : 'tests' }

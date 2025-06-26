@@ -14,9 +14,9 @@ Class {
 }
 
 { #category : 'creation' }
-HyperGravity class >> at: position with: xValue [
-
-	^ self new initializeWith: position and: xValue
+HyperGravity class >> createWith: xValue [
+(xValue <0) ifTrue: [ self error:'The number of HyperGravity X value must be positive'].
+	^ self new initializeWith: xValue
 ]
 
 { #category : 'creation' }
@@ -32,7 +32,6 @@ HyperGravity >> activateWith: anEffectManager on: aShip [
 { #category : 'method' }
 HyperGravity >> applyEffectTo: aShip with: anEffectManager [
 
-	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 	state activateWith: anEffectManager on: aShip.
 ]
 
@@ -42,10 +41,9 @@ HyperGravity >> changeState: aState [
 ]
 
 { #category : 'initialize' }
-HyperGravity >> initializeWith: aPosition and: aXvalue [
-	aXvalue < 0 ifTrue: [self error: 'The Hypergravity X value must be positive'].
-	aPosition < 0 ifTrue: [self error: 'The Hypergravity position must be positive'].
-	effectPosition := aPosition.
+
+HyperGravity >> initializeWith: aXvalue [
+
 	hyperGravityXValue := aXvalue.
 	state := StateInactiveHyperGravity createWith: self and: hyperGravityXValue
 ]

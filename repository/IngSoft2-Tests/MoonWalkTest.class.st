@@ -17,34 +17,33 @@ MoonWalkTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorM
 { #category : 'tests' }
 MoonWalkTest >> testMoonWalkAffectsAllShipsExceptTheOneThatTriggersIt [
 
-	| effectlist game dices anMoonWalk |
-
-	effectlist := OrderedCollection new.
-	anMoonWalk := MoonWalk at: 10 and: 3.
-	effectlist add: anMoonWalk.
-
+	|  game dices  tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 11 put: (MoonWalk createWith: 3).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game addShip.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.
 	game play.
 	game play.
 	game play.
-	self assert: ((game ship: 1) isAt: 5).
-	self assert: ((game ship: 2) isAt: 5).
-	self assert: ((game ship: 3) isAt: 5).
+	self assert: ((game ship: 1) isAt: 6).
+	self assert: ((game ship: 2) isAt: 6).
+	self assert: ((game ship: 3) isAt: 6).
 	game play.
 
-	self assert: ((game ship: 1) isAt: 10).
-	self assert: ((game ship: 2) isAt: 2).
-	self assert: ((game ship: 3) isAt: 2)
+	self assert: ((game ship: 1) isAt: 11).
+	self assert: ((game ship: 2) isAt: 3).
+	self assert: ((game ship: 3) isAt: 3)
+]
+
+{ #category : 'tests' }
+MoonWalkTest >> testMoonWalkCanNotBeCreatedWithAnInvalidWald [
+	self
+		should: [MoonWalk createWith: -2 ]
+		raise: Error
+		withMessageText: 'The MoonWalk value must be positive'.
 ]
 
 { #category : 'tests' }

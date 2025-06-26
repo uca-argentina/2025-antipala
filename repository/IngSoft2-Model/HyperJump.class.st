@@ -5,28 +5,27 @@ Class {
 	#name : 'HyperJump',
 	#superclass : 'Effect',
 	#instVars : [
-		'parsecs',
-		'currentIndex'
+		'jumpList',
+		'currentJumpIndex'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-HyperJump class >> at: position with: aListOfJumps [
-
-	^ self new initializeWith: position withJumps: aListOfJumps
+HyperJump class >> createWith: aListOfJumps [
+	(aListOfJumps isEmpty) ifTrue: [ self error:'The HyperJump Squares must have a valid list of jumps'].
+	^ self new initializeWith: aListOfJumps
 ]
 
 { #category : 'method' }
 HyperJump >> applyEffectTo: aShip with: anEffectManager [
 
-	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
-	anEffectManager move: aShip by: (parsecs at: currentIndex).
+	anEffectManager move: aShip by: (jumpList at: currentJumpIndex).
 
-	currentIndex := currentIndex = parsecs size
+	currentJumpIndex := currentJumpIndex = jumpList size
 		                ifTrue: [ 1 ]
-		                ifFalse: [ currentIndex + 1 ]
+		                ifFalse: [ currentJumpIndex + 1 ]
 ]
 
 { #category : 'initialize' }
@@ -36,9 +35,8 @@ HyperJump >> convertToParsec: aList [
 ]
 
 { #category : 'initialize' }
-HyperJump >> initializeWith: position withJumps: aList [
-	position < 0 ifTrue: [self error: 'The HyperJump position must be positive'].
-	parsecs := self convertToParsec: (aList sort: [ :a :b | a > b ]).
-	effectPosition := position.
-	currentIndex := 1
+HyperJump >> initializeWith: aListOfJumps [
+
+	jumpList := self convertToParsec: (aListOfJumps sort: [ :jumpA :jumpB | jumpA > jumpB ]).
+	currentJumpIndex := 1
 ]

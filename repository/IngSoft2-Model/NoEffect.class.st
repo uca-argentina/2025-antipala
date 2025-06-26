@@ -1,5 +1,5 @@
 "
-Clase NoEffect. Efecto generico que tiene cualquier casillero, no modifica la posicion de la nave que aterriza en el. (Ver si vale la pena hacerlo singleton)
+Clase NoEffect. Efecto generico que tiene cualquier casillero, no modifica la posicion de la nave que aterriza en el.
 "
 Class {
 	#name : 'NoEffect',
@@ -9,19 +9,13 @@ Class {
 }
 
 { #category : 'creation' }
-NoEffect class >> at: position [
+NoEffect class >> create [
 
-	^ self new initializeWith: position
+	^ self new 
 ]
 
 { #category : 'method' }
 NoEffect >> applyEffectTo: ship with: effectManager [
 
 	^ self
-]
-
-{ #category : 'initialize' }
-NoEffect >> initializeWith: position [
-
-	effectPosition := position
 ]

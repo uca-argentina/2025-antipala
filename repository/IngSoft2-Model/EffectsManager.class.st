@@ -5,28 +5,34 @@ Class {
 	#name : 'EffectsManager',
 	#superclass : 'Object',
 	#instVars : [
-		'effectlist',
 		'moveManager',
 		'game',
-		'actualThrow'
+		'actualThrow',
+		'lastEffect',
+		'tileList'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-EffectsManager class >> createWith: aCollectionofeffects and: aMoveManager [
-	^self new initwitheffects:aCollectionofeffects and: aMoveManager.
+EffectsManager class >> createWith: aCollectionOfTilesWithEffects and: aMoveManager [
+	^self new initwitheffects: aCollectionOfTilesWithEffects and: aMoveManager.
 ]
 
 { #category : 'method' }
-EffectsManager >> applyAnEffectTo: aShip2 in: aGameState with: playerthrow [
+EffectsManager >> applyAnEffectTo: aShip in: aGame with: playerthrow [
 
 	| effect |
 	actualThrow := playerthrow.
-	game := aGameState.
-	effect := effectlist
-		          do: [ :each | each applyEffectTo: aShip2 with: self ]
+	game := aGame.
+	effect := (tileList at: (aShip position)) applyEffectTo: aShip with: self.
+]
+
+{ #category : 'method' }
+EffectsManager >> applyLastEffectTo: aShip [
+
+	lastEffect applyEffectTo: aShip with: self
 ]
 
 { #category : 'method effects' }
@@ -46,9 +52,11 @@ EffectsManager >> handleHyperGravityCondition: hyperGravityXValue in: aShip with
 ]
 
 { #category : 'initialize' }
-EffectsManager >> initwitheffects: aCollectionofeffects and: aMoveManager [
-	effectlist:=aCollectionofeffects.
-	moveManager:= aMoveManager.
+EffectsManager >> initwitheffects: aCollectionOfTilesWithEffects and: aMoveManager [
+
+	tileList := aCollectionOfTilesWithEffects.
+	moveManager := aMoveManager.
+	lastEffect := NoEffect create.
 ]
 
 { #category : 'method effects' }
@@ -61,6 +69,17 @@ EffectsManager >> move: aShip by: jumpSquares [
 EffectsManager >> moveAllShipsExcept: ship by: walk [
 
 	game moveAllShipsExcept: ship by: walk
+]
+
+{ #category : 'method' }
+EffectsManager >> moveToTheExitWormhole: aShip [ 
+
+]
+
+{ #category : 'method' }
+EffectsManager >> putLastEffect: effect [
+
+	lastEffect := effect .
 ]
 
 { #category : 'method effects' }
