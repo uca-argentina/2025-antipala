@@ -10,13 +10,13 @@ Acceleration class >> create [
 	^ self new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Acceleration >> applyEffect: aShip with: cardManager [
 
-	^self
+	cardManager applyAcceleration: self.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Acceleration >> effectAppliedTo: aShip [
 	^1
 ]

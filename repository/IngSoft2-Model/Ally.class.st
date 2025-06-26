@@ -13,7 +13,7 @@ Ally class >> create [
 ^self new intialize
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Ally >> applyEffect: aShip with: cardManager [
 
 
@@ -23,12 +23,12 @@ Ally >> applyEffect: aShip with: cardManager [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Ally >> effectAppliedTo: aShip [
 	^0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Ally >> ifAllyWith:aShip give:fuel [
 |donatorship|
 linkship detect:[:ship|aShip==ship] ifNone:[^self]. 
@@ -37,12 +37,12 @@ donatorship donatefuel: fuel ship:aShip.
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 Ally >> intialize [
 linkship:=OrderedCollection new.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Ally >> linkShip: aShip [
 	(linkship size = 2) ifTrue: [Error signal: 'You can only link 2 ships'].
 	linkship add:aShip.

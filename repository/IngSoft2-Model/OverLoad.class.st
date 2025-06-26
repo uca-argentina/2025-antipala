@@ -1,3 +1,6 @@
+"
+clase Overload: Reduce el movimiento de una nave a eleccion.
+"
 Class {
 	#name : 'OverLoad',
 	#superclass : 'Cards',
@@ -14,24 +17,24 @@ OverLoad class >> create [
 	^ self new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 OverLoad >> applyEffect: aShip with: cardManager [
 	cardManager applyOverLoadWith: self.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 OverLoad >> effectAppliedTo: aShip [
 
 	^ (objetiveShip = aShip) ifTrue: [ -2 ] ifFalse: [ 0 ].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 OverLoad >> intialize [
 
 	objetiveShip := nil.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 OverLoad >> newObjetiveShip: aShip [
 
 	^ objetiveShip := aShip.

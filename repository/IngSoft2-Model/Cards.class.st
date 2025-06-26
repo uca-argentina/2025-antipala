@@ -19,11 +19,11 @@ Cards >> copy [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Cards >> effectAppliedTo: aShip [
 	^0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Cards >> ifAllyWith:aShip give: fuel [
 ]

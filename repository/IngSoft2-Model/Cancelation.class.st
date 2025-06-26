@@ -5,12 +5,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Cancelation >> applyEffect: aShip with: aCardManager [ 
 	aCardManager removePermanentCard.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 Cancelation >> intialize [
 	
 ]

@@ -131,6 +131,25 @@ ShipGameTest >> testShipGameCanMoveTheCreatedShips [
 ]
 
 { #category : 'tests' }
+ShipGameTest >> testShipsCantPlayPermanentCardsOutOfTheirTurn [
+
+	|  tiles dices |
+
+	tiles := OrderedCollection new.
+	22 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 21 put: AtomicBomb create.
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #(10 )).
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 2.
+
+	game play.
+	self should: [game playAPermanent: (Acceleration create) from: (game ship: 1) to: (game ship: 2)]
+		raise: Error
+		withMessageText:'Permanent cards can only be played in your turn ' .
+]
+
+{ #category : 'tests' }
 ShipGameTest >> testTheGameCanBeWinned [
 
 	| tiles dices |
@@ -143,6 +162,7 @@ ShipGameTest >> testTheGameCanBeWinned [
 
 	game play.
 	self assert: game winner equals: (game ship: 1).
+
 ]
 
 { #category : 'tests' }
@@ -211,6 +231,25 @@ ShipGameTest >> testThePlayerCantRepostFuelOnceItFinished [
 		should: [ game repostFuel ]
 		raise: Error
 		withMessageText: 'the game ended'
+]
+
+{ #category : 'tests' }
+ShipGameTest >> testYouCantPlayCardsIfThereIsAWinner [
+
+	| tiles dices |
+	tiles := OrderedCollection new.
+	10 timesRepeat: [ tiles add: (NoEffect create)].
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 30 )).
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 2.
+
+	game play.
+	self assert: game winner equals: (game ship: 1).
+
+	self should: [game playAPermanent: (Acceleration create) from: (game ship: 1) to: (game ship: 2)]
+		raise: Error
+		withMessageText:'the game ended' .
 ]
 
 { #category : 'tests' }

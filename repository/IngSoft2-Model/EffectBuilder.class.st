@@ -61,28 +61,35 @@ EffectBuilder >> build [
 ]
 
 { #category : 'building' }
-EffectBuilder >> buildAtomicBombAt: pos with: prob [
+EffectBuilder >> buildAtomicBombwith: prob [
 
 	prob > 98 ifTrue: [ ^ AtomicBomb create ].
 	^nil.
 ]
 
 { #category : 'building' }
-EffectBuilder >> buildBlackHoleAt: pos with: prob [
+EffectBuilder >> buildBlackHolewith: prob [
 
 	prob > 40 ifTrue: [ ^ BlackHole create ].
 	^nil.
 ]
 
 { #category : 'building' }
-EffectBuilder >> buildHyperGravityAt: pos with: prob [
+EffectBuilder >> buildCardDealerwith: prob [
+
+	prob > 30 ifTrue: [ ^ CardGiver createWith: (Dice with: 5) ].
+	^nil.
+]
+
+{ #category : 'building' }
+EffectBuilder >> buildHyperGravitywith: prob [
 
 	prob > 60 ifTrue: [ ^ HyperGravity createWith: self throwRealDices ].
 	^ nil
 ]
 
 { #category : 'building' }
-EffectBuilder >> buildHyperJumpAt: pos with: prob [
+EffectBuilder >> buildHyperJumpwith: prob [
 
 	| listOfJumps |
 	listOfJumps := OrderedCollection new.
@@ -94,14 +101,14 @@ EffectBuilder >> buildHyperJumpAt: pos with: prob [
 ]
 
 { #category : 'building' }
-EffectBuilder >> buildMoonWalkAt: pos with: prob [
+EffectBuilder >> buildMoonWalkwith: prob [
 
 	prob > 80 ifTrue: [ ^ MoonWalk  createWith: self throwRealDices ].
 	^ nil
 ]
 
 { #category : 'building' }
-EffectBuilder >> buildNoEffectAt: pos with: prob [
+EffectBuilder >> buildNoEffectwith: prob [
 
 	prob > 0 ifTrue: [ ^ NoEffect create ].
 	^nil.
@@ -123,12 +130,13 @@ EffectBuilder >> randomEffect [
 	position := 0.
 	probability := diceOf100Faces roll.
 	effectBuilders := {
-		                  (self buildAtomicBombAt: position with: probability).
-		                  (self buildHyperJumpAt: position with: probability).
-		                  (self buildMoonWalkAt: position with: probability).
-		                  (self buildHyperGravityAt: position with: probability).
-		                  (self buildBlackHoleAt: position with: probability).
-		                  (self buildNoEffectAt: position with: probability) }.
+		                  (self buildAtomicBombwith: probability).
+		                  (self buildHyperJumpwith: probability).
+		                  (self buildMoonWalkwith: probability).
+		                  (self buildHyperGravitywith: probability).
+		                  (self buildBlackHolewith: probability).
+								(self buildCardDealerwith: probability).
+		                  (self buildNoEffectwith: probability) }.
 	^ effectBuilders detect: [ :block | block value notNil ]
 ]
 

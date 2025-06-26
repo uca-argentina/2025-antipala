@@ -58,6 +58,23 @@ EffectBuilderTest >> testEffectBuilderCanBuildAnBlackHole [
 ]
 
 { #category : 'tests' }
+EffectBuilderTest >> testEffectBuilderCanBuildAnCardGiver [
+
+	| builder tiles chargeDiceOf100Faces effectAtPosition dices aCollectionOfPositions |
+	aCollectionOfPositions := { 3. 6. 5 } asOrderedCollection.
+	chargeDiceOf100Faces := ChargeDice createWith: #( 35  100).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
+	builder := EffectBuilder
+		           createWith: chargeDiceOf100Faces
+		           and: aCollectionOfPositions
+		           and: dices.
+	tiles := builder build.
+	effectAtPosition := tiles at: 5.
+	self assert: effectAtPosition class equals: CardGiver 
+]
+
+{ #category : 'tests' }
 EffectBuilderTest >> testEffectBuilderCanBuildAnHyperGravity [
 	| builder tiles chargeDiceOf100Faces effectAtPosition dices game aCollectionOfPositions |
 	aCollectionOfPositions := { 3. 19. 4 } asOrderedCollection.

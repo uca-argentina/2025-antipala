@@ -30,7 +30,7 @@ Ship >> addCard: aCard [
 	cards add:aCard .
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'methods' }
 Ship >> attemptToMoveBy: steps [
 	self isBlocked 
 		ifTrue: [ ^ self reduceTimeout ] 
@@ -57,7 +57,7 @@ Ship >> consumeFuel:amount [
     fuel := fuel - amount.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'methods' }
 Ship >> donatefuel:steps ship:aShip [
 aShip givefuel: ((steps) min:fuel).
 self consumeFuel: ((steps) min:fuel).
@@ -75,7 +75,7 @@ Ship >> fuelNededFor: steps [
 	^ steps - fuel.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'methods' }
 Ship >> givefuel:afuel [
 fuel:=fuel+afuel.
 ]

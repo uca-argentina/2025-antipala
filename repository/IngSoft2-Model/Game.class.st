@@ -12,7 +12,8 @@ Class {
 		'lapsToWin',
 		'shipbuilder',
 		'effectsManager',
-		'currentPlayer'
+		'currentPlayer',
+		'cardManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -49,8 +50,8 @@ Game >> initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequi
 	setofdices := dices.
 	lapsToWin := numberOfLapsToWin.
 	currentPlayer := 0.
-
-	movemanager := MoveManager createWith: boardlength and: (CardManager create).
+	cardManager := CardManager create.
+	movemanager := MoveManager createWith: boardlength and: cardManager .
 		
 	effectsManager := EffectsManager
 		                 createWith: aCollectionOfTilesWithEffects
@@ -98,6 +99,21 @@ Game >> play [
 
 	movemanager move: player by: playerthrow.
 	effectsManager applyAnEffectTo: player in: self with: playerthrow
+]
+
+{ #category : 'playing' }
+Game >> play: aCard from: aShip to: aTarget [
+	cardManager apply: aCard from: aShip to: aTarget.
+]
+
+{ #category : 'playing' }
+Game >> playAPermanent: card from: aShip to: aTarget [
+	| player |
+	self winner ifNotNil: [ Error signal: 'the game ended' ].
+	
+	player := ships at: ( currentPlayer \\ ships size + 1).
+	player = aShip ifFalse:[Error signal: 'Permanent cards can only be played in your turn ' ].
+	cardManager apply: card from: player to: aTarget.
 ]
 
 { #category : 'playing' }

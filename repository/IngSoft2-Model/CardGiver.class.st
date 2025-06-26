@@ -1,3 +1,6 @@
+"
+clase CardGiver: Da cartas a las naves con una probabilidad uniforme
+"
 Class {
 	#name : 'CardGiver',
 	#superclass : 'Effect',

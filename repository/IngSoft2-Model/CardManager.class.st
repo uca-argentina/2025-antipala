@@ -18,20 +18,20 @@ CardManager class >> create [
 ^ self new initialize
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 CardManager >> addPermanentCard: card [
 
 	activeCards add: card.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method ally' }
 CardManager >> allymetotheothership: aCard [ 
 	
 	aCard linkShip:target.
 	lastcard:=(aCard copy).
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 CardManager >> apply: aCard from: aShip to: aTarget [
 	
 	aShip removeCard: aCard.
@@ -40,7 +40,13 @@ CardManager >> apply: aCard from: aShip to: aTarget [
 	self addPermanentCard:aCard.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method Acceleration' }
+CardManager >> applyAcceleration: aAccelerationCard [
+
+	lastcard:=aAccelerationCard copy.
+]
+
+{ #category : 'method Redo' }
 CardManager >> applyFromRedo: aCard from: aShip to: aTarget [
 	
 	target := aTarget.
@@ -48,48 +54,37 @@ CardManager >> applyFromRedo: aCard from: aShip to: aTarget [
 	self addPermanentCard:aCard.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method Overload' }
 CardManager >> applyOverLoadWith: card [
 
 	card newObjetiveShip: target .
+	lastcard := card copy.
 ]
 
-{ #category : 'as yet unclassified' }
-CardManager >> effectsFor: aShip [
-
-	^0
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'method ally' }
 CardManager >> handleally: aShip  fuel: fuel [
 
  activeCards  do: [:card | card ifAllyWith:aShip give: fuel] 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialize' }
 CardManager >> initialize [
 
 	activeCards := OrderedCollection new .
 	lastcard:=0
 ]
 
-{ #category : 'as yet unclassified' }
-CardManager >> lastActiveEffect [
-
-	^activeCards last.
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'method Redo' }
 CardManager >> playlastcard:aShip [
 	self applyFromRedo: lastcard from:aShip to:target .
 ]
 
-{ #category : 'removing' }
+{ #category : 'method Cancelation' }
 CardManager >> removePermanentCard [
 	activeCards remove:target ifAbsent:[Error signal: 'no card found'].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 CardManager >> throwEffectsFor: aShip [
 	| effects |
 	activeCards isEmpty ifTrue: [ ^ 0 ].

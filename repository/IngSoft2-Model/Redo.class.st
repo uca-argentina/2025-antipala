@@ -1,3 +1,6 @@
+"
+clase Redo: Vuelve a aplicar la ultima carta jugada.
+"
 Class {
 	#name : 'Redo',
 	#superclass : 'Cards',
@@ -10,12 +13,12 @@ Redo class >> create [
 	^ self new.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Redo >> applyEffect: aShip with: aCardManager [ 
 	aCardManager playlastcard:aShip .
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Redo >> effectAppliedTo: aShip [
 	^0
 ]
