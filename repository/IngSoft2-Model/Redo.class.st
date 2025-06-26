@@ -7,7 +7,7 @@ Class {
 
 { #category : 'creation' }
 Redo class >> create [
-	self shouldBeImplemented.
+	^ self new
 ]
 
 { #category : 'as yet unclassified' }

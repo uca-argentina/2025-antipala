@@ -58,7 +58,7 @@ CardManager >> handleally: aShip  step: steps [
 CardManager >> initialize [
 
 	activeCards := OrderedCollection new .
-	lastcard:=0
+	lastcard:=Nonecard create.
 ]
 
 { #category : 'as yet unclassified' }
