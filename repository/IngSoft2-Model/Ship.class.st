@@ -65,7 +65,6 @@ self consumeFuel: ((steps) min:fuel).
 
 { #category : 'private accessing' }
 Ship >> fuel [
-	"este metodo solo debe ser usado por los tests"
 
 	^ fuel
 ]
@@ -88,7 +87,7 @@ Ship >> hasFuelFor: steps [
 
 { #category : 'private accessing' }
 Ship >> id [
-	"este metodo solo debe ser usado por los tests"
+	
 	^ id
 ]
 
@@ -132,9 +131,8 @@ Ship >> isAt: aPosition [
 	^ position truncated = aPosition
 ]
 
-{ #category : 'methods' }
+{ #category : 'private - testing' }
 Ship >> isAtLap: lap [
-	"este metodo solo debe ser usado por los tests"
 
 	^ laps = lap
 ]
@@ -146,7 +144,6 @@ Ship >> isBlocked [
 
 { #category : 'private accessing' }
 Ship >> isWithTimeout: amount [
-	"este metodo solo debe ser usado por los tests"
 
 	^ timeout = amount
 ]

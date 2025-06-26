@@ -17,6 +17,11 @@ AtomicBomb class >> create [
 { #category : 'method' }
 AtomicBomb >> applyEffectTo: aShip with: effectManager [
 
+
 		effectManager triggerAtomicBomb .
 		effectManager putLastEffect: self.
+
+	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
+		effectManager triggerAtomicBomb 
 ]
+

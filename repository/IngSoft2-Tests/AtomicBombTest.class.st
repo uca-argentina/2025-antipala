@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+AtomicBombTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
 AtomicBombTest >> testAtomicBombAffectsAllShips [
 
@@ -28,4 +37,12 @@ AtomicBombTest >> testAtomicBombAffectsAllShips [
 	self assert: ((game ship: 1) isAt: 1).
 	self assert: ((game ship: 2) isAt: 1).
 	self assert: ((game ship: 3) isAt: 1)
+]
+
+{ #category : 'tests' }
+AtomicBombTest >> testAtomicBombPositionCannotBeNegative [
+	self
+		should: [ AtomicBomb new initializeWith: -5 ]
+		raise: Error
+		withMessageText: 'Atomic Bomb position must be positive'.
 ]

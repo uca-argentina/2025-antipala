@@ -56,6 +56,14 @@ DiceTest >> testCreateDiceOfXFaces [
 ]
 
 { #category : 'tests' }
+DiceTest >> testTheNumberOfFacesOfADiceCannotBeNegative [
+	self
+		should: [ Dice new initializeDiceWith: -5 ]
+		raise: Error
+		withMessageText: 'The number of faces of the dice must be positive'
+]
+
+{ #category : 'tests' }
 DiceTest >> testThrowsErrorWhenInitializingWith1OrLessFaces [
 
 	self
