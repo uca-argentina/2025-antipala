@@ -54,7 +54,7 @@ Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: 
 	currentPlayerIndex := 0.
 
 	movemanager := MoveManager createWith:
-		               (LapManager createWith: anBoardlength) and: (CardManager createWith: #())
+		               (anBoardlength) and: (CardManager createWith: #())
 .
 	effectsManager := EffectsManager
 		                 createWith: aCollectionofeffects

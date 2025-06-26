@@ -6,16 +6,17 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'lapManager',
-		'cardManager'
+		'cardManager',
+		'boardSize'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-MoveManager class >> createWith: aLapManager and: aCardManager [
+MoveManager class >> createWith: aBoardSize and: aCardManager [
 
-	^ self new intializeWith: aLapManager and: aCardManager
+	^ self new intializeWith: aBoardSize and: aCardManager
 ]
 
 { #category : 'method' }
@@ -24,11 +25,20 @@ MoveManager >> block: aShip by: timeout [
 	aShip increaseTimeoutBy: timeout.
 ]
 
+{ #category : 'accessing' }
+MoveManager >> handle: aship [
+
+	| lapsDoneByTheShip |
+	lapsDoneByTheShip := aship lapsToApplyWith: boardSize.
+	aship changeLapsBy: lapsDoneByTheShip.
+	aship
+		moveBy: boardSize * lapsDoneByTheShip negated
+]
+
 { #category : 'method' }
 MoveManager >> handleBlockOf: aShip with: steps [
 
-	((aShip hasFuelFor: steps )not and: aShip isBlocked not) ifFalse: [
-		^ self ].
+((aShip hasFuelFor: steps) or: aShip isBlocked) ifTrue: [ ^ self ].
 	aShip increaseTimeoutBy: 2.
 	aShip moveToFirstPosition.
 	aShip refillFuel
@@ -41,9 +51,9 @@ MoveManager >> handleally:aShip step:steps [
 ]
 
 { #category : 'initialize' }
-MoveManager >> intializeWith: aLapManager and: aCardManager [
+MoveManager >> intializeWith: aBoardSize and: aCardManager [
 	cardManager := aCardManager.
-	lapManager := aLapManager
+	boardSize:= aBoardSize.
 ]
 
 { #category : 'method' }
@@ -54,7 +64,7 @@ MoveManager >> move: aShip by: steps [
 	self handleally: aShip step: steps.
 	self handleBlockOf: aShip with: steps.
 	aShip attemptToMoveBy: steps. 
-	lapManager handle: aShip
+	self handle: aShip
 ]
 
 { #category : 'method' }
