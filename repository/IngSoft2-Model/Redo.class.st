@@ -7,7 +7,7 @@ Class {
 
 { #category : 'creation' }
 Redo class >> create [
-	self shouldBeImplemented.
+	^ self new.
 ]
 
 { #category : 'as yet unclassified' }
@@ -18,8 +18,4 @@ Redo >> applyEffect: aShip with: aCardManager [
 { #category : 'as yet unclassified' }
 Redo >> effectAppliedTo: aShip [
 	^0
-]
-
-{ #category : 'as yet unclassified' }
-Redo >> ifAlly:aShip steps:steps [
 ]

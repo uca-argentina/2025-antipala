@@ -3,7 +3,7 @@ Class {
 	#superclass : 'Effect',
 	#instVars : [
 		'lastCard',
-		'diceOf6Faces'
+		'diceOf5Faces'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -23,9 +23,9 @@ CardGiver >> applyEffectTo: aShip with: effectManager [
 CardGiver >> createRandomCard [
 
 	| cardClasses selectedCard |
-	cardClasses := { Ally. Acceleration . OverLoad.}.
+	cardClasses := { Acceleration. Ally. Cancelation. OverLoad. Redo.}.
 
-	selectedCard := cardClasses at: (diceOf6Faces roll).
+	selectedCard := cardClasses at: (diceOf5Faces roll).
 
 	lastCard := selectedCard create.
 	^ lastCard .
@@ -33,7 +33,7 @@ CardGiver >> createRandomCard [
 
 { #category : 'initialization' }
 CardGiver >> initializeWith: aDice [
-	diceOf6Faces:= aDice.
+	diceOf5Faces:= aDice.
 	lastCard := nil.
 ]
 

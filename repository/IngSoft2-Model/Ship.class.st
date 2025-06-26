@@ -59,8 +59,8 @@ Ship >> consumeFuel:amount [
 
 { #category : 'as yet unclassified' }
 Ship >> donatefuel:steps ship:aShip [
-aShip givefuel: ((steps) max:fuel).
-self consumeFuel: ((steps) max:fuel).
+aShip givefuel: ((steps) min:fuel).
+self consumeFuel: ((steps) min:fuel).
 ]
 
 { #category : 'private accessing' }
@@ -68,6 +68,11 @@ Ship >> fuel [
 	"este metodo solo debe ser usado por los tests"
 
 	^ fuel
+]
+
+{ #category : 'initialize' }
+Ship >> fuelNededFor: steps [
+	^ steps - fuel.
 ]
 
 { #category : 'as yet unclassified' }

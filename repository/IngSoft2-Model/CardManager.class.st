@@ -3,8 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'activeCards',
-		'targetShip',
-		'lastcard'
+		'lastcard',
+		'target'
 	],
 	#classInstVars : [
 		'lastcard'
@@ -27,15 +27,23 @@ CardManager >> addPermanentCard: card [
 { #category : 'as yet unclassified' }
 CardManager >> allymetotheothership: aCard [ 
 	
-	aCard linkShip:targetShip.
+	aCard linkShip:target.
 	lastcard:=(aCard copy).
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> apply: aCard from: aShip to: aTargetShip [
+CardManager >> apply: aCard from: aShip to: aTarget [
 	
 	aShip removeCard: aCard.
-	targetShip := aTargetShip.
+	target := aTarget.
+	aCard applyEffect: aShip with: self.
+	self addPermanentCard:aCard.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> applyFromRedo: aCard from: aShip to: aTarget [
+	
+	target := aTarget.
 	aCard applyEffect: aShip with: self.
 	self addPermanentCard:aCard.
 ]
@@ -43,7 +51,7 @@ CardManager >> apply: aCard from: aShip to: aTargetShip [
 { #category : 'as yet unclassified' }
 CardManager >> applyOverLoadWith: card [
 
-	card newObjetiveShip: targetShip .
+	card newObjetiveShip: target .
 ]
 
 { #category : 'as yet unclassified' }
@@ -53,9 +61,9 @@ CardManager >> effectsFor: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> handleally: aShip  step: steps [
+CardManager >> handleally: aShip  fuel: fuel [
 
- activeCards  do: [:card | card ifAlly:aShip steps:steps] 
+ activeCards  do: [:card | card ifAllyWith:aShip give: fuel] 
 ]
 
 { #category : 'as yet unclassified' }
@@ -73,18 +81,12 @@ CardManager >> lastActiveEffect [
 
 { #category : 'as yet unclassified' }
 CardManager >> playlastcard:aShip [
-	self apply:lastcard from:aShip to:targetShip .
+	self applyFromRedo: lastcard from:aShip to:target .
 ]
 
 { #category : 'removing' }
 CardManager >> removePermanentCard [
-	activeCards remove:targetShip ifAbsent:[Error signal: 'no card found'].
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> removePermanentCard: card [
-
-	activeCards remove: card.
+	activeCards remove:target ifAbsent:[Error signal: 'no card found'].
 ]
 
 { #category : 'as yet unclassified' }

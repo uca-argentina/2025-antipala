@@ -16,7 +16,9 @@ RedoTest >> testcandredoacard [
 	ship3 := builder build.
 	ship4 := builder build.
 	aAlly:=Ally create.
-   aRedo:=Redo new.	
+	ship1 addCard: aAlly.
+   aRedo:=Redo create.	
+	ship3 addCard: aRedo.
 	cardManager :=CardManager create.
 	cardManager apply: aAlly from: ship1 to: ship2.
 	moveManager := MoveManager createWith: 20 and: (cardManager ).
@@ -30,7 +32,7 @@ RedoTest >> testcandredoacard [
 
 { #category : 'as yet unclassified' }
 RedoTest >> testcandredoacardanddoesntchainredo [
-	| dices builder ship1 ship2 ship3 ship4 ship5 ship6 cardManager moveManager aAlly aRedo|
+	| dices builder ship1 ship2 ship3 ship4 ship5 ship6 cardManager moveManager aAlly aRedo aRedo2 |
 	dices:= OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 	builder := ShipBuilder buildWith: dices.
@@ -41,7 +43,11 @@ RedoTest >> testcandredoacardanddoesntchainredo [
 	ship5 := builder build.
 	ship6 := builder build.
 	aAlly:=Ally create.
-   aRedo:=Redo new.	
+	ship1 addCard: aAlly.
+   aRedo :=Redo create.	
+	ship3 addCard: aRedo.
+	aRedo2 :=Redo create.	
+	ship5 addCard: aRedo2.
 	cardManager :=CardManager create.
 	cardManager apply: aAlly from: ship1 to: ship2.
 	moveManager := MoveManager createWith: 20 and: (cardManager ).
@@ -51,7 +57,7 @@ RedoTest >> testcandredoacardanddoesntchainredo [
 	moveManager := MoveManager createWith: 20 and: (cardManager ).
 	moveManager move: ship3 by: 15.
 	self assert: (ship3 isAt: 16).
-	cardManager apply: aRedo from: ship5 to: ship6.
+	cardManager apply: aRedo2 from: ship5 to: ship6.
 	moveManager := MoveManager createWith: 20 and: (cardManager ).
 	moveManager move: ship5 by: 15.
 	self assert: (ship5 isAt: 16)

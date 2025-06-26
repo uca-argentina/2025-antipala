@@ -23,7 +23,7 @@ MoveManager class >> createWith: aBoardSize and: aCardManager [
 { #category : 'as yet unclassified' }
 MoveManager >> askforally: aShip step: steps [
 
-	(aShip hasFuelFor: steps) ifFalse: [ cardManager handleally: aShip  step: steps].
+	(aShip hasFuelFor: steps) ifFalse: [ cardManager handleally: aShip  fuel: (aShip fuelNededFor: steps)].
 ]
 
 { #category : 'method' }

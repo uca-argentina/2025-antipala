@@ -27,9 +27,10 @@ CancelationTest >> testcancelation [
 
 	card := Acceleration create.
 	cardCancel := Cancelation create.
+	ship1 addCard: card.
 	cardManager apply: card from: ship1 to: ship2.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 1.
-
+	ship2 addCard: cardCancel .
 	cardManager apply: cardCancel from: ship2 to: card.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 0.
 
@@ -47,6 +48,8 @@ CancelationTest >> testcancelationdoesnthavecard [
 
 	card := Acceleration create.
 	cardCancel := Cancelation create.
+	ship1 addCard: card.
+	ship2 addCard: cardCancel .
 	cardManager apply: card from: ship1 to: ship2.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 1.
 
@@ -54,7 +57,7 @@ CancelationTest >> testcancelationdoesnthavecard [
 	self assert: (cardManager throwEffectsFor: ship1) equals: 0.
 	self should: [ cardManager apply: cardCancel from: ship2 to: card. ]
 		raise: Error
-		withMessageText: 'no card found'.
+		withMessageText: 'The Ship Should have the card to play'.
 	
 
 ]

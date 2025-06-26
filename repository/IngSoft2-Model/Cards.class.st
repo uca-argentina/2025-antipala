@@ -25,5 +25,5 @@ Cards >> effectAppliedTo: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-Cards >> ifAlly:aShip steps:steps [
+Cards >> ifAllyWith:aShip give: fuel [
 ]

@@ -29,11 +29,11 @@ Ally >> effectAppliedTo: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-Ally >> ifAlly:aShip steps:steps [
+Ally >> ifAllyWith:aShip give:fuel [
 |donatorship|
 linkship detect:[:ship|aShip==ship] ifNone:[^self]. 
 donatorship:= (linkship reject: [:unaNave | unaNave = aShip]) at:1.
-donatorship donatefuel:steps ship:aShip.
+donatorship donatefuel: fuel ship:aShip.
 
 ]
 
