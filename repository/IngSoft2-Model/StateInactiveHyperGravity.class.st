@@ -10,7 +10,6 @@ Class {
 
 { #category : 'as yet unclassified' }
 StateInactiveHyperGravity class >> createWith: hyperGravity and: hyperGravityXValue [
-
 	^ self new initializeWith: hyperGravity and: hyperGravityXValue
 ]
 
