@@ -1,6 +1,6 @@
 Class {
 	#name : 'OverLoad',
-	#superclass : 'Object',
+	#superclass : 'Cards',
 	#instVars : [
 		'objetiveShip'
 	],

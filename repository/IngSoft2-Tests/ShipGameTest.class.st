@@ -188,9 +188,7 @@ ShipGameTest >> testThePlayerCanReciveAPositiveReward [
 	20 timesRepeat: [ tiles add: (NoEffect create)].
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 10 7 )).
-
 	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
-
 	game play.
 	self assert: ((game ship: 1) isAt: 11).
 	game repostFuel.

@@ -1,6 +1,6 @@
 Class {
 	#name : 'Ally',
-	#superclass : 'Object',
+	#superclass : 'Cards',
 	#instVars : [
 		'linkship'
 	],
