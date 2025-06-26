@@ -28,11 +28,6 @@ CardManager >> apply: aCard from: aShip to: aTargetShip [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> applyAllyWith: aShip card:aCard [
- aCard linkShip:aShip
-]
-
-{ #category : 'as yet unclassified' }
 CardManager >> initializeWith: someCards [
 	activeCards := someCards.
 	
@@ -40,7 +35,8 @@ CardManager >> initializeWith: someCards [
 
 { #category : 'as yet unclassified' }
 CardManager >> linkmyshipwithallycard:aCard [
- aCard linkShip:targetShip 
+ aCard linkShip:targetShip.
+ self addPermanentCard: aCard 
 ]
 
 { #category : 'as yet unclassified' }

@@ -10,8 +10,8 @@ Class {
 
 { #category : 'as yet unclassified' }
 Ally >> applyEffect: aShip with: cardManager [
-
-	cardManager applyAllyWith: aShip .
+   self linkShip:aShip.
+	cardManager  linkmyshipwithallycard:self.
 	
 
 ]
@@ -26,4 +26,9 @@ Ally >> intializeWith [
 
 
 linkedships:=OrderedCollection new
+]
+
+{ #category : 'as yet unclassified' }
+Ally >> linkShip:aShip [
+linkedships add:aShip
 ]
