@@ -11,7 +11,8 @@ Class {
 		'maxfuel',
 		'timeout',
 		'laps',
-		'ally'
+		'ally',
+		'mycards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -23,6 +24,11 @@ Ship class >> createWhithId: anId andWithFuel: anFuel [
 ]
 
 { #category : 'as yet unclassified' }
+Ship >> addcard: aCard [ 
+	mycards add:aCard.
+]
+
+{ #category : 'as yet unclassified' }
 Ship >> allywith: aTargetShip [ 
 	ally:=aTargetShip
 ]
@@ -30,6 +36,11 @@ Ship >> allywith: aTargetShip [
 { #category : 'as yet unclassified' }
 Ship >> askforfuel [
  ally donatefuel:self.
+]
+
+{ #category : 'as yet unclassified' }
+Ship >> cards [
+	^mycards size.
 ]
 
 { #category : 'methods' }
@@ -93,7 +104,8 @@ Ship >> initializewith: anId andfuel: afuel [
 	position:=0.
 	timeout:=0.
 	laps:=0.
-	ally:=self
+	ally:=self.
+	mycards:=OrderedCollection new.
 	
 ]
 
@@ -164,4 +176,9 @@ Ship >> reduceTimeout [
 { #category : 'methods' }
 Ship >> refillFuel [
     fuel := maxfuel .
+]
+
+{ #category : 'removing' }
+Ship >> removeCard: aCard [ 
+	mycards remove:aCard ifAbsent:'error' .
 ]

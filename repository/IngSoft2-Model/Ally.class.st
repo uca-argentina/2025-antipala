@@ -1,6 +1,9 @@
 Class {
 	#name : 'Ally',
 	#superclass : 'Object',
+	#instVars : [
+		'linkedships'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -16,4 +19,11 @@ Ally >> applyEffect: aShip with: cardManager [
 { #category : 'as yet unclassified' }
 Ally >> effectAppliedTo: aShip [
 	^0
+]
+
+{ #category : 'as yet unclassified' }
+Ally >> intializeWith [
+
+
+linkedships:=OrderedCollection new
 ]

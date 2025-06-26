@@ -223,6 +223,26 @@ ShipGameTest >> testThePlayerCanReciveAPositiveReward [
 ]
 
 { #category : 'tests' }
+ShipGameTest >> testThePlayerCanUseAcard [
+	| effectlist dices cardManager card|
+	effectlist := OrderedCollection new.
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 30 )).
+	card:=Ally new.
+	game := Game
+		        createWith: 10
+		        and: dices
+		        and: effectlist
+		        and: 3.
+	game addShip.
+	game play.
+	cardManager := CardManager new.
+	(game ship:1) addcard:Ally.
+	(game ship:1) removeCard:Ally.
+	self assert: (game ship:1) cards equals:0.
+]
+
+{ #category : 'tests' }
 ShipGameTest >> testThePlayerCantRepostFuelOnceItFinished [
 
 	| effectlist dices |

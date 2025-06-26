@@ -8,20 +8,20 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'creation' }
+{ #category : 'as yet unclassified' }
 BlackHole class >> at: position [
 
 	^ self new initializeWith: position
 ]
 
-{ #category : 'method' }
+{ #category : 'as yet unclassified' }
 BlackHole >> applyEffectTo: aShip with: anEffectManager [
 
 	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 		anEffectManager move: aShip by: -4 
 ]
 
-{ #category : 'initialize' }
+{ #category : 'as yet unclassified' }
 BlackHole >> initializeWith: position [
 
 	effectPosition := position
