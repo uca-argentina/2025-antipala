@@ -24,7 +24,6 @@ CardManager >> addPermanentCard: card [
 CardManager >> allymetotheothership: aCard [ 
 	
 	aCard linkShip:targetShip.
-	self addPermanentCard:aCard.
 ]
 
 { #category : 'as yet unclassified' }
@@ -32,7 +31,7 @@ CardManager >> apply: aCard from: aShip to: aTargetShip [
 
 	targetShip := aTargetShip.
 	aCard applyEffect: aShip with: self.
-	
+	self addPermanentCard:aCard.
 ]
 
 { #category : 'as yet unclassified' }
@@ -51,12 +50,6 @@ CardManager >> handleally: aShip  step: steps [
 
 { #category : 'as yet unclassified' }
 CardManager >> initialize [
-
-	activeCards := OrderedCollection new .
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> initializlalaeWith: someCards [
 
 	activeCards := OrderedCollection new .
 ]

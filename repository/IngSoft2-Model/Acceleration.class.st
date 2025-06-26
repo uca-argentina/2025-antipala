@@ -13,7 +13,7 @@ Acceleration class >> create [
 { #category : 'as yet unclassified' }
 Acceleration >> applyEffect: aShip with: cardManager [
 
-	cardManager addPermanentCard: self.
+	^self
 ]
 
 { #category : 'as yet unclassified' }

@@ -76,7 +76,7 @@ MoveManagerTest >> testMoveManagerCanMoveShips [
 
 { #category : 'tests' }
 MoveManagerTest >> testMoveManagerCannotBeIniciatedWithAnInvalidBoardSize [
-	self should: [ MoveManager createWith: -4 and: (CardManager createWith: #(  )). ]
+	self should: [ MoveManager createWith: -4 and: (CardManager create). ]
 		raise: Error
 		withMessageText: 'The BoardSize must be equal or greater than 4 squares.'.
 ]

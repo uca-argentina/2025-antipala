@@ -17,7 +17,6 @@ OverLoad class >> create [
 { #category : 'as yet unclassified' }
 OverLoad >> applyEffect: aShip with: cardManager [
 	objetiveShip := aShip.
-	cardManager addPermanentCard:self
 ]
 
 { #category : 'as yet unclassified' }
