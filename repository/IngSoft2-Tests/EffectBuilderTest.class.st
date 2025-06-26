@@ -22,7 +22,7 @@ EffectBuilderTest >> testEffectBuilderCanBuildAnAtomicBomb [
 
 	| builder tiles chargeDiceOf100Faces effectAtPosition dices game aCollectionOfPositions |
 	aCollectionOfPositions := { 3. 6. 5 } asOrderedCollection.
-	chargeDiceOf100Faces := ChargeDice createWith: #( 99 ).
+	chargeDiceOf100Faces := ChargeDice createWith: #( 99  100).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 4 )).
 	builder := EffectBuilder
@@ -42,7 +42,7 @@ EffectBuilderTest >> testEffectBuilderCanBuildAnBlackHole [
 
 	| builder tiles chargeDiceOf100Faces effectAtPosition dices game aCollectionOfPositions |
 	aCollectionOfPositions := { 3. 6. 5 } asOrderedCollection.
-	chargeDiceOf100Faces := ChargeDice createWith: #( 45 ).
+	chargeDiceOf100Faces := ChargeDice createWith: #( 45  100).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 	builder := EffectBuilder
@@ -61,7 +61,7 @@ EffectBuilderTest >> testEffectBuilderCanBuildAnBlackHole [
 EffectBuilderTest >> testEffectBuilderCanBuildAnHyperGravity [
 	| builder tiles chargeDiceOf100Faces effectAtPosition dices game aCollectionOfPositions |
 	aCollectionOfPositions := { 3. 19. 4 } asOrderedCollection.
-	chargeDiceOf100Faces := ChargeDice createWith: #( 65 ).
+	chargeDiceOf100Faces := ChargeDice createWith: #( 65 100).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 	builder := EffectBuilder
@@ -82,41 +82,75 @@ EffectBuilderTest >> testEffectBuilderCanBuildAnHyperGravity [
 ]
 
 { #category : 'tests' }
-EffectBuilderTest >> testEffectBuilderShoudStartBuildingAWormHole [
+EffectBuilderTest >> testEffectBuilderCantBeCreatedWithNegativeTiles [
 
-	| builder effects chargeDice ship moveManager aCollectionOfPositions effectAtPosition alapmanager aCollectionOfDices |
-	aCollectionOfPositions := { 5. 9. 7 } asOrderedCollection.
-	chargeDice := ChargeDice createWith: #( 1 2 3 4 5 6 7 8 9 10 ).
-	aCollectionOfDices := OrderedCollection new.
-	aCollectionOfDices add: (ChargeDice createWith: #( 3 4 5 )).
-	builder := EffectBuilder
-		           createWith: chargeDice
+	| aCollectionOfPositions chargeDiceOf100Faces dices |
+	aCollectionOfPositions := { -1. 0. 9 } asOrderedCollection.
+	chargeDiceOf100Faces := ChargeDice createWith: #( 3 4 5 100).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 1 )).
+self
+	should:[EffectBuilder
+		           createWith: chargeDiceOf100Faces
 		           and: aCollectionOfPositions
-		           and: aCollectionOfDices.
-	effects := builder build.
-	alapmanager := LapManager createWith: 100.
-	ship := Ship createWhithId: 1 andWithFuel: 1000.
-	moveManager := MoveManager createWith: alapmanager and: (CardManager createWith: #(  ))..
-	moveManager move: ship by: 5.
-	effectAtPosition := effects detect: [ :e | e shouldApplyTo: ship ].
-	self assert: effectAtPosition class equals: WormHoleExit.
-
-
-	moveManager move: ship by: 2.
-	effectAtPosition := effects detect: [ :e | e shouldApplyTo: ship ].
-	self assert: effectAtPosition class equals: NoEffect.
-
-
-	moveManager move: ship by: 2.
-	effectAtPosition := effects detect: [ :e | e shouldApplyTo: ship ].
-	self assert: effectAtPosition class equals: WormHoleExit
+		           and: dices.]
+	raise: Error
+	withMessageText: 'The game cant have negative tiles'.
 ]
 
 { #category : 'tests' }
-EffectBuilderTest >> testWhenBothPositionsAreNegativeThrowAnError [
+EffectBuilderTest >> testEffectBuilderCantBeCreatedWithTilesAt0 [
 
+	| aCollectionOfPositions chargeDiceOf100Faces dices |
+	aCollectionOfPositions := { 1. 0. 9 } asOrderedCollection.
+	chargeDiceOf100Faces := ChargeDice createWith: #( 3 4 100 ).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 1 )).
 self
-	should:[WormHoleExit at:-20 and: -20]
+	should:[EffectBuilder
+		           createWith: chargeDiceOf100Faces
+		           and: aCollectionOfPositions
+		           and: dices.]
 	raise: Error
-	withMessageText: 'The WormHole Position can not be negative'.
+	withMessageText: 'The game cant have tiles in the position 0'.
+]
+
+{ #category : 'tests' }
+EffectBuilderTest >> testEffectBuilderCantBeCreatedWithoutA100FacesDice [
+
+	| aCollectionOfPositions chargeDiceOf100Faces dices |
+	aCollectionOfPositions := { 1. 2. 3 } asOrderedCollection.
+	chargeDiceOf100Faces := ChargeDice createWith: #( 3 4 10 ).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 1 )).
+self
+	should:[EffectBuilder
+		           createWith: chargeDiceOf100Faces
+		           and: aCollectionOfPositions
+		           and: dices.]
+	raise: Error
+	withMessageText: 'the Dice Of 100 Faces thould have 100 faces'.
+]
+
+{ #category : 'tests' }
+EffectBuilderTest >> testEffectBuilderShoudStartBuildingAWormHole [
+
+	| builder tiles chargeDiceOf100Faces dices game aCollectionOfPositions |
+	aCollectionOfPositions := { 5. 9. 98 } asOrderedCollection.
+	chargeDiceOf100Faces := ChargeDice createWith: #( 3 4 5 100).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 1 )).
+	builder := EffectBuilder
+		           createWith: chargeDiceOf100Faces
+		           and: aCollectionOfPositions
+		           and: dices.
+	tiles := builder build.
+	
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 4 2 2)).
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
+	game play.
+	self assert: ((game ship: 1) isAt:9).
+	self assert: (tiles at: 5) class equals: WormHole.
+	self assert: (tiles at: 9) class equals: WormHole.
 ]

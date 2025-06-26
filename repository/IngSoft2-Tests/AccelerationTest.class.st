@@ -6,24 +6,29 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AccelerationTest >> testBanana [
+AccelerationTest >> testAccelerationCardShoulIncreaseTheMovementOfAllShips [
 
-	| dices builder ship1 ship2 cardManager moveManager |
+	| dices builder ship1 ship2 cardManager moveManager card |
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 	builder := ShipBuilder buildWith: dices.
 	ship1 := builder build.
 	ship2 := builder build.
 
-	cardManager := CardManager new.
-	cardManager apply: Acceleration new from: ship1 to: ship2.
+	cardManager := CardManager createWith: #() asOrderedCollection .
+	
+	card := Acceleration create.
+	cardManager apply: card from: ship1 to: ship2.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 1.
 
-	cardManager apply: Acceleration from: ship2 to: ship1.
+	cardManager apply: card from: ship2 to: ship1.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 2.
 
-	moveManager := MoveManager createWith: (LapManager createWith: 20).
+	moveManager := MoveManager createWith: 20 and: cardManager .
 
 	moveManager move: ship1 by: 5.
-	self assert: (ship1 isAt: 6)
+	self assert: (ship1 isAt: 8).
+	
+	moveManager move: ship2 by: 1.
+	self assert: (ship2 isAt: 4).
 ]

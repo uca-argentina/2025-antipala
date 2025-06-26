@@ -16,11 +16,29 @@ Class {
 
 { #category : 'creation' }
 EffectBuilder class >> createWith: aDiceOf100Faces and: aCollectionOfPositions and: dicesToUse [
-
+	self validateTiles: aCollectionOfPositions.
+	self validateTheDiceOf100Faces: aDiceOf100Faces .
 	^ self new
 		  initializeWith: aDiceOf100Faces
 		  and: aCollectionOfPositions
 		  and: dicesToUse
+]
+
+{ #category : 'as yet unclassified' }
+EffectBuilder class >> validateTheDiceOf100Faces: aDiceOf100Faces [ 
+	(aDiceOf100Faces max ~= 100) ifTrue: [
+        Error signal: 'the Dice Of 100 Faces thould have 100 faces'
+    ].
+]
+
+{ #category : 'as yet unclassified' }
+EffectBuilder class >> validateTiles: aCollectionOfPositions [ 
+	(aCollectionOfPositions anySatisfy: [:tile | tile < 0]) ifTrue: [
+        Error signal: 'The game cant have negative tiles'
+    ].
+	(aCollectionOfPositions anySatisfy: [:tile | tile = 0]) ifTrue: [
+        Error signal: 'The game cant have tiles in the position 0'
+    ].
 ]
 
 { #category : 'building' }

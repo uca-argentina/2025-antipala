@@ -5,6 +5,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'creation' }
+Acceleration class >> create [
+	^ self new
+]
+
 { #category : 'as yet unclassified' }
 Acceleration >> applyEffect: aShip with: cardManager [
 
