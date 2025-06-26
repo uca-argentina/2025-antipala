@@ -39,5 +39,5 @@ AllyTest >> testAShipCantUseTheFuelOfTheAlly [
 	moveManager move: ship1 by: 15.
 	self assert: (ship1 isAt: 16).
 	moveManager move: ship3 by: 15.
-	self assert: (ship1 isAt: 1)
+	self assert: (ship3 isAt: 1)
 ]
