@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+ShipBuilderTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
 ShipBuilderTest >> testShipBuilderCanCreateAShip [
 
@@ -60,4 +69,18 @@ self assert: ship1 id equals: 1.
 self assert: ship2 id equals: 2.
 self assert: ship3 id equals: 3.
 
+]
+
+{ #category : 'tests' }
+ShipBuilderTest >> testShipCannotBeCreatedWithNegativeFuel [
+	self should: [ Ship createWhithId: 1 andWithFuel: -5 ]
+		raise: Error
+		withMessageText: 'El fuel must be positive'.
+]
+
+{ #category : 'tests' }
+ShipBuilderTest >> testShipCannotBeCreatedWithNegativeIdorNil [
+	self should: [ Ship createWhithId: -1 andWithFuel: 15 ]
+		raise: Error
+		withMessageText: 'The Ship ID must be a positive number'.
 ]
