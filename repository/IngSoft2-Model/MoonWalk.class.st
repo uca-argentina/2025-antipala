@@ -13,7 +13,7 @@ Class {
 
 { #category : 'creation' }
 MoonWalk class >> createWith: aWalk [
-
+	aWalk<0 ifTrue: [ self error:'The MoonWalk value must be positive']. 
 	^ self new initializeWith: aWalk
 ]
 

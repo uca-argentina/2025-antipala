@@ -15,7 +15,7 @@ Class {
 
 { #category : 'creation' }
 HyperGravity class >> createWith: xValue [
-
+(xValue <0) ifTrue: [ self error:'The number of HyperGravity X value must be positive'].
 	^ self new initializeWith: xValue
 ]
 

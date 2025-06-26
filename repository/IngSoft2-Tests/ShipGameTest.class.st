@@ -29,7 +29,7 @@ ShipGameTest >> testCannotCreateGameWithoutDices [
 	self
 		should: [Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.]
 		raise: Error
-		withMessageText: 'you cant play without dices'
+		withMessageText: 'The game cannot be played without dices.'
 ]
 
 { #category : 'tests' }
@@ -70,6 +70,36 @@ ShipGameTest >> testGameCanTellTheRanking [
 ]
 
 { #category : 'tests' }
+ShipGameTest >> testGameCannotBeCreatedWithAnEmptyBoard [
+	| tiles dices numberOfLaps |
+	tiles := OrderedCollection new.
+	10 timesRepeat: [ tiles add: (NoEffect create)].
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 30 )).
+	numberOfLaps:=-3.
+	
+	
+	self should: [ Game createOn: tiles toPlayWith: dices withARequired: numberOfLaps andWithThePlayers: 3. ]
+		raise: Error
+		withMessageText: 'The number of laps must be equal or greater than 1'.
+]
+
+{ #category : 'tests' }
+ShipGameTest >> testGameCannotBeCreatedWithAnInvalidNumberOfLaps [
+	| tiles dices numberOfLaps |
+	tiles := OrderedCollection new.
+	10 timesRepeat: [ tiles add: (NoEffect create)].
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 30 )).
+	numberOfLaps:=-3.
+	
+	
+	self should: [ Game createOn: tiles toPlayWith: dices withARequired: numberOfLaps andWithThePlayers: 3. ]
+		raise: Error
+		withMessageText: 'The number of laps must be equal or greater than 1'.
+]
+
+{ #category : 'tests' }
 ShipGameTest >> testGameCannotStartWithoutShips [
 
 	| tiles dices |
@@ -78,12 +108,10 @@ ShipGameTest >> testGameCannotStartWithoutShips [
 	dices add: (ChargeDice createWith: #( 5 )).
 	tiles := OrderedCollection new.
 	20 timesRepeat: [ tiles add: (NoEffect create)].
-
-	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 0.
 	self
-		should: [ game play ]
+		should: [ Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 0.]
 		raise: Error
-		withMessageText: 'you cant play without ships'
+		withMessageText: 'The Game must be created with at least 1 player.'
 ]
 
 { #category : 'tests' }

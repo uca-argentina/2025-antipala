@@ -14,7 +14,7 @@ Class {
 
 { #category : 'creation' }
 HyperJump class >> createWith: aListOfJumps [
-
+	(aListOfJumps isEmpty) ifTrue: [ self error:'The HyperJump Squares must have a valid list of jumps'].
 	^ self new initializeWith: aListOfJumps
 ]
 

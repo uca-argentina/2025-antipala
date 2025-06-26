@@ -9,10 +9,10 @@ Class {
 		'setofdices',
 		'boardlength',
 		'movemanager',
-		'currentPlayerIndex',
 		'lapsToWin',
 		'shipbuilder',
-		'effectsManager'
+		'effectsManager',
+		'currentPlayer'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,6 +20,12 @@ Class {
 
 { #category : 'creation' }
 Game class >> createOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers [
+
+(numberOfLapsToWin <1) ifTrue: [ self error:'The number of laps must be equal or greater than 1'].
+aCollectionOfTilesWithEffects isEmpty ifTrue: [ self error: 'you cant play without tiles' ].
+numberOfPlayers <=0 ifTrue: [self error: 'The Game must be created with at least 1 player.' ].
+dices isEmpty ifTrue: [ Error signal: 'The game cannot be played without dices.' ].
+
 	^ self new initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers
 ]
 
@@ -39,13 +45,10 @@ Game >> handleRewardsWith: playerthrow and: player [
 
 { #category : 'initialize' }
 Game >> initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers [
-
-	dices isEmpty ifTrue: [ Error signal: 'you cant play without dices' ].
-	aCollectionOfTilesWithEffects isEmpty ifTrue: [ Error signal: 'you cant play without tiles' ].
 	boardlength := aCollectionOfTilesWithEffects size.
 	setofdices := dices.
 	lapsToWin := numberOfLapsToWin.
-	currentPlayerIndex := 0.
+	currentPlayer := 0.
 
 	movemanager := MoveManager createWith: boardlength and: (CardManager createWith: #()).
 		
@@ -86,10 +89,9 @@ Game >> moveAllShipsToTheInitialPosition [
 Game >> play [
 
 	| player playerthrow |
-	ships isEmpty ifTrue: [ Error signal: 'you cant play without ships' ].
 	self winner ifNotNil: [ Error signal: 'the game ended' ].
-	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
-	player := ships at: currentPlayerIndex.
+	currentPlayer := currentPlayer \\ ships size + 1.
+	player := ships at: currentPlayer.
 
 	playerthrow := self throwdice.
 	self handleRewardsWith: playerthrow and: player.
@@ -108,10 +110,9 @@ Game >> ranking [
 Game >> repostFuel [
 
 	| player |
-	ships isEmpty ifTrue: [ Error signal: 'you cant play without ships' ].
 	self winner ifNotNil: [ Error signal: 'the game ended' ].
-	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
-	player := ships at: currentPlayerIndex.
+	currentPlayer := currentPlayer \\ ships size + 1.
+	player := ships at: currentPlayer.
 	player refillFuel
 ]
 
