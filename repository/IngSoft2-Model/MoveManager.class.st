@@ -27,8 +27,7 @@ MoveManager >> block: aShip by: timeout [
 { #category : 'method' }
 MoveManager >> handleBlockOf: aShip with: steps [
 
-	((aShip hasFuelFor: steps )not and: aShip isBlocked not) ifFalse: [
-		^ self ].
+	((aShip hasFuelFor: steps) or: aShip isBlocked) ifTrue: [^self].
 	aShip increaseTimeoutBy: 2.
 	aShip moveToFirstPosition.
 	aShip refillFuel

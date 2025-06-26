@@ -18,7 +18,8 @@ StateInactiveHyperGravity class >> createWith: hyperGravity and: hyperGravityXVa
 StateInactiveHyperGravity >> activateWith: anEffectManager on: aShip [
 
 	anEffectManager block: aShip.
-	effect changeState: (StateActiveHyperGravity createWith: effect and: hyperGravityXValue)
+	effect changeState: (StateActiveHyperGravity createWith: effect and: hyperGravityXValue).
+	anEffectManager putLastEffect: self.
 ]
 
 { #category : 'method' }

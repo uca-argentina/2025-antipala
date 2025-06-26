@@ -21,16 +21,13 @@ ShipGameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorM
 { #category : 'tests' }
 ShipGameTest >> testCannotCreateGameWithoutDices [
 
-	| effectlist dices |
-	effectlist := OrderedCollection new.
-	effectlist add: (AtomicBomb at: 20).
+	| dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+
 	dices := OrderedCollection new.
 	self
-		should: [Game
-		        createWith: 30
-		        and: dices
-		        and: effectlist
-		        and: 3.]
+		should: [Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.]
 		raise: Error
 		withMessageText: 'you cant play without dices'
 ]
@@ -38,37 +35,27 @@ ShipGameTest >> testCannotCreateGameWithoutDices [
 { #category : 'tests' }
 ShipGameTest >> testGameCanBePlayedWithoutEfects [
 
-	| effectlist dices |
-	effectlist := OrderedCollection new.
+	| tiles dices |
+	tiles := OrderedCollection new.
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
-	game := Game
-		        createWith: 30
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	self shouldnt: game play raise: Error
+	self
+		should: [Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.]
+		raise: Error
+		withMessageText: 'you cant play without tiles'
 ]
 
 { #category : 'tests' }
 ShipGameTest >> testGameCanTellTheRanking [
 
-	| effectlist dices ranking |
+	| dices ranking tiles |
 
-	effectlist := OrderedCollection new.
-	effectlist add: (AtomicBomb at: 20).
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 10 7 )).
 
-	game := Game
-		        createWith: 30
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game addShip.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.
 	ranking := game ranking.
 	self assert: ranking first id equals: 3.
 	self assert: ranking second id equals: 2.
@@ -85,17 +72,14 @@ ShipGameTest >> testGameCanTellTheRanking [
 { #category : 'tests' }
 ShipGameTest >> testGameCannotStartWithoutShips [
 
-	| effectlist dices |
-	effectlist := OrderedCollection new.
-	effectlist add: (AtomicBomb at: 20).
+	| tiles dices |
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 	dices add: (ChargeDice createWith: #( 5 )).
-	game := Game
-		        createWith: 30
-		        and: dices
-		        and: effectlist
-		        and: 3.
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 0.
 	self
 		should: [ game play ]
 		raise: Error
@@ -103,59 +87,31 @@ ShipGameTest >> testGameCannotStartWithoutShips [
 ]
 
 { #category : 'tests' }
-ShipGameTest >> testGameCantAddShipsWhenTheGameHasStarted [
-
-	| effectlist dices |
-	effectlist := OrderedCollection new.
-	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 )).
-	game := Game
-		        createWith: 30
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game play.
-	self
-		should: [ game addShip ]
-		raise: Error
-		withMessageText: 'The game started, you cant add ships'
-]
-
-{ #category : 'tests' }
 ShipGameTest >> testShipGameCanMoveTheCreatedShips [
 
-	|  effectlist dices |
+	|  tiles dices |
 
-	effectlist := OrderedCollection new.
-
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
-	dices add: (ChargeDice createWith: #( 5 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
-	self assert: ((game ship: 1) isAt: 10)
+	game play.
+	self assert: ((game ship: 1) isAt: 11)
 ]
 
 { #category : 'tests' }
 ShipGameTest >> testTheGameCanBeWinned [
 
-	| effectlist dices |
-	effectlist := OrderedCollection new.
+	| tiles dices |
+	tiles := OrderedCollection new.
+	10 timesRepeat: [ tiles add: (NoEffect create)].
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 30 )).
-	game := Game
-		        createWith: 10
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 2.
 
 	game play.
 	self assert: game winner equals: (game ship: 1).
@@ -164,16 +120,13 @@ ShipGameTest >> testTheGameCanBeWinned [
 { #category : 'tests' }
 ShipGameTest >> testTheGameCantBePlayedOnceItFinished [
 
-	| effectlist dices |
-	effectlist := OrderedCollection new.
+	| tiles dices |
+	tiles := OrderedCollection new.
+	10 timesRepeat: [ tiles add: (NoEffect create)].
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 30 )).
-	game := Game
-		        createWith: 10
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	dices add: (ChargeDice createWith: #( 30)).
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.
 
 	game play.
 	self
@@ -185,19 +138,16 @@ ShipGameTest >> testTheGameCantBePlayedOnceItFinished [
 { #category : 'tests' }
 ShipGameTest >> testThePlayerCanReciveANegativeReward [
 
-	| effectlist dices |
-	effectlist := OrderedCollection new.
+	| tiles dices |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 10 9 )).
-	game := Game
-		        createWith: 30
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	dices add: (ChargeDice createWith: #(10 9 )).
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 
 	game play.
-	self assert: ((game ship: 1) isAt: 10).
+	self assert: ((game ship: 1) isAt: 11).
 	game repostFuel.
 	self assert: (game ship: 1) fuel equals: 19
 ]
@@ -205,19 +155,16 @@ ShipGameTest >> testThePlayerCanReciveANegativeReward [
 { #category : 'tests' }
 ShipGameTest >> testThePlayerCanReciveAPositiveReward [
 
-	| effectlist dices |
-	effectlist := OrderedCollection new.
+	| tiles dices |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 10 5 )).
-	game := Game
-		        createWith: 30
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	dices add: (ChargeDice createWith: #( 10 7 )).
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 
 	game play.
-	self assert: ((game ship: 1) isAt: 10).
+	self assert: ((game ship: 1) isAt: 11).
 	game repostFuel.
 	self assert: (game ship: 1) fuel equals: 21
 ]
@@ -225,16 +172,13 @@ ShipGameTest >> testThePlayerCanReciveAPositiveReward [
 { #category : 'tests' }
 ShipGameTest >> testThePlayerCantRepostFuelOnceItFinished [
 
-	| effectlist dices |
-	effectlist := OrderedCollection new.
+	| tiles dices |
+	tiles := OrderedCollection new.
+	10 timesRepeat: [ tiles add: (NoEffect create)].
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 30 )).
-	game := Game
-		        createWith: 10
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 
 	game play.
 	self
@@ -246,26 +190,21 @@ ShipGameTest >> testThePlayerCantRepostFuelOnceItFinished [
 { #category : 'tests' }
 ShipGameTest >> testcreateAShipGamepasaturnoconatomicbomb [
 
-	|  effectlist dices |
+	|  tiles dices |
 
-	effectlist := OrderedCollection new.
-	effectlist add: (AtomicBomb at: 20).
+	tiles := OrderedCollection new.
+	21 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 21 put: AtomicBomb create.
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 )).
-	dices add: (ChargeDice createWith: #( 5 )).
-	game := Game
-		        createWith: 30
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game addShip.
+	dices add: (ChargeDice createWith: #(10 )).
+
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 2.
 
 	game play.
 	game play.
-	self assert: ((game ship: 1) isAt: 10).
-	self assert: ((game ship: 2) isAt: 10).
+	self assert: ((game ship: 1) isAt: 11).
+	self assert: ((game ship: 2) isAt: 11).
 	game play.
-	self assert: ((game ship: 1) isAt: 0).
-	self assert: ((game ship: 2) isAt: 0)
+	self assert: ((game ship: 1) isAt: 1).
+	self assert: ((game ship: 2) isAt: 1)
 ]

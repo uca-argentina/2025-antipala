@@ -24,7 +24,7 @@ WormHoleTest >> testAShipCanEnterTheWormHole [
 	aPositionY := 5.
 	aPositionZ := 10.
 	wormhole := WormHole at: aPositionY and: aPositionZ.
-
+	
 
 ]
 

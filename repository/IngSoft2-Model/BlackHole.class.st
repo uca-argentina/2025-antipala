@@ -18,5 +18,5 @@ BlackHole class >> create [
 BlackHole >> applyEffectTo: aShip with: anEffectManager [
 
 	anEffectManager move: aShip by: -4.
-	"anEffectManager putLastEffect: self."
+	anEffectManager putLastEffect: self.
 ]

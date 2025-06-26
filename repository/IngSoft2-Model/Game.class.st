@@ -24,13 +24,6 @@ Game class >> createOn: aCollectionOfTilesWithEffects toPlayWith: dices withAReq
 ]
 
 { #category : 'playing' }
-Game >> addShip [
-	currentPlayerIndex > 0 ifTrue: [
-		Error signal: 'The game started, you cant add ships' ].
-	ships add: shipbuilder build
-]
-
-{ #category : 'playing' }
 Game >> giveRewardTo: player [
 
 	self throwdice / self maxThrow <= 0.8
@@ -54,15 +47,16 @@ Game >> initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequi
 	currentPlayerIndex := 0.
 
 	movemanager := MoveManager createWith:
-		               (LapManager createWith: boardlength) and: (CardManager createWith: #())
-.
+		               (LapManager createWith: boardlength) and: (CardManager createWith: #()).
+		
 	effectsManager := EffectsManager
 		                 createWith: aCollectionOfTilesWithEffects
 		                 and: movemanager.
 
 
 	shipbuilder := ShipBuilder buildWith: dices.
-	ships := OrderedCollection new
+	ships := OrderedCollection new.
+	numberOfPlayers timesRepeat: [ships add: shipbuilder build ]
 ]
 
 { #category : 'playing' }

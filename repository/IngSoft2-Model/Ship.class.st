@@ -100,7 +100,7 @@ Ship >> initializewith: anId andfuel: afuel [
 	fuel:=afuel.
 	maxfuel:=afuel.
 	id:=anId. 
-	position:=0.
+	position:=1.
 	timeout:=0.
 	laps:=0.
 	ally:=self
@@ -162,7 +162,12 @@ Ship >> moveBy: steps [
 { #category : 'methods' }
 Ship >> moveToFirstPosition [
 
-	position:=0.
+	position:=1.
+]
+
+{ #category : 'accessing' }
+Ship >> position [
+	^  position truncated
 ]
 
 { #category : 'methods' }

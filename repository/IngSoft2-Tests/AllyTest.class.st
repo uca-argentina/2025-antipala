@@ -18,8 +18,8 @@ AllyTest >> testAShipCanUseTheFuelOfTheAlly [
 	cardManager := CardManager new.
 	cardManager apply: Ally new from: ship1 to: ship2.
 	moveManager := MoveManager createWith: (LapManager createWith: 20)
-		               and: (CardManager createWith: #(  ))..
+		               and: (CardManager createWith: #(  )).
 
 	moveManager move: ship1 by: 10.
-	self assert: (ship1 isAt: 10)
+	self assert: (ship1 isAt: 11)
 ]

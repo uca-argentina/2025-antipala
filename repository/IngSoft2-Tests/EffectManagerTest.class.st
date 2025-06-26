@@ -8,31 +8,27 @@ Class {
 { #category : 'tests' }
 EffectManagerTest >> testEffectHandlerCanHandleAnAtomicBomb [
 
-	|  effectlist  dices game |
-	effectlist := OrderedCollection new.
-	effectlist add:( AtomicBomb at: 10).
 
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 9 put: (AtomicBomb create).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 )).
+	dices add: (ChargeDice createWith: #( 4 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
 	self assert: ((game ship: 1) isAt: 5).
 	game play.
 
-	self assert: ((game ship: 1) isAt: 0)
+	self assert: ((game ship: 1) isAt: 1)
 ]
 
 { #category : 'tests' }
 EffectManagerTest >> testEffectManagerCanForceAnEffect [
 
 	| effectlist movemanager manageeffects ship efecto |
-	efecto := BlackHole at: 10.
+	efecto := BlackHole create .
 	effectlist := OrderedCollection new.
 	effectlist add: efecto.
 
@@ -47,7 +43,31 @@ EffectManagerTest >> testEffectManagerCanForceAnEffect [
 	movemanager move: ship by: 10.
 	efecto applyEffectTo: ship with: manageeffects.
 	movemanager move: ship by: 1.
-	self assert: (ship isAt: 7).
+	self assert: (ship isAt: 8).
 	manageeffects forceApplyLastEffectTo: ship.
-	self assert: (ship isAt: 3)
+	self assert: (ship isAt: 4)
+]
+
+{ #category : 'tests' }
+EffectManagerTest >> testHyperGravityLastEffect [
+
+	| effectlist movemanager manageeffects ship efecto |
+	efecto := HyperGravity createWith: 4 .
+	effectlist := OrderedCollection new.
+	effectlist add: efecto.
+
+	movemanager := MoveManager
+		               createWith: (LapManager createWith: 20)
+		               and: (CardManager createWith: #(  )).
+	manageeffects := EffectsManager
+		                 createWith: effectlist
+		                 and: movemanager.
+	ship := Ship createWhithId: 1 andWithFuel: 50.
+
+	movemanager move: ship by: 10.
+	efecto applyEffectTo: ship with: manageeffects.
+	movemanager move: ship by: 1.
+	self assert: (ship isAt: 8).
+	manageeffects forceApplyLastEffectTo: ship.
+	self assert: (ship isAt: 4)
 ]

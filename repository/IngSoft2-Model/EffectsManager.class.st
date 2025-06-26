@@ -26,7 +26,7 @@ EffectsManager >> applyAnEffectTo: aShip in: aGame with: playerthrow [
 	| effect |
 	actualThrow := playerthrow.
 	game := aGame.
-	effect := (tileList at: aShip position) applyEffectTo: aShip with: self 
+	effect := (tileList at: (aShip position)) applyEffectTo: aShip with: self 
 ]
 
 { #category : 'method effects' }
@@ -38,7 +38,7 @@ EffectsManager >> block: aShip [
 { #category : 'method effects' }
 EffectsManager >> forceApplyLastEffectTo: aShip [
 
-	lastEffect forceApplyTo: aShip with: self.
+	lastEffect applyEffectTo: aShip with: self.
 ]
 
 { #category : 'method effects' }
@@ -56,7 +56,7 @@ EffectsManager >> initwitheffects: aCollectionOfTilesWithEffects and: aMoveManag
 
 	tileList := aCollectionOfTilesWithEffects.
 	moveManager := aMoveManager.
-	lastEffect := NoEffect at:0.
+	lastEffect := NoEffect create.
 ]
 
 { #category : 'method effects' }

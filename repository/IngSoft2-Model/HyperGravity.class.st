@@ -14,9 +14,9 @@ Class {
 }
 
 { #category : 'creation' }
-HyperGravity class >> at: position with: xValue [
+HyperGravity class >> createWith: xValue [
 
-	^ self new initializeWith: position and: xValue
+	^ self new initializeWith: xValue
 ]
 
 { #category : 'method' }
@@ -27,7 +27,6 @@ HyperGravity >> activateWith: anEffectManager on: aShip [
 { #category : 'method' }
 HyperGravity >> applyEffectTo: aShip with: anEffectManager [
 
-	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 	state activateWith: anEffectManager on: aShip.
 ]
 
@@ -36,16 +35,9 @@ HyperGravity >> changeState: aState [
 	state := aState.
 ]
 
-{ #category : 'method' }
-HyperGravity >> forceApplyTo: aShip with: anEffectManager [
-
-	state activateWith: anEffectManager on: aShip.
-]
-
 { #category : 'initialize' }
-HyperGravity >> initializeWith: aPosition and: aXvalue [
+HyperGravity >> initializeWith: aXvalue [
 
-	effectPosition := aPosition.
 	hyperGravityXValue := aXvalue.
 	state := StateInactiveHyperGravity createWith: self and: hyperGravityXValue
 ]

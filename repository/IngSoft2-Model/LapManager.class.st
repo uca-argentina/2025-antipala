@@ -28,5 +28,5 @@ LapManager >> handle: aship [
 
 { #category : 'initialize' }
 LapManager >> initializeWith: aboardSize [
-	boardSize:=aboardSize.
+	boardSize:=aboardSize-1.
 ]
