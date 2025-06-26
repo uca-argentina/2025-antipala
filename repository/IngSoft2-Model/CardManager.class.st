@@ -42,9 +42,17 @@ CardManager >> effectsFor: aShip [
 ]
 
 { #category : 'as yet unclassified' }
+CardManager >> handleally: aShip  step: steps [
+
+
+
+ activeCards  do: [:card | card ifAlly:aShip steps:steps] 
+]
+
+{ #category : 'as yet unclassified' }
 CardManager >> initializeWith: someCards [
 
-	activeCards := someCards asOrderedCollection .
+	activeCards := OrderedCollection new .
 ]
 
 { #category : 'as yet unclassified' }

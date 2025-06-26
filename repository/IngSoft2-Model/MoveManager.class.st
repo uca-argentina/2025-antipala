@@ -19,6 +19,12 @@ MoveManager class >> createWith: aBoardSize and: aCardManager [
 	^ self new intializeWith: aBoardSize and: aCardManager
 ]
 
+{ #category : 'as yet unclassified' }
+MoveManager >> askforally: aShip step: steps [
+
+	(aShip hasFuelFor: steps) ifFalse: [ cardManager handleally: aShip  step: steps].
+]
+
 { #category : 'method' }
 MoveManager >> block: aShip by: timeout [
 
@@ -44,12 +50,6 @@ MoveManager >> handleLaps: aship [
 	aship moveBy: boardSize * lapsDoneByTheShip negated + 1
 ]
 
-{ #category : 'as yet unclassified' }
-MoveManager >> handleally: aShip step: steps [
-
-	(aShip hasFuelFor: steps) ifFalse: [ aShip askforfuel ]
-]
-
 { #category : 'initialize' }
 MoveManager >> intializeWith: aBoardSize and: aCardManager [
 	cardManager := aCardManager.
@@ -58,13 +58,14 @@ MoveManager >> intializeWith: aBoardSize and: aCardManager [
 
 { #category : 'method' }
 MoveManager >> move: aShip by: steps [
+  
+   self askforally:aShip  step:steps.
+	self handleBlockOf: aShip with: steps.	
+	aShip isBlocked ifTrue:[aShip reduceTimeout. ^self].
+	aShip moveBy: steps.
+	aShip consumeFuel: steps.
+   self  handleLaps: aShip.
 
-	| newSteps |
-	newSteps := steps + (cardManager effectsFor: aShip).
-	self handleally: aShip step: steps.
-	self handleBlockOf: aShip with: steps.
-	aShip attemptToMoveBy: steps. 
-	self handleLaps: aShip
 ]
 
 { #category : 'method' }
