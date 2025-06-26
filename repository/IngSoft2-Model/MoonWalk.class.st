@@ -24,7 +24,9 @@ MoonWalk >> applyEffectTo: aShip with: effectManager [
 ]
 
 { #category : 'initialize' }
+
 MoonWalk >> initializeWith: aWalk [
 
 	walk := aWalk negated 
+
 ]

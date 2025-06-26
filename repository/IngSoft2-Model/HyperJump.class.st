@@ -35,8 +35,10 @@ HyperJump >> convertToParsec: aList [
 ]
 
 { #category : 'initialize' }
+
 HyperJump >> initializeWith: aListOfJumps [
 
 	jumpList := self convertToParsec: (aListOfJumps sort: [ :jumpA :jumpB | jumpA > jumpB ]).
 	currentJumpIndex := 1
+
 ]

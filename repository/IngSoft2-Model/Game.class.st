@@ -134,7 +134,7 @@ Game >> repostFuel [
 
 { #category : 'private - testing' }
 Game >> ship:index [
-"Este metodo solamente se debe usar para Testeo"
+
 	^ships at:index
 ]
 

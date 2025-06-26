@@ -19,6 +19,11 @@ HyperGravity class >> createWith: xValue [
 	^ self new initializeWith: xValue
 ]
 
+{ #category : 'creation' }
+HyperGravity class >> createWith: hyperGravity and: hyperGravityXValue [ 
+	^ self subclassResponsibility
+]
+
 { #category : 'method' }
 HyperGravity >> activateWith: anEffectManager on: aShip [ 
 	^ self subclassResponsibility
@@ -36,7 +41,9 @@ HyperGravity >> changeState: aState [
 ]
 
 { #category : 'initialize' }
+
 HyperGravity >> initializeWith: aXvalue [
+
 
 	hyperGravityXValue := aXvalue.
 	state := StateInactiveHyperGravity createWith: self and: hyperGravityXValue

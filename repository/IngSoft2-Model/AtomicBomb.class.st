@@ -19,4 +19,5 @@ AtomicBomb >> applyEffectTo: aShip with: effectManager [
 
 		effectManager triggerAtomicBomb .
 		effectManager putLastEffect: self.
+
 ]

@@ -127,3 +127,11 @@ HyperGravityTest >> testTheHyperGravityCanBeActivatedSeveralTimes [
 	self assert: ((game ship: 1) isAt: 19).
 	self assert: ((game ship: 2) isAt: 10)
 ]
+
+{ #category : 'tests' }
+HyperGravityTest >> testTheHypergravityPositionCannotBeNegative [
+	self
+		should: [ HyperGravity new initializeWith: -4 and: 10 ]
+		raise: Error
+		withMessageText: 'The Hypergravity position must be positive'
+]

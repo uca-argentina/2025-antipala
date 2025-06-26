@@ -20,7 +20,9 @@ WormHole class >> createWith: aDistanceToTheWormholeExit [
 { #category : 'method' }
 WormHole >> applyEffectTo: aShip with: anEffectManager [
 	
+
 	anEffectManager move: aShip by: exitRelativeDistance .
+
 ]
 
 { #category : 'method' }
