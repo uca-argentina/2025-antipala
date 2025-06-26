@@ -28,10 +28,17 @@ CardManager >> allymetotheothership: aCard [
 
 { #category : 'as yet unclassified' }
 CardManager >> apply: aCard from: aShip to: aTargetShip [
-
+	
+	aShip removeCard: aCard.
 	targetShip := aTargetShip.
 	aCard applyEffect: aShip with: self.
 	self addPermanentCard:aCard.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> applyOverLoadWith: card [
+
+	card newObjetiveShip: targetShip .
 ]
 
 { #category : 'as yet unclassified' }
@@ -42,8 +49,6 @@ CardManager >> effectsFor: aShip [
 
 { #category : 'as yet unclassified' }
 CardManager >> handleally: aShip  step: steps [
-
-
 
  activeCards  do: [:card | card ifAlly:aShip steps:steps] 
 ]
@@ -58,6 +63,12 @@ CardManager >> initialize [
 CardManager >> lastActiveEffect [
 
 	^activeCards last.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> removePermanentCard: card [
+
+	activeCards remove: card.
 ]
 
 { #category : 'as yet unclassified' }

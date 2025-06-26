@@ -44,7 +44,7 @@ EffectManagerTest >> testEffectManagerCanForceAnEffect [
 	efecto applyEffectTo: ship with: manageeffects.
 	movemanager move: ship by: 1.
 	self assert: (ship isAt: 8).
-	manageeffects forceApplyLastEffectTo: ship.
+	manageeffects applyLastEffectTo: ship.
 	self assert: (ship isAt: 4)
 ]
 

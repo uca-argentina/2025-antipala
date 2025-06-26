@@ -16,6 +16,8 @@ CardManagerTest >> testapplycardeffectoshiptest [
 	aShip := Ship createWhithId: 1 andWithFuel: 5.
 
 	aTargetShip := Ship createWhithId: 2 andWithFuel: 2.
+	
+	aShip addCard: aCard .
 	aCardManager apply: aCard from: aShip to: aTargetShip.
 	manager move: aShip by: 10.
 

@@ -26,19 +26,19 @@ EffectsManager >> applyAnEffectTo: aShip in: aGame with: playerthrow [
 	| effect |
 	actualThrow := playerthrow.
 	game := aGame.
-	effect := (tileList at: (aShip position)) applyEffectTo: aShip with: self 
+	effect := (tileList at: (aShip position)) applyEffectTo: aShip with: self.
+]
+
+{ #category : 'method' }
+EffectsManager >> applyLastEffectTo: aShip [
+
+	lastEffect applyEffectTo: aShip with: self
 ]
 
 { #category : 'method effects' }
 EffectsManager >> block: aShip [
 
 	moveManager block: aShip by: 1
-]
-
-{ #category : 'method effects' }
-EffectsManager >> forceApplyLastEffectTo: aShip [
-
-	lastEffect applyEffectTo: aShip with: self.
 ]
 
 { #category : 'method effects' }

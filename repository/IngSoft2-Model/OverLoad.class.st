@@ -16,7 +16,7 @@ OverLoad class >> create [
 
 { #category : 'as yet unclassified' }
 OverLoad >> applyEffect: aShip with: cardManager [
-	objetiveShip := aShip.
+	cardManager applyOverLoadWith: self.
 ]
 
 { #category : 'as yet unclassified' }
@@ -29,4 +29,10 @@ OverLoad >> effectAppliedTo: aShip [
 OverLoad >> intialize [
 
 	objetiveShip := nil.
+]
+
+{ #category : 'as yet unclassified' }
+OverLoad >> newObjetiveShip: aShip [
+
+	^ objetiveShip := aShip.
 ]

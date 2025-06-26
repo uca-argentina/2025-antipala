@@ -8,7 +8,7 @@ Class {
 { #category : 'as yet unclassified' }
 AccelerationTest >> testAccelerationCardShoulIncreaseTheMovementOfAllShips [
 
-	| dices builder ship1 ship2 cardManager moveManager card |
+	| dices builder ship1 ship2 cardManager moveManager card card1 card2 |
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 	builder := ShipBuilder buildWith: dices.
@@ -17,11 +17,14 @@ AccelerationTest >> testAccelerationCardShoulIncreaseTheMovementOfAllShips [
 
 	cardManager := CardManager create .
 	
-	card := Acceleration create.
-	cardManager apply: card from: ship1 to: ship2.
+	card1 := Acceleration create.
+	card2 := Acceleration create.
+	ship1 addCard: card1.
+	ship2 addCard: card2.
+	cardManager apply: card1 from: ship1 to: ship2.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 1.
 
-	cardManager apply: card from: ship2 to: ship1.
+	cardManager apply: card2 from: ship2 to: ship1.
 	self assert: (cardManager throwEffectsFor: ship1) equals: 2.
 
 	moveManager := MoveManager createWith: 20 and: cardManager .

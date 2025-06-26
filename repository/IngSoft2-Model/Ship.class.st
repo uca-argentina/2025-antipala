@@ -11,7 +11,8 @@ Class {
 		'maxfuel',
 		'timeout',
 		'laps',
-		'ally'
+		'ally',
+		'cards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -22,6 +23,11 @@ Ship class >> createWhithId: anId andWithFuel: anFuel [
     (anId isNil or: [ anId <= 0 ]) ifTrue: [ self error: 'The Ship ID must be a positive number' ].
 	anFuel < 0 ifTrue: [ self error: 'El fuel must be positive' ]. 
 	^self new initializewith: anId andfuel: anFuel.
+]
+
+{ #category : 'methods' }
+Ship >> addCard: aCard [
+	cards add:aCard .
 ]
 
 { #category : 'as yet unclassified' }
@@ -53,8 +59,8 @@ Ship >> consumeFuel:amount [
 
 { #category : 'as yet unclassified' }
 Ship >> donatefuel:steps ship:aShip [
-aShip givefuel:fuel.
-self consumeFuel:steps.
+aShip givefuel: ((steps) max:fuel).
+self consumeFuel: ((steps) max:fuel).
 ]
 
 { #category : 'private accessing' }
@@ -95,7 +101,7 @@ Ship >> initializewith: anId andfuel: afuel [
 	position:=1.
 	timeout:=0.
 	laps:=0.
-	
+	cards:= OrderedCollection new.
 	
 ]
 
@@ -171,4 +177,11 @@ Ship >> reduceTimeout [
 { #category : 'methods' }
 Ship >> refillFuel [
     fuel := maxfuel .
+]
+
+{ #category : 'methods' }
+Ship >> removeCard: aCard [
+	| cardToDelete |
+	cardToDelete:=cards detect: [:card | card = aCard  ] ifNone: [Error signal: 'The Ship Should have the card to play'].
+	cards remove:cardToDelete.
 ]

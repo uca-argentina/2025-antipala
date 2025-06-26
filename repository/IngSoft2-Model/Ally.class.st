@@ -44,5 +44,6 @@ linkship:=OrderedCollection new.
 
 { #category : 'as yet unclassified' }
 Ally >> linkShip: aShip [
+	(linkship size = 2) ifTrue: [Error signal: 'You can only link 2 ships'].
 	linkship add:aShip.
 ]
