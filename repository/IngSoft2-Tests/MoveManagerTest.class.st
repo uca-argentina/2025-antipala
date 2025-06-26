@@ -13,13 +13,13 @@ MoveManagerTest >> testBlockedShipsShouldntMoveForSomeTurns [
 	aBoardSize:=30.
 	manager := MoveManager createWith: aBoardSize and: (CardManager createWith: #(  )).
 	manager move: ship by: 10.
-	self assert: (ship isAt: 10).
+	self assert: (ship isAt: 11).
 	manager move: ship by: 10. "Ship se bloquea, agrega un timeout de 2, pero reduce en 1 ese turno"
-	self assert: (ship isAt: 0).
+	self assert: (ship isAt: 1).
 	manager move: ship by: 2. "Timeout: 1->0"
 	manager move: ship by: 2. "ship pos = 2"
 	manager move: ship by: 2. "ship pos = 4"
-	self assert: (ship isAt: 4)
+	self assert: (ship isAt: 5)
 ]
 
 { #category : 'tests' }
@@ -31,11 +31,11 @@ MoveManagerTest >> testMoveManagerBlocksTheShipsForSeveralTurnsWhenOutOfFuel [
 	manager := MoveManager createWith: aBoardSize and: (CardManager createWith: #(  )).
 	manager move: ship by: 10.
 	manager move: ship by: 10.
-	self assert: (ship isAt: 0).
+	self assert: (ship isAt: 1).
 	manager move: ship by: 2.
 	manager move: ship by: 2.
 	manager move: ship by: 2.
-	self assert: (ship isAt: 4)
+	self assert: (ship isAt: 5)
 ]
 
 { #category : 'tests' }
@@ -48,8 +48,8 @@ MoveManagerTest >> testMoveManagerCanHandleSeveralShips [
 	manager := MoveManager createWith: aBoardSize and: (CardManager createWith: #(  )).
 	manager move: ship1 by: 15.
 	manager move: ship2 by: 15.
-	self assert: (ship1 isAt: 0).
-	self assert: (ship2 isAt: 15).
+	self assert: (ship1 isAt: 1).
+	self assert: (ship2 isAt: 16).
 	self assert: ship1 id equals: 1.
 	self assert: ship2 id equals: 2
 ]
@@ -62,10 +62,7 @@ MoveManagerTest >> testMoveManagerCanMoveShips [
 	ship := Ship createWhithId: 1 andWithFuel: 10.
 	manager := MoveManager createWith: aBoardSize and: (CardManager createWith: #(  )).
 	manager move: ship by: 10.
-	"ship changePositionTo: 10. no te deja porq es privado"
-	"positionValue := ship instVarNamed: 'position'."
-
-	self assert: (ship isAt: 10)
+	self assert: (ship isAt: 11)
 ]
 
 { #category : 'tests' }
@@ -77,7 +74,7 @@ MoveManagerTest >> testMoveManagerResetThePositionOfShipsWhenOutOfFuel [
 	manager := MoveManager createWith: aBoardSize and: (CardManager createWith: #(  )).
 	manager move: ship by: 10.
 	manager move: ship by: 10.
-	self assert: (ship isAt: 0)
+	self assert: (ship isAt: 1)
 ]
 
 { #category : 'tests' }
@@ -88,7 +85,7 @@ MoveManagerTest >> testMoveManagerResetThePositionOfShipsWhenTheShipsShouldntMov
 	ship := Ship createWhithId: 1 andWithFuel: 15.
 	manager := MoveManager createWith: aBoardSize and: (CardManager createWith: #(  )).
 	manager move: ship by: 20.
-	self assert: (ship isAt: 0)
+	self assert: (ship isAt: 1)
 ]
 
 { #category : 'tests' }
@@ -106,6 +103,18 @@ MoveManagerTest >> testMoveManagerShouldHandleTheFuelOfTheShips [
 	self assert: ship fuel equals: 10.
 	manager move: ship by: 5. "Ship Bloqueada"
 	self assert: ship fuel equals: 10
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testNegativeLaps [
+
+	| ship manager |
+	ship := Ship createWhithId: 1 andWithFuel: 100.
+	manager := MoveManager createWith: 10 and: (CardManager createWith: #(  )).
+	manager move: ship by: 25.
+	self assert: (ship isAtLap: 2).
+	manager move: ship by: -25.
+	self assert: (ship isAtLap: 0)
 ]
 
 { #category : 'tests' }
@@ -142,6 +151,16 @@ MoveManagerTest >> testShipsCanTellIfTheyAreAheadOfAnotherShip [
 ]
 
 { #category : 'tests' }
+MoveManagerTest >> testTheShipCannotHaveNegativeLaps [
+
+	| ship manager |
+	ship := Ship createWhithId: 1 andWithFuel: 100.
+	manager := MoveManager createWith: 10 and: (CardManager createWith: #(  )).
+	manager move: ship by: -25.
+	self assert: (ship isAtLap: 0)
+]
+
+{ #category : 'tests' }
 MoveManagerTest >> testTimeoutGeneratedByEffects [
 
 	| ship manager aBoardSize |
@@ -171,4 +190,14 @@ MoveManagerTest >> testTimeoutGeneratedByLowFuel [
 	self assert: (ship isWithTimeout: 1).
 	manager move: ship by: 2.
 	self assert: (ship isWithTimeout: 0)
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testWhenShipsPassTheBoardLenghtThenIncreaseTheLapNumber [
+
+	| ship manager |
+	ship := Ship createWhithId: 1 andWithFuel: 10.
+	manager := MoveManager createWith: 10 and: (CardManager createWith: #(  )).
+	manager move: ship by: 10.
+	self assert: (ship isAtLap: 1)
 ]

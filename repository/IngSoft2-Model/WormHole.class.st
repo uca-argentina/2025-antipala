@@ -5,29 +5,26 @@ Class {
 	#name : 'WormHole',
 	#superclass : 'Effect',
 	#instVars : [
-		'positionY',
-		'positionZ'
+		'exitRelativeDistance'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-WormHole class >> at: positionY and: positionZ [
+WormHole class >> createWith: aDistanceToTheWormholeExit [
 
-	^ self new initializeWith: positionY and: positionZ
+	^ self new initializeWith: aDistanceToTheWormholeExit 
 ]
 
 { #category : 'method' }
 WormHole >> applyEffectTo: aShip with: anEffectManager [
 	
-	| displacement |
-	displacement := 0.
-	(aShip isAt: positionY) ifTrue: [
-		displacement := positionZ - positionY ].
+	anEffectManager move: aShip by: exitRelativeDistance .
+]
 
-	(aShip isAt: positionZ) ifTrue: [
-		displacement := positionY - positionZ ].
-
-	anEffectManager move: aShip by: displacement
+{ #category : 'method' }
+WormHole >> initializeWith: aExitDistance [
+	
+	exitRelativeDistance:= aExitDistance.
 ]

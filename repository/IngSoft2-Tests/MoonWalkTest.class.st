@@ -11,7 +11,7 @@ MoonWalkTest >> testMoonWalkAffectsAllShipsExceptTheOneThatTriggersIt [
 	|  game dices  tiles |
 	tiles := OrderedCollection new.
 	20 timesRepeat: [ tiles add: (NoEffect create)].
-	tiles at: 10 put: (MoonWalk createWith: 3).
+	tiles at: 11 put: (MoonWalk createWith: 3).
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #( 5 )).
 

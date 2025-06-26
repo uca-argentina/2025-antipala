@@ -25,23 +25,23 @@ MoveManager >> block: aShip by: timeout [
 	aShip increaseTimeoutBy: timeout.
 ]
 
-{ #category : 'accessing' }
-MoveManager >> handle: aship [
-
-	| lapsDoneByTheShip |
-	lapsDoneByTheShip := aship lapsToApplyWith: boardSize.
-	aship changeLapsBy: lapsDoneByTheShip.
-	aship
-		moveBy: boardSize * lapsDoneByTheShip negated
-]
-
 { #category : 'method' }
 MoveManager >> handleBlockOf: aShip with: steps [
 
-	((aShip hasFuelFor: steps) or: aShip isBlocked) ifTrue: [^self].
+((aShip hasFuelFor: steps) or: aShip isBlocked) ifTrue: [ ^ self ].
 	aShip increaseTimeoutBy: 2.
 	aShip moveToFirstPosition.
 	aShip refillFuel
+]
+
+{ #category : 'accessing' }
+MoveManager >> handleLaps: aship [
+
+	| lapsDoneByTheShip |
+	lapsDoneByTheShip := aship lapsToApplyWith: boardSize.
+	lapsDoneByTheShip = 0 ifTrue: [ ^ self ].
+	aship changeLapsBy: lapsDoneByTheShip.
+	aship moveBy: boardSize * lapsDoneByTheShip negated + 1
 ]
 
 { #category : 'as yet unclassified' }
@@ -64,7 +64,7 @@ MoveManager >> move: aShip by: steps [
 	self handleally: aShip step: steps.
 	self handleBlockOf: aShip with: steps.
 	aShip attemptToMoveBy: steps. 
-	self handle: aShip
+	self handleLaps: aShip
 ]
 
 { #category : 'method' }

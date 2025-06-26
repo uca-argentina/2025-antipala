@@ -6,9 +6,9 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'collectionOfEffects',
-		'positions',
 		'realDices',
-		'diceOf100Faces'
+		'diceOf100Faces',
+		'tiles'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -25,34 +25,41 @@ EffectBuilder class >> createWith: aDiceOf100Faces and: aCollectionOfPositions a
 
 { #category : 'building' }
 EffectBuilder >> build [
-
-	collectionOfEffects add:
-		(self buildWormHoleOn: positions first and: positions second).
+	| numberOfTiles diference otherTiles |
+	numberOfTiles := tiles max +1.
 	
-	 collectionOfEffects := collectionOfEffects, ((positions allButFirst: 2) collect: [ :pos |
-		self randomEffectAt: pos ]).
+	collectionOfEffects := (1 to: numberOfTiles ) collect: [:tile |NoEffect create].
 	
+	diference := tiles second - tiles first.
+	
+	collectionOfEffects at: (tiles first) put: (WormHole createWith: diference).
+	collectionOfEffects at: (tiles second) put: (WormHole createWith: diference negated).
+	
+	otherTiles := tiles allButFirst: 2.
+	otherTiles do: [:tile |
+		collectionOfEffects at: (tile ) put: self randomEffect
+	].
 	^ collectionOfEffects asOrderedCollection.
 ]
 
 { #category : 'building' }
 EffectBuilder >> buildAtomicBombAt: pos with: prob [
 
-	prob > 98 ifTrue: [ ^ AtomicBomb at: pos ].
+	prob > 98 ifTrue: [ ^ AtomicBomb create ].
 	^nil.
 ]
 
 { #category : 'building' }
 EffectBuilder >> buildBlackHoleAt: pos with: prob [
 
-	prob > 40 ifTrue: [ ^ BlackHole at: pos ].
+	prob > 40 ifTrue: [ ^ BlackHole create ].
 	^nil.
 ]
 
 { #category : 'building' }
 EffectBuilder >> buildHyperGravityAt: pos with: prob [
 
-	prob > 60 ifTrue: [ ^ HyperGravity at: pos with: self throwRealDices ].
+	prob > 60 ifTrue: [ ^ HyperGravity createWith: self throwRealDices ].
 	^ nil
 ]
 
@@ -64,28 +71,22 @@ EffectBuilder >> buildHyperJumpAt: pos with: prob [
 	listOfJumps add: self throwRealDices.
 	listOfJumps add: self throwRealDices.
 	listOfJumps add: self throwRealDices.
-	prob > 90 ifTrue: [ ^ HyperJump at: pos with: listOfJumps ].
+	prob > 90 ifTrue: [ ^ HyperJump createWith: listOfJumps ].
 	^ nil
 ]
 
 { #category : 'building' }
 EffectBuilder >> buildMoonWalkAt: pos with: prob [
 
-	prob > 80 ifTrue: [ ^ MoonWalk at: pos and: self throwRealDices ].
+	prob > 80 ifTrue: [ ^ MoonWalk  createWith: self throwRealDices ].
 	^ nil
 ]
 
 { #category : 'building' }
 EffectBuilder >> buildNoEffectAt: pos with: prob [
 
-	prob > 0 ifTrue: [ ^ NoEffect at: pos ].
+	prob > 0 ifTrue: [ ^ NoEffect create ].
 	^nil.
-]
-
-{ #category : 'building' }
-EffectBuilder >> buildWormHoleOn: positionY and: positionZ [
-
-	^ WormHole at: positionY and: positionZ
 ]
 
 { #category : 'initialization' }
@@ -94,7 +95,23 @@ EffectBuilder >> initializeWith: aDiceOf100Faces and: aCollectionOfPositions and
 	collectionOfEffects := OrderedCollection new.
 	diceOf100Faces := aDiceOf100Faces.
 	realDices := dicesToUse.
-	positions := aCollectionOfPositions
+	tiles := aCollectionOfPositions.
+]
+
+{ #category : 'method' }
+EffectBuilder >> randomEffect [
+
+	| effectBuilders probability position |
+	position := 0.
+	probability := diceOf100Faces roll.
+	effectBuilders := {
+		                  (self buildAtomicBombAt: position with: probability).
+		                  (self buildHyperJumpAt: position with: probability).
+		                  (self buildMoonWalkAt: position with: probability).
+		                  (self buildHyperGravityAt: position with: probability).
+		                  (self buildBlackHoleAt: position with: probability).
+		                  (self buildNoEffectAt: position with: probability) }.
+	^ effectBuilders detect: [ :block | block value notNil ]
 ]
 
 { #category : 'method' }

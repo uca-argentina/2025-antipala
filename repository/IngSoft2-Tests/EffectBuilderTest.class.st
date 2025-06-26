@@ -5,77 +5,73 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+EffectBuilderTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+self
+	should: anErrorBlock
+	raise: anErrorClass
+	withExceptionDo: [ :error | self assert: (error messageText)
+			equals: errorMessage ]. 
+	
+	
+]
+
 { #category : 'tests' }
 EffectBuilderTest >> testEffectBuilderCanBuildAnAtomicBomb [
 
-	| builder effects chargeDice aCollectionOfPositions effectAtPosition aCollectionOfDices game |
-	aCollectionOfPositions := { 1. 2. 5 } asOrderedCollection.
-	chargeDice := ChargeDice createWith: #( 99 ).
-	aCollectionOfDices := OrderedCollection new.
-	aCollectionOfDices add: (ChargeDice createWith: #( 5 )).
+	| builder tiles chargeDiceOf100Faces effectAtPosition dices game aCollectionOfPositions |
+	aCollectionOfPositions := { 3. 6. 5 } asOrderedCollection.
+	chargeDiceOf100Faces := ChargeDice createWith: #( 99 ).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 4 )).
 	builder := EffectBuilder
-		           createWith: chargeDice
+		           createWith: chargeDiceOf100Faces
 		           and: aCollectionOfPositions
-		           and: aCollectionOfDices.
-	effects := builder build.
-	effectAtPosition := effects at: 2.
-	game := Game
-		        createWith: 20
-		        and: aCollectionOfDices
-		        and: effects
-		        and: 3.
-	game addShip.
+		           and: dices.
+	tiles := builder build.
+	effectAtPosition := tiles at: 5.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
-	self assert: ((game ship: 1) isAt:0).
+	self assert: ((game ship: 1) isAt:1).
 	self assert: effectAtPosition class equals: AtomicBomb
 ]
 
 { #category : 'tests' }
 EffectBuilderTest >> testEffectBuilderCanBuildAnBlackHole [
 
-	| builder effects chargeDice aCollectionOfPositions effectAtPosition aCollectionOfDices game |
-	aCollectionOfPositions := { 1. 2. 5 } asOrderedCollection.
-	chargeDice := ChargeDice createWith: #( 45 ).
-	aCollectionOfDices := OrderedCollection new.
-	aCollectionOfDices add: (ChargeDice createWith: #( 5 )).
+	| builder tiles chargeDiceOf100Faces effectAtPosition dices game aCollectionOfPositions |
+	aCollectionOfPositions := { 3. 6. 5 } asOrderedCollection.
+	chargeDiceOf100Faces := ChargeDice createWith: #( 45 ).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
 	builder := EffectBuilder
-		           createWith: chargeDice
+		           createWith: chargeDiceOf100Faces
 		           and: aCollectionOfPositions
-		           and: aCollectionOfDices.
-	effects := builder build.
-	effectAtPosition := effects at: 2.
-	game := Game
-		        createWith: 20
-		        and: aCollectionOfDices
-		        and: effects
-		        and: 3.
-	game addShip.
+		           and: dices.
+	tiles := builder build.
+	effectAtPosition := tiles at: 6.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
-	self assert: ((game ship: 1) isAt:1).
-	self assert: effectAtPosition class equals: BlackHole 
+	self assert: ((game ship: 1) isAt:3).
+	self assert: effectAtPosition class equals: WormHole 
 ]
 
 { #category : 'tests' }
 EffectBuilderTest >> testEffectBuilderCanBuildAnHyperGravity [
-
-	| builder effects chargeDice aCollectionOfPositions effectAtPosition aCollectionOfDices game |
-	aCollectionOfPositions := { 2. 3. 4 } asOrderedCollection.
-	chargeDice := ChargeDice createWith: #( 65 ).
-	aCollectionOfDices := OrderedCollection new.
-	aCollectionOfDices add: (ChargeDice createWith: #( 5 )).
+	| builder tiles chargeDiceOf100Faces effectAtPosition dices game aCollectionOfPositions |
+	aCollectionOfPositions := { 3. 19. 4 } asOrderedCollection.
+	chargeDiceOf100Faces := ChargeDice createWith: #( 65 ).
+	dices := OrderedCollection new.
+	dices add: (ChargeDice createWith: #( 5 )).
 	builder := EffectBuilder
-		           createWith: chargeDice
+		           createWith: chargeDiceOf100Faces
 		           and: aCollectionOfPositions
-		           and: aCollectionOfDices.
-	effects := builder build.
-	effectAtPosition := effects at: 2.
-	aCollectionOfDices at: 1 put: (ChargeDice createWith: #( 4 3 5 )).
-	game := Game
-		        createWith: 20
-		        and: aCollectionOfDices
-		        and: effects
-		        and: 3.
-	game addShip.
+		           and: dices.
+	tiles := builder build.
+	effectAtPosition := tiles at: 4.
+	dices at: 1 put: (ChargeDice createWith: #( 3 3 5 )).
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
 	self assert: effectAtPosition class equals: HyperGravity.
 	self assert: ((game ship: 1) isAt: 4).
@@ -103,7 +99,7 @@ EffectBuilderTest >> testEffectBuilderShoudStartBuildingAWormHole [
 	moveManager := MoveManager createWith: alapmanager and: (CardManager createWith: #(  ))..
 	moveManager move: ship by: 5.
 	effectAtPosition := effects detect: [ :e | e shouldApplyTo: ship ].
-	self assert: effectAtPosition class equals: WormHole.
+	self assert: effectAtPosition class equals: WormHoleExit.
 
 
 	moveManager move: ship by: 2.
@@ -113,5 +109,14 @@ EffectBuilderTest >> testEffectBuilderShoudStartBuildingAWormHole [
 
 	moveManager move: ship by: 2.
 	effectAtPosition := effects detect: [ :e | e shouldApplyTo: ship ].
-	self assert: effectAtPosition class equals: WormHole
+	self assert: effectAtPosition class equals: WormHoleExit
+]
+
+{ #category : 'tests' }
+EffectBuilderTest >> testWhenBothPositionsAreNegativeThrowAnError [
+
+self
+	should:[WormHoleExit at:-20 and: -20]
+	raise: Error
+	withMessageText: 'The WormHole Position can not be negative'.
 ]

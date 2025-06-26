@@ -41,13 +41,13 @@ Game >> handleRewardsWith: playerthrow and: player [
 Game >> initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers [
 
 	dices isEmpty ifTrue: [ Error signal: 'you cant play without dices' ].
+	aCollectionOfTilesWithEffects isEmpty ifTrue: [ Error signal: 'you cant play without tiles' ].
 	boardlength := aCollectionOfTilesWithEffects size.
 	setofdices := dices.
 	lapsToWin := numberOfLapsToWin.
 	currentPlayerIndex := 0.
 
-	movemanager := MoveManager createWith:
-		               (LapManager createWith: boardlength) and: (CardManager createWith: #()).
+	movemanager := MoveManager createWith: boardlength and: (CardManager createWith: #()).
 		
 	effectsManager := EffectsManager
 		                 createWith: aCollectionOfTilesWithEffects

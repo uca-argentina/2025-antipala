@@ -72,6 +72,11 @@ EffectsManager >> moveAllShipsExcept: ship by: walk [
 ]
 
 { #category : 'method' }
+EffectsManager >> moveToTheExitWormhole: aShip [ 
+
+]
+
+{ #category : 'method' }
 EffectsManager >> putLastEffect: effect [
 
 	lastEffect := effect .

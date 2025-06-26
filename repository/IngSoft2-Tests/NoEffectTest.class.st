@@ -18,5 +18,5 @@ NoEffectTest >> testNoEffectShouldntMoveTheShip [
 	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.
 
 	game play.
-	self assert: ((game ship: 1) isAt: 5)
+	self assert: ((game ship: 1) isAt:6)
 ]

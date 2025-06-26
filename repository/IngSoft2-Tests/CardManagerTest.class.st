@@ -8,9 +8,8 @@ Class {
 { #category : 'as yet unclassified' }
 CardManagerTest >> testapplycardeffectoshiptest [
 
-	| aCardManager aCard aShip aTargetShip alapmanager manager |
-	alapmanager := LapManager createWith: 30.
-	manager := MoveManager createWith: alapmanager 
+	| aCardManager aCard aShip aTargetShip manager |
+	manager := MoveManager createWith: 30 
 		               and: (CardManager createWith: #(  )).
 	aCardManager := CardManager new.
 	aCard := Ally new.
@@ -21,5 +20,5 @@ CardManagerTest >> testapplycardeffectoshiptest [
 	manager move: aShip by: 10.
 
 
-	self assert: (aShip isAt: 0)
+	self assert: (aShip isAt: 1)
 ]

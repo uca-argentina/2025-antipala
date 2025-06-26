@@ -193,7 +193,7 @@ ShipGameTest >> testcreateAShipGamepasaturnoconatomicbomb [
 	|  tiles dices |
 
 	tiles := OrderedCollection new.
-	21 timesRepeat: [ tiles add: (NoEffect create)].
+	22 timesRepeat: [ tiles add: (NoEffect create)].
 	tiles at: 21 put: AtomicBomb create.
 	dices := OrderedCollection new.
 	dices add: (ChargeDice createWith: #(10 )).

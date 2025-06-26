@@ -20,18 +20,11 @@ MoonWalk class >> createWith: aWalk [
 { #category : 'method' }
 MoonWalk >> applyEffectTo: aShip with: effectManager [
 	
-	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
-	effectManager moveAllShipsExcept: aShip by: walk
-]
-
-{ #category : 'method' }
-MoonWalk >> forceApplyTo: aShip with: effectManager [
-
 	effectManager moveAllShipsExcept: aShip by: walk
 ]
 
 { #category : 'initialize' }
 MoonWalk >> initializeWith: aWalk [
 
-	walk := aWalk
+	walk := aWalk negated 
 ]

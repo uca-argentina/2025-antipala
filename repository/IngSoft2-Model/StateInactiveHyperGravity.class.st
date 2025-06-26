@@ -22,14 +22,6 @@ StateInactiveHyperGravity >> activateWith: anEffectManager on: aShip [
 	anEffectManager putLastEffect: self.
 ]
 
-{ #category : 'method' }
-StateInactiveHyperGravity >> forceApplyTo: aShip with: anEffectManager [
-
-	anEffectManager block: aShip.
-	effect changeState:
-		(StateActiveHyperGravity createWith: effect and: hyperGravityXValue)
-]
-
 { #category : 'initialization' }
 StateInactiveHyperGravity >> initializeWith: hyperGravity and: anHyperGravityXValue [
 
