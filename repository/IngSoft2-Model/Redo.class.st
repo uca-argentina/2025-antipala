@@ -1,6 +1,3 @@
-"
-clase Redo: Vuelve a aplicar la ultima carta jugada.
-"
 Class {
 	#name : 'Redo',
 	#superclass : 'Cards',
