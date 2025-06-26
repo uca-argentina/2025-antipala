@@ -1,6 +1,6 @@
 Class {
 	#name : 'Acceleration',
-	#superclass : 'Object',
+	#superclass : 'Cards',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }

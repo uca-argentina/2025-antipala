@@ -3,7 +3,11 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'activeCards',
-		'targetShip'
+		'targetShip',
+		'lastcard'
+	],
+	#classInstVars : [
+		'lastcard'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -24,14 +28,16 @@ CardManager >> addPermanentCard: card [
 CardManager >> allymetotheothership: aCard [ 
 	
 	aCard linkShip:targetShip.
+	lastcard:=(aCard copy).
 ]
 
 { #category : 'as yet unclassified' }
 CardManager >> apply: aCard from: aShip to: aTargetShip [
-
+   
 	targetShip := aTargetShip.
 	aCard applyEffect: aShip with: self.
 	self addPermanentCard:aCard.
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -52,12 +58,18 @@ CardManager >> handleally: aShip  step: steps [
 CardManager >> initialize [
 
 	activeCards := OrderedCollection new .
+	lastcard:=0
 ]
 
 { #category : 'as yet unclassified' }
 CardManager >> lastActiveEffect [
 
 	^activeCards last.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> playlastcard:aShip [
+	self apply:lastcard from:aShip to:targetShip .
 ]
 
 { #category : 'as yet unclassified' }
