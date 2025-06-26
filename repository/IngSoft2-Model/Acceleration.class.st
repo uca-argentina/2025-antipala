@@ -1,3 +1,6 @@
+"
+clase acceleration: Aumenta la tirada de todas las naves en 1
+"
 Class {
 	#name : 'Acceleration',
 	#superclass : 'Cards',

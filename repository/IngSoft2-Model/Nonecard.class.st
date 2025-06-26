@@ -1,3 +1,6 @@
+"
+clase nonecard: No hace nada 
+"
 Class {
 	#name : 'Nonecard',
 	#superclass : 'Cards',
@@ -10,6 +13,6 @@ Nonecard class >> create [
 ^ self new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'method' }
 Nonecard >> applyEffect: aShip with: aCardManager [
 ]

@@ -1,3 +1,6 @@
+"
+clase card: Clases que van a modificar el comportamiento del juego
+"
 Class {
 	#name : 'Cards',
 	#superclass : 'Object',

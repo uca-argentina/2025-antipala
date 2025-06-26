@@ -1,3 +1,6 @@
+"
+clase ally: Permite elegir una nave aliada a la nave que juega la carta. Ambas naves compartirán el fuel.  
+"
 Class {
 	#name : 'Ally',
 	#superclass : 'Cards',

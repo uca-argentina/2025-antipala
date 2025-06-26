@@ -1,3 +1,6 @@
+"
+clase cancelacion: Cancela el efecto de una carta permanente a eleccion
+"
 Class {
 	#name : 'Cancelation',
 	#superclass : 'Cards',
@@ -5,12 +8,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'creation' }
+Cancelation class >> create [
+	^ self new.
+]
+
 { #category : 'method' }
 Cancelation >> applyEffect: aShip with: aCardManager [ 
 	aCardManager removePermanentCard.
-]
-
-{ #category : 'initialize' }
-Cancelation >> intialize [
-	
 ]

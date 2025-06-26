@@ -1,5 +1,5 @@
 "
-Clase NoEffect. Efecto generico que tiene cualquier casillero, no modifica la posicion de la nave que aterriza en el. (Ver si vale la pena hacerlo singleton)
+Clase NoEffect. Efecto generico que tiene cualquier casillero, no modifica la posicion de la nave que aterriza en el.
 "
 Class {
 	#name : 'NoEffect',

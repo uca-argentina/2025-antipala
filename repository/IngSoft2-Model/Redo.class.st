@@ -7,7 +7,7 @@ Class {
 
 { #category : 'creation' }
 Redo class >> create [
-	^ self new.
+	^ self new
 ]
 
 { #category : 'method' }

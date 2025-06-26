@@ -1,3 +1,6 @@
+"
+clase CardManager: Maneja todas las cartas del juego
+"
 Class {
 	#name : 'CardManager',
 	#superclass : 'Object',
@@ -67,11 +70,11 @@ CardManager >> handleally: aShip  fuel: fuel [
  activeCards  do: [:card | card ifAllyWith:aShip give: fuel] 
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 CardManager >> initialize [
 
 	activeCards := OrderedCollection new .
-	lastcard:=0
+	lastcard:=Nonecard create.
 ]
 
 { #category : 'method Redo' }
