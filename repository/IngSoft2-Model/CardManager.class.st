@@ -21,18 +21,18 @@ CardManager >> addPermanentCard: card [
 ]
 
 { #category : 'as yet unclassified' }
+CardManager >> allymetotheothership: aCard [ 
+	
+	aCard linkShip:targetShip.
+	self addPermanentCard:aCard.
+]
+
+{ #category : 'as yet unclassified' }
 CardManager >> apply: aCard from: aShip to: aTargetShip [
 
 	targetShip := aTargetShip.
 	aCard applyEffect: aShip with: self.
 	
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> applyAllyWith: aShip [
-	
-	aShip allywith: targetShip.
-	targetShip allywith: aShip
 ]
 
 { #category : 'as yet unclassified' }
