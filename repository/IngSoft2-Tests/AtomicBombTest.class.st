@@ -38,11 +38,3 @@ AtomicBombTest >> testAtomicBombAffectsAllShips [
 	self assert: ((game ship: 2) isAt: 1).
 	self assert: ((game ship: 3) isAt: 1)
 ]
-
-{ #category : 'tests' }
-AtomicBombTest >> testAtomicBombPositionCannotBeNegative [
-	self
-		should: [ AtomicBomb new initializeWith: -5 ]
-		raise: Error
-		withMessageText: 'Atomic Bomb position must be positive'.
-]

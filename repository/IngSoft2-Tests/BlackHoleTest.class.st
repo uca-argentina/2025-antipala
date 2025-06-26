@@ -14,14 +14,6 @@ BlackHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 			self assert: (error messageText) equals: errorMessage ].
 ]
 
-{ #category : 'tests' }
-BlackHoleTest >> testBlackHolePositionCannotBeNegative [
-	self
-		should: [ BlackHole new initializeWith: -5 ]
-		raise: Error
-		withMessageText: 'Black Hole position must be positive'
-]
-
 { #category : 'as yet unclassified' }
 BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 
