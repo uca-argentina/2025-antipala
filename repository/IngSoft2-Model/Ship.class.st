@@ -10,8 +10,7 @@ Class {
 		'id',
 		'maxfuel',
 		'timeout',
-		'laps',
-		'ally'
+		'laps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,16 +19,6 @@ Class {
 { #category : 'creation' }
 Ship class >> createWhithId: anId andWithFuel: anFuel [ 
 	^self new initializewith: anId andfuel: anFuel.
-]
-
-{ #category : 'as yet unclassified' }
-Ship >> allywith: aTargetShip [ 
-	ally:=aTargetShip
-]
-
-{ #category : 'as yet unclassified' }
-Ship >> askforfuel [
- ally donatefuel:self.
 ]
 
 { #category : 'as yet unclassified' }
@@ -60,9 +49,9 @@ Ship >> consumeFuel:amount [
 ]
 
 { #category : 'as yet unclassified' }
-Ship >> donatefuel:aShip [
+Ship >> donatefuel:steps ship:aShip [
 aShip givefuel:fuel.
-self consumeFuel:fuel.
+self consumeFuel:steps.
 ]
 
 { #category : 'private accessing' }
@@ -103,7 +92,7 @@ Ship >> initializewith: anId andfuel: afuel [
 	position:=1.
 	timeout:=0.
 	laps:=0.
-	ally:=self
+	
 	
 ]
 
