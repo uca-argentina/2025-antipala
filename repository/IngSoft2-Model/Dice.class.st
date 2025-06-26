@@ -11,17 +11,9 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'operations' }
-Dice class >> validLength: aFace [
-    (aFace < 2) ifTrue: [
-        Error signal: 'the dice must have at least 2 faces.'
-    ].
-]
-
 { #category : 'creation' }
 Dice class >> with:aFace [
-
-self validLength: aFace.
+(aFace < 2) ifTrue: [Error signal: 'the dice must have at least 2 faces.'].
 ^(self new) initializeDiceWith:aFace.
 ]
 

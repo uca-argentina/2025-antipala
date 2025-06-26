@@ -10,7 +10,6 @@ Class {
 
 { #category : 'creation' }
 StateActiveHyperGravity class >> createWith: hyperGravity and: hyperGravityXValue [
-
 	^ self new initializeWith: hyperGravity and: hyperGravityXValue
 ]
 

@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+WormHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
 WormHoleTest >> testAShipCanEnterTheWormHole [
 
@@ -19,6 +28,15 @@ WormHoleTest >> testAShipCanEnterTheWormHole [
 	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
 	self assert: ((game ship:1) isAt: 9)
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testHWormHoledistanceShouldBePositive [
+|aValue|
+	self
+		should: [WormHole createWith: aValue ]
+		raise: Error
+		withMessageText: 'The WormHole distance should be a number'.
 ]
 
 { #category : 'tests' }

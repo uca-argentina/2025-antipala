@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+HyperJumpTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
 HyperJumpTest >> testAShipAdvancesWhenTriggersTheEffect [
 
@@ -38,6 +47,14 @@ HyperJumpTest >> testHyperJumpCanHandleDecimalJumps [
 	game play. "5.5"
 	self assert: ((game ship: 1) isAt: 7) "Ship RealPosition => 7.0"
 	
+]
+
+{ #category : 'tests' }
+HyperJumpTest >> testHyperJumpCanNotBeCreatedWithAnInvaludListOfJumps [
+	self
+		should: [HyperJump createWith: (HyperJump createWith: #() asSortedCollection) ]
+		raise: Error
+		withMessageText: 'The HyperJump Squares must have a valid list of jumps'.
 ]
 
 { #category : 'tests' }

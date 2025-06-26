@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+MoveManagerTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: (error messageText) equals: errorMessage ].
+]
+
 { #category : 'tests' }
 MoveManagerTest >> testBlockedShipsShouldntMoveForSomeTurns [
 
@@ -63,6 +72,20 @@ MoveManagerTest >> testMoveManagerCanMoveShips [
    manager := MoveManager createWith: aBoardSize and: (CardManager create).
 	manager move: ship by: 10.
 	self assert: (ship isAt: 11)
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testMoveManagerCannotBeIniciatedWithAnInvalidBoardSize [
+	self should: [ MoveManager createWith: -4 and: (CardManager createWith: #(  )). ]
+		raise: Error
+		withMessageText: 'The BoardSize must be equal or greater than 4 squares.'.
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testMoveManagerCannotBeIniciatedWithoutACardManager [
+	self should: [ MoveManager createWith: 40 and: nil ]
+		raise: Error
+		withMessageText: 'The MoveManager must have a CardManager.'.
 ]
 
 { #category : 'tests' }

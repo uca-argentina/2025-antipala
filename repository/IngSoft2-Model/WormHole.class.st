@@ -13,7 +13,7 @@ Class {
 
 { #category : 'creation' }
 WormHole class >> createWith: aDistanceToTheWormholeExit [
-
+	aDistanceToTheWormholeExit ifNil: [ self error:'The WormHole distance should be a number'].
 	^ self new initializeWith: aDistanceToTheWormholeExit 
 ]
 

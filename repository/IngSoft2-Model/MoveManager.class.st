@@ -15,7 +15,8 @@ Class {
 
 { #category : 'creation' }
 MoveManager class >> createWith: aBoardSize and: aCardManager [
-
+	aCardManager ifNil: [ self error: 'The MoveManager must have a CardManager.' ].
+	aBoardSize  <4 ifTrue: [ self error: 'The BoardSize must be equal or greater than 4 squares.' ]. 
 	^ self new intializeWith: aBoardSize and: aCardManager
 ]
 

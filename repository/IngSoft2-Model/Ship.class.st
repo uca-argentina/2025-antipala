@@ -10,14 +10,17 @@ Class {
 		'id',
 		'maxfuel',
 		'timeout',
-		'laps'
+		'laps',
+		'ally'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-Ship class >> createWhithId: anId andWithFuel: anFuel [ 
+Ship class >> createWhithId: anId andWithFuel: anFuel [
+    (anId isNil or: [ anId <= 0 ]) ifTrue: [ self error: 'The Ship ID must be a positive number' ].
+	anFuel < 0 ifTrue: [ self error: 'El fuel must be positive' ]. 
 	^self new initializewith: anId andfuel: anFuel.
 ]
 
