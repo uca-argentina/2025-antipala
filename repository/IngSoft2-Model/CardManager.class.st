@@ -72,6 +72,11 @@ CardManager >> playlastcard:aShip [
 	self apply:lastcard from:aShip to:targetShip .
 ]
 
+{ #category : 'removing' }
+CardManager >> removePermanentCard [
+	activeCards remove:targetShip ifAbsent:[Error signal: 'no card found'].
+]
+
 { #category : 'as yet unclassified' }
 CardManager >> throwEffectsFor: aShip [
 	| effects |
