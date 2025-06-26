@@ -132,9 +132,8 @@ Ship >> isAt: aPosition [
 	^ position truncated = aPosition
 ]
 
-{ #category : 'methods' }
+{ #category : 'private - testing' }
 Ship >> isAtLap: lap [
-	"este metodo solo debe ser usado por los tests"
 
 	^ laps = lap
 ]

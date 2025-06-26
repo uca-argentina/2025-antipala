@@ -45,3 +45,19 @@ MoonWalkTest >> testMoonWalkCanNotBeCreatedWithAnInvalidWald [
 		raise: Error
 		withMessageText: 'The MoonWalk value must be positive'.
 ]
+
+{ #category : 'tests' }
+MoonWalkTest >> testMoonWalkPositionCannotBeNegative [
+	self
+		should: [ MoonWalk new initializeWith: -4 and: 5 ]
+		raise: Error
+		withMessageText: 'The MoonWalk position must be positive'.
+]
+
+{ #category : 'tests' }
+MoonWalkTest >> testMoonWalkwalkCannotBeNegative [
+	self
+		should: [ MoonWalk new initializeWith: 10 and: -5 ]
+		raise: Error
+		withMessageText: 'The MoonWalk walk must be positive'.
+]

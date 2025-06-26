@@ -131,3 +131,11 @@ HyperJumpTest >> testHyperJumpShouldSortTheJumpValues [
 	self assert: ((game ship: 2) isAt: 10).
 	self assert: ((game ship: 3) isAt: 8)
 ]
+
+{ #category : 'tests' }
+HyperJumpTest >> testTheHyperJumpPositionCannotBeNegative [
+	self
+		should: [ HyperJump new initializeWith: -4 withJumps: #(1 2 3) asOrderedCollection ]
+		raise: Error
+		withMessageText: 'The HyperJump position must be positive'
+]
