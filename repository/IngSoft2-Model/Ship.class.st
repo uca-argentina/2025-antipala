@@ -10,15 +10,34 @@ Class {
 		'id',
 		'maxfuel',
 		'timeout',
-		'laps'
+		'laps',
+		'ally',
+		'cards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-Ship class >> createWhithId: anId andWithFuel: anFuel [ 
+Ship class >> createWhithId: anId andWithFuel: anFuel [
+    (anId isNil or: [ anId <= 0 ]) ifTrue: [ self error: 'The Ship ID must be a positive number' ].
+	anFuel < 0 ifTrue: [ self error: 'El fuel must be positive' ]. 
 	^self new initializewith: anId andfuel: anFuel.
+]
+
+{ #category : 'methods' }
+Ship >> addCard: aCard [
+	cards add:aCard .
+]
+
+{ #category : 'methods' }
+Ship >> attemptToMoveBy: steps [
+	self isBlocked 
+		ifTrue: [ ^ self reduceTimeout ] 
+		ifFalse: [
+			self moveBy: steps.
+			self consumeFuel: steps
+		].
 ]
 
 { #category : 'methods' }
@@ -27,15 +46,38 @@ Ship >> changeLapsBy: someLaps [
 ]
 
 { #category : 'methods' }
+Ship >> changeMaxFuelBy: quanty [
+
+	maxfuel := maxfuel + quanty
+]
+
+{ #category : 'methods' }
 Ship >> consumeFuel:amount [
    
     fuel := fuel - amount.
 ]
 
-{ #category : 'private - testing' }
+{ #category : 'methods' }
+Ship >> donatefuel:steps ship:aShip [
+aShip givefuel: ((steps) min:fuel).
+self consumeFuel: ((steps) min:fuel).
+]
+
+{ #category : 'private accessing' }
 Ship >> fuel [
+	"este metodo solo debe ser usado por los tests"
 
 	^ fuel
+]
+
+{ #category : 'initialize' }
+Ship >> fuelNededFor: steps [
+	^ steps - fuel.
+]
+
+{ #category : 'methods' }
+Ship >> givefuel:afuel [
+fuel:=fuel+afuel.
 ]
 
 { #category : 'methods' }
@@ -44,9 +86,9 @@ Ship >> hasFuelFor: steps [
     ^ fuel >= (steps abs).
 ]
 
-{ #category : 'private - testing' }
+{ #category : 'private accessing' }
 Ship >> id [
-	
+	"este metodo solo debe ser usado por los tests"
 	^ id
 ]
 
@@ -61,9 +103,10 @@ Ship >> initializewith: anId andfuel: afuel [
 	fuel:=afuel.
 	maxfuel:=afuel.
 	id:=anId. 
-	position:=0.
+	position:=1.
 	timeout:=0.
 	laps:=0.
+	cards:= OrderedCollection new.
 	
 ]
 
@@ -100,8 +143,9 @@ Ship >> isBlocked [
 	^ timeout > 0.
 ]
 
-{ #category : 'private - testing' }
+{ #category : 'private accessing' }
 Ship >> isWithTimeout: amount [
+	"este metodo solo debe ser usado por los tests"
 
 	^ timeout = amount
 ]
@@ -120,7 +164,12 @@ Ship >> moveBy: steps [
 { #category : 'methods' }
 Ship >> moveToFirstPosition [
 
-	position:=0.
+	position:=1.
+]
+
+{ #category : 'accessing' }
+Ship >> position [
+	^  position truncated
 ]
 
 { #category : 'methods' }
@@ -132,4 +181,11 @@ Ship >> reduceTimeout [
 { #category : 'methods' }
 Ship >> refillFuel [
     fuel := maxfuel .
+]
+
+{ #category : 'methods' }
+Ship >> removeCard: aCard [
+	| cardToDelete |
+	cardToDelete:=cards detect: [:card | card = aCard  ] ifNone: [Error signal: 'The Ship Should have the card to play'].
+	cards remove:cardToDelete.
 ]

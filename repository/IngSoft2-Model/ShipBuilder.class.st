@@ -19,11 +19,22 @@ ShipBuilder class >> buildWith: dices [
 ]
 
 { #category : 'method' }
+ShipBuilder >> add2CardsTo: newShip [
+	
+	| temporalDice dealer |
+	temporalDice:= Dice with:5.
+	dealer := CardGiver createWith: temporalDice.
+	dealer applyEffectTo: newShip with: self.
+	dealer applyEffectTo: newShip with: self.
+]
+
+{ #category : 'method' }
 ShipBuilder >> build [
-	|newship|
-	newship := Ship createWhithId:actualId andWithFuel:maxFuel.
+	|newShip|
+	newShip := Ship createWhithId:actualId andWithFuel:maxFuel.
 	actualId:= actualId+1.
-	^newship.
+	self add2CardsTo: newShip.
+	^newShip.
 
 	
 ]

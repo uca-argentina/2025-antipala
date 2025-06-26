@@ -9,46 +9,66 @@ Class {
 		'setofdices',
 		'boardlength',
 		'movemanager',
-		'manageeffects',
-		'currentPlayerIndex',
 		'lapsToWin',
-		'shipbuilder'
+		'shipbuilder',
+		'effectsManager',
+		'currentPlayer',
+		'cardManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'creation' }
-Game class >> createWith:anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
-	^ self new initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin
+Game class >> createOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers [
+
+(numberOfLapsToWin <1) ifTrue: [ self error:'The number of laps must be equal or greater than 1'].
+aCollectionOfTilesWithEffects isEmpty ifTrue: [ self error: 'you cant play without tiles' ].
+numberOfPlayers <=0 ifTrue: [self error: 'The Game must be created with at least 1 player.' ].
+dices isEmpty ifTrue: [ Error signal: 'The game cannot be played without dices.' ].
+
+	^ self new initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers
 ]
 
 { #category : 'playing' }
-Game >> addShip [
-	currentPlayerIndex > 0 ifTrue: [
-		Error signal: 'The game started, you cant add ships' ].
-	ships add: shipbuilder build
+Game >> giveRewardTo: player [
+
+	self throwdice / self maxThrow <= 0.8
+		ifTrue: [ player changeMaxFuelBy: 1 ]
+		ifFalse: [ player changeMaxFuelBy: -1 ]
+]
+
+{ #category : 'playing' }
+Game >> handleRewardsWith: playerthrow and: player [
+
+	self maxThrow = playerthrow ifTrue: [ self giveRewardTo: player ]
 ]
 
 { #category : 'initialize' }
-Game >> initializeWith: anBoardlength and: dices and: aCollectionofeffects and: numberOfLapsToWin [
-
-	dices isEmpty ifTrue: [
-		Error signal: 'you cant play without dices' ].
-	boardlength := anBoardlength.
+Game >> initializeOn: aCollectionOfTilesWithEffects toPlayWith: dices withARequired: numberOfLapsToWin andWithThePlayers: numberOfPlayers [
+	boardlength := aCollectionOfTilesWithEffects size.
 	setofdices := dices.
 	lapsToWin := numberOfLapsToWin.
-	currentPlayerIndex := 0.
-
-	movemanager := MoveManager createWith:
-		               (LapManager createWith: anBoardlength).
-	manageeffects := EffectsManager
-		                 createWith: aCollectionofeffects
+	currentPlayer := 0.
+	cardManager := CardManager create.
+	movemanager := MoveManager createWith: boardlength and: cardManager .
+		
+	effectsManager := EffectsManager
+		                 createWith: aCollectionOfTilesWithEffects
 		                 and: movemanager.
 
 
 	shipbuilder := ShipBuilder buildWith: dices.
-	ships := OrderedCollection new
+	ships := OrderedCollection new.
+	numberOfPlayers timesRepeat: [ships add: shipbuilder build ]
+]
+
+{ #category : 'playing' }
+Game >> maxThrow [
+
+	^ setofdices
+		            inject: 0
+		            into: [ :sum :eachDice | sum + eachDice max ].
 ]
 
 { #category : 'playing' }
@@ -70,14 +90,30 @@ Game >> moveAllShipsToTheInitialPosition [
 Game >> play [
 
 	| player playerthrow |
-	ships isEmpty ifTrue: [ Error signal: 'you cant play without ships' ].
 	self winner ifNotNil: [ Error signal: 'the game ended' ].
-	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
-	player := ships at: currentPlayerIndex.
+	currentPlayer := currentPlayer \\ ships size + 1.
+	player := ships at: currentPlayer.
+
 	playerthrow := self throwdice.
+	self handleRewardsWith: playerthrow and: player.
 
 	movemanager move: player by: playerthrow.
-	manageeffects applyAnEffectTo: player in: self with: playerthrow
+	effectsManager applyAnEffectTo: player in: self with: playerthrow
+]
+
+{ #category : 'playing' }
+Game >> play: aCard from: aShip to: aTarget [
+	cardManager apply: aCard from: aShip to: aTarget.
+]
+
+{ #category : 'playing' }
+Game >> playAPermanent: card from: aShip to: aTarget [
+	| player |
+	self winner ifNotNil: [ Error signal: 'the game ended' ].
+	
+	player := ships at: ( currentPlayer \\ ships size + 1).
+	player = aShip ifFalse:[Error signal: 'Permanent cards can only be played in your turn ' ].
+	cardManager apply: card from: player to: aTarget.
 ]
 
 { #category : 'playing' }
@@ -90,10 +126,9 @@ Game >> ranking [
 Game >> repostFuel [
 
 	| player |
-	ships isEmpty ifTrue: [ Error signal: 'you cant play without ships' ].
 	self winner ifNotNil: [ Error signal: 'the game ended' ].
-	currentPlayerIndex := currentPlayerIndex \\ ships size + 1.
-	player := ships at: currentPlayerIndex.
+	currentPlayer := currentPlayer \\ ships size + 1.
+	player := ships at: currentPlayer.
 	player refillFuel
 ]
 
@@ -105,11 +140,7 @@ Game >> ship:index [
 
 { #category : 'playing' }
 Game >> throwdice [
- | totalThrow |
-totalThrow:= setofdices
-		         inject: 0
-		         into: [ :sum :eachDice | sum + eachDice roll ]. 
-		^totalThrow.
+^ (setofdices collect: [:each | each roll]) sum.
 ]
 
 { #category : 'playing' }

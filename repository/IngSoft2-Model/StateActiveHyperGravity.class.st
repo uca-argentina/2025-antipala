@@ -10,7 +10,6 @@ Class {
 
 { #category : 'creation' }
 StateActiveHyperGravity class >> createWith: hyperGravity and: hyperGravityXValue [
-
 	^ self new initializeWith: hyperGravity and: hyperGravityXValue
 ]
 
@@ -21,6 +20,7 @@ StateActiveHyperGravity >> activateWith: anEffectManager on: aShip [
 		handleHyperGravityCondition: hyperGravityXValue
 		in: aShip
 		with: effect.
+	anEffectManager putLastEffect: self.
 ]
 
 { #category : 'initialize' }

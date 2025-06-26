@@ -9,20 +9,14 @@ Class {
 }
 
 { #category : 'creation' }
-AtomicBomb class >> at: position [
+AtomicBomb class >> create [
 
-	^ self new initializeWith: position
+	^ self new
 ]
 
 { #category : 'method' }
 AtomicBomb >> applyEffectTo: aShip with: effectManager [
 
-	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
-		effectManager triggerAtomicBomb 
-]
-
-{ #category : 'initialize' }
-AtomicBomb >> initializeWith: position [
-	position < 0 ifTrue: [self error: 'Atomic Bomb position must be positive'].
-	effectPosition := position
+		effectManager triggerAtomicBomb .
+		effectManager putLastEffect: self.
 ]

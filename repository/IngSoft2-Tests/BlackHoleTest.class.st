@@ -14,30 +14,17 @@ BlackHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 			self assert: (error messageText) equals: errorMessage ].
 ]
 
-{ #category : 'tests' }
-BlackHoleTest >> testBlackHolePositionCannotBeNegative [
-	self
-		should: [ BlackHole new initializeWith: -5 ]
-		raise: Error
-		withMessageText: 'Black Hole position must be positive'
-]
-
 { #category : 'as yet unclassified' }
 BlackHoleTest >> testWhenTheShipEnterInABlackHoleThenGoBack4Squares [
 
-	| effectlist dices game |
-	effectlist := OrderedCollection new.
-	effectlist add: (BlackHole at: 5).
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 5 put: (AtomicBomb create).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 )).
+	dices add: (ChargeDice createWith: #( 4 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 
 	game play.
 	self assert: ((game ship:1) isAt: 1)

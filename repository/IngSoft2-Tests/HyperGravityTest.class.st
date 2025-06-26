@@ -17,22 +17,16 @@ HyperGravityTest >> should: anErrorBlock raise: anErrorClass withMessageText: er
 { #category : 'tests' }
 HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 
-	| effectlist game dices anHyperGravity |
 
-	effectlist := OrderedCollection new.
-	anHyperGravity := HyperGravity at: 5 with: 10.
-	effectlist add: anHyperGravity.
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 5 put: (HyperGravity createWith: 10).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 )).
+	dices add: (ChargeDice createWith: #( 4 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	self assert: ((game ship: 1) isAt: 0).
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
+	self assert: ((game ship: 1) isAt: 1).
 
 	game play.
 	self assert: ((game ship: 1) isAt: 5).
@@ -48,23 +42,14 @@ HyperGravityTest >> testAShipThatShouldntBeAbleToLeaveTheHyperGravity [
 { #category : 'tests' }
 HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 
-	| effectlist game dices anHyperGravity |
-
-	effectlist := OrderedCollection new.
-	anHyperGravity := HyperGravity at: 5 with: 10.
-	effectlist add: anHyperGravity.
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 5 put: (HyperGravity createWith: 10).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 )).
+	dices add: (ChargeDice createWith: #( 4 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game addShip.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 3.
 	game play.
 	game play.
 	game play.
@@ -81,22 +66,24 @@ HyperGravityTest >> testHyperGravityCanHandleSeveralShips [
 ]
 
 { #category : 'tests' }
+HyperGravityTest >> testHyperGravityCannotBeCreatedWithAnInvalidXValue [
+	self
+		should: [HyperGravity createWith: -2 ]
+		raise: Error
+		withMessageText: 'The number of HyperGravity X value must be positive'.
+]
+
+{ #category : 'tests' }
 HyperGravityTest >> testShipsCanExitTheHyperGravity [
 
-	| effectlist game dices anHyperGravity |
-	effectlist := OrderedCollection new.
-	anHyperGravity := HyperGravity at: 5 with: 10.
-	effectlist add: anHyperGravity.
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 5 put: (HyperGravity createWith: 10).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 5 5 10 )).
+	dices add: (ChargeDice createWith: #( 4 5 10 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
 	self assert: ((game ship: 1) isAt: 5).
 	game play.
@@ -108,20 +95,14 @@ HyperGravityTest >> testShipsCanExitTheHyperGravity [
 { #category : 'tests' }
 HyperGravityTest >> testShipsShouldntGoForwardWhenTheyStepOnTheBlackHoleForTheFirstTime [
 
-	| effectlist game dices anHyperGravity |
-	effectlist := OrderedCollection new.
-	anHyperGravity := HyperGravity at: 10 with: 5.
-	effectlist add: anHyperGravity.
-
+| game dices tiles |
+	tiles := OrderedCollection new.
+	20 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 10 put: (HyperGravity createWith: 5).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 10 )).
+	dices add: (ChargeDice createWith: #( 9 )).
 
-	game := Game
-		        createWith: 20
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 1.
 	game play.
 	self assert: ((game ship: 1) isAt: 10)
 ]
@@ -129,35 +110,20 @@ HyperGravityTest >> testShipsShouldntGoForwardWhenTheyStepOnTheBlackHoleForTheFi
 { #category : 'tests' }
 HyperGravityTest >> testTheHyperGravityCanBeActivatedSeveralTimes [
 
-	| effectlist game dices anHyperGravity |
-	effectlist := OrderedCollection new.
-	anHyperGravity := HyperGravity at: 10 with: 5.
-	effectlist add: anHyperGravity.
-
+	| game dices tiles |
+	tiles := OrderedCollection new.
+	30 timesRepeat: [ tiles add: (NoEffect create)].
+	tiles at: 10 put: (HyperGravity createWith: 5).
 	dices := OrderedCollection new.
-	dices add: (ChargeDice createWith: #( 10 5 )).
+	dices add: (ChargeDice createWith: #( 9 )).
 
-	game := Game
-		        createWith: 25
-		        and: dices
-		        and: effectlist
-		        and: 3.
-	game addShip.
-	game addShip.
+	game := Game createOn: tiles toPlayWith: dices withARequired: 3 andWithThePlayers: 2.
 	game play.
-	game play.
+	game repostFuel .
 	self assert: ((game ship: 1) isAt: 10).
-	self assert: ((game ship: 2) isAt: 5).
+	self assert: ((game ship: 2) isAt: 1).
 	game play.
 	game play.
-	self assert: ((game ship: 1) isAt: 20).
-	self assert: ((game ship: 2) isAt: 10). "si sigue activo, lo mandaria al casillero 20"
-]
-
-{ #category : 'tests' }
-HyperGravityTest >> testTheHypergravityPositionCannotBeNegative [
-	self
-		should: [ HyperGravity new initializeWith: -4 and: 10 ]
-		raise: Error
-		withMessageText: 'The Hypergravity position must be positive'
+	self assert: ((game ship: 1) isAt: 19).
+	self assert: ((game ship: 2) isAt: 10)
 ]

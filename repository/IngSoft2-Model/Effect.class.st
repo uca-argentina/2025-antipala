@@ -4,9 +4,6 @@ Clase Effect. Effect es un casillero especial que modifica el comportamiento ori
 Class {
 	#name : 'Effect',
 	#superclass : 'Object',
-	#instVars : [
-		'effectPosition'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -15,10 +12,4 @@ Class {
 Effect >> applyEffectTo: ship with: effectManager [
 
 	^ self subclassResponsibility 
-]
-
-{ #category : 'method' }
-Effect >> shouldApplyTo: aShip [
-
-	^ aShip isAt: effectPosition
 ]

@@ -12,22 +12,19 @@ Class {
 }
 
 { #category : 'creation' }
-MoonWalk class >> at: position and: walk [
-
-	^ self new initializeWith: position and: walk
+MoonWalk class >> createWith: aWalk [
+	aWalk<0 ifTrue: [ self error:'The MoonWalk value must be positive']. 
+	^ self new initializeWith: aWalk
 ]
 
 { #category : 'method' }
 MoonWalk >> applyEffectTo: aShip with: effectManager [
 	
-	(self shouldApplyTo: aShip) ifFalse: [ ^ self ].
 	effectManager moveAllShipsExcept: aShip by: walk
 ]
 
 { #category : 'initialize' }
-MoonWalk >> initializeWith: position and: aWalk [
-	position < 0 ifTrue: [self error: 'The MoonWalk position must be positive'].
-	aWalk < 0 ifTrue: [self error: 'The MoonWalk walk must be positive'].
-	effectPosition := position.
-	walk := aWalk negated
+MoonWalk >> initializeWith: aWalk [
+
+	walk := aWalk negated 
 ]
