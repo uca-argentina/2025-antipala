@@ -36,7 +36,7 @@ Ship >> attemptToMoveBy: steps [
 		ifTrue: [ ^ self reduceTimeout ] 
 		ifFalse: [
 			self moveBy: steps.
-			self consumeFuel: steps
+			self consumeFuel: steps abs 
 		].
 ]
 
@@ -72,7 +72,7 @@ Ship >> fuel [
 
 { #category : 'initialize' }
 Ship >> fuelNededFor: steps [
-	^ steps - fuel.
+	^ steps abs - fuel.
 ]
 
 { #category : 'methods' }

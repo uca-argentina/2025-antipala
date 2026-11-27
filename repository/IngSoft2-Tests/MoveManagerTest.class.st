@@ -129,6 +129,17 @@ MoveManagerTest >> testMoveManagerShouldHandleTheFuelOfTheShips [
 ]
 
 { #category : 'tests' }
+MoveManagerTest >> testMoveManagerShouldSpendFuelWhenTheShipMovesBackwards [
+
+	| ship manager |
+	ship := Ship createWhithId: 1 andWithFuel: 10.
+	manager := MoveManager createWith: 20 and: CardManager create.
+	manager move: ship by: 5.
+	manager move: ship by: -3.
+	self assert: ship fuel equals: 2
+]
+
+{ #category : 'tests' }
 MoveManagerTest >> testNegativeLaps [
 
 	| ship manager |
