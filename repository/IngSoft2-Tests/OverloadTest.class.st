@@ -27,7 +27,7 @@ OverloadTest >> testOverloadCardSholdBeStackable [
 
 	moveManager := MoveManager createWith: 20 and: cardManager .
 
-	moveManager move: ship2 by: 5.
+	moveManager move: ship2 byThrow: 5.
 	self assert: (ship2 isAt:2).
 ]
 
@@ -51,12 +51,12 @@ OverloadTest >> testOverloadCardShoulDecreaseTheMovementOfAShip [
 
 	moveManager := MoveManager createWith: 20 and: cardManager .
 
-	moveManager move: ship1 by: 5.
+	moveManager move: ship1 byThrow: 5.
 	self assert: (ship1 isAt: 6).
 	
-	moveManager move: ship2 by: 5.
+	moveManager move: ship2 byThrow: 5.
 	self assert: (ship2 isAt:4).
 	
-	moveManager move: ship3 by: 5.
+	moveManager move: ship3 byThrow: 5.
 	self assert: (ship3 isAt:6).
 ]

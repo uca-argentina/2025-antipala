@@ -69,12 +69,15 @@ MoveManager >> intializeWith: aBoardSize and: aCardManager [
 { #category : 'method' }
 MoveManager >> move: aShip by: steps [
 
-	| newSteps |
-	newSteps := steps + (cardManager throwEffectsFor: aShip).
-	self askforally:aShip  step:steps.
-	self handleBlockOf: aShip with: newSteps.
-	aShip attemptToMoveBy: newSteps. 
-	self handleLaps: aShip 
+	self askforally: aShip step: steps.
+	self handleBlockOf: aShip with: steps.
+	aShip attemptToMoveBy: steps.
+	self handleLaps: aShip
+]
+
+{ #category : 'as yet unclassified' }
+MoveManager >> move: aShip byThrow: aThrow [ 
+	self move: aShip by: aThrow + (cardManager throwEffectsFor: aShip)
 ]
 
 { #category : 'method' }
