@@ -15,6 +15,31 @@ MoveManagerTest >> should: anErrorBlock raise: anErrorClass withMessageText: err
 ]
 
 { #category : 'tests' }
+MoveManagerTest >> testAShipThatRetreatsBelowTheStartAfterAFullLapGoesBackToThePreviousLap [
+
+	| ship manager |
+	ship := Ship createWhithId: 1 andWithFuel: 100.
+	manager := MoveManager createWith: 20 and: CardManager create.
+	manager move: ship by: 19.
+	self assert: (ship isAtLap: 1).
+	manager move: ship by: -2.
+	self assert: (ship isAt: 18).
+	self assert: (ship isAtLap: 0)
+]
+
+{ #category : 'tests' }
+MoveManagerTest >> testAShipThatRetreatsBelowTheStartInTheFirstLapGoesBackToTheFirstSquare [
+
+	| ship manager |
+	ship := Ship createWhithId: 1 andWithFuel: 100.
+	manager := MoveManager createWith: 20 and: CardManager create.
+	manager move: ship by: 2.
+	manager move: ship by: -4.
+	self assert: (ship isAt: 1).
+	self assert: (ship isAtLap: 0)
+]
+
+{ #category : 'tests' }
 MoveManagerTest >> testBlockedShipsShouldntMoveForSomeTurns [
 
 	| ship manager aBoardSize|

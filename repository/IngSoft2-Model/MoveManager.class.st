@@ -5,7 +5,6 @@ Class {
 	#name : 'MoveManager',
 	#superclass : 'Object',
 	#instVars : [
-		'lapManager',
 		'cardManager',
 		'boardSize'
 	],
@@ -42,13 +41,23 @@ MoveManager >> handleBlockOf: aShip with: steps [
 ]
 
 { #category : 'accessing' }
-MoveManager >> handleLaps: aship [
+MoveManager >> handleLaps: aShip [
 
 	| lapsDoneByTheShip |
-	lapsDoneByTheShip := aship lapsToApplyWith: boardSize.
+	aShip position < 1 ifTrue: [ ^ self handleRetreatBelowTheStartOf: aShip ].
+	lapsDoneByTheShip := aShip lapsToApplyWith: boardSize.
 	lapsDoneByTheShip = 0 ifTrue: [ ^ self ].
-	aship changeLapsBy: lapsDoneByTheShip.
-	aship moveBy: boardSize * lapsDoneByTheShip negated + 1
+	aShip changeLapsBy: lapsDoneByTheShip.
+	aShip moveBy: boardSize * lapsDoneByTheShip negated + 1
+]
+
+{ #category : 'accessing' }
+MoveManager >> handleRetreatBelowTheStartOf: aShip [
+
+	[ aShip position < 1 and: [ (aShip isAtLap: 0) not ] ] whileTrue: [
+		aShip changeLapsBy: -1.
+		aShip moveBy: boardSize - 1 ].
+	aShip position < 1 ifTrue: [ aShip moveToFirstPosition ]
 ]
 
 { #category : 'initialize' }
